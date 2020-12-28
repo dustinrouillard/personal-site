@@ -16,7 +16,7 @@ export function Spotify(props: { playing: Playing }): ReactElement {
     <Container>
       <Icon
         link={`https://open.spotify.com/track/${props.playing.item_id}`}
-        size={48}
+        size={38}
         color="#1DB954"
         icon={faSpotify}
       />
@@ -30,6 +30,7 @@ export function Spotify(props: { playing: Playing }): ReactElement {
         />
 
         <Text
+          size={10}
           text={props.playing.item_author}
           leading={2 * 1e3}
           trailing={3 * 1e3}
@@ -53,13 +54,14 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Text = styled(TextTicker)`
+const Text = styled(TextTicker)<{ size?: number }>`
   font-family: "FiraCode-Medium";
   color: #ffffff;
   margin-left: 20px;
   margin-top: 3px;
   margin-bottom: 3px;
   width: 280px;
+  font-size: ${(props) => `${props.size || 15}px`};
 `;
 
 const SpotifyInfo = styled.div`
