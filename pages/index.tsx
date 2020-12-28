@@ -46,7 +46,7 @@ export default function Home(props: { playing: any }) {
             <Info>
               <Name>Dustin Rouillard</Name>
               <Description>
-                <Text>Hi there 👋🏼 I’m Dustin.</Text>
+                <Text>Hi there 👋🏼 I’m Dustin</Text>
 
                 <Text>
                   I’m a 21 year old software engineer and network/systems
@@ -55,7 +55,7 @@ export default function Home(props: { playing: any }) {
 
                 <Text>
                   Currently living in a small town in New Mexico, United States,
-                  yes it’s really a desert here.
+                  yes it’s really a desert here
                 </Text>
 
                 <SocialLinks />
@@ -66,7 +66,7 @@ export default function Home(props: { playing: any }) {
               <div
                 style={{
                   position: "relative",
-                  width: "432px",
+                  width: "350px",
                   height: "470px",
                   marginLeft: "30px",
                 }}
@@ -127,7 +127,6 @@ const Name = styled.div`
   text-align: right;
   color: black;
   margin-bottom: 30px;
-  float: right;
 `;
 
 const Text = styled.div`
@@ -142,7 +141,7 @@ const Description = styled.div`
   font-family: "FiraCode-Medium";
   font-size: 1.3em;
   color: black;
-  width: 75%;
+  width: 65%;
   flex: 1;
   float: right;
 `;
