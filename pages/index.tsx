@@ -120,13 +120,15 @@ const Info = styled.div`
   width: 50%;
 `;
 
-const Name = styled.div`
+const Name = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.8em;
   text-align: right;
   color: black;
   margin-bottom: 30px;
+  font-weight: normal;
+  margin-top: 0px;
 `;
 
 const Text = styled.div`
