@@ -18,7 +18,7 @@ export function Footer(): ReactElement {
       >
         <Text>Dustin Rouillard</Text>
         <Text style={{ paddingLeft: "10px", paddingRight: "10px" }}>•</Text>
-        <Text>1999 - 2020</Text>
+        <Text>1999 - {new Date().getFullYear()}</Text>
       </div>
       <div
         style={{

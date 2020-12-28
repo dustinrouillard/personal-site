@@ -45,8 +45,8 @@ const Container = styled.div`
   position: absolute;
   border-radius: 10px;
   width: 400px;
-  height: 100px;
-  background-color: rgba(0, 0, 0, 0.45);
+  height: 75px;
+  background-color: #000000;
   margin: 15px;
   padding: 20px;
   align-items: center;
@@ -55,7 +55,7 @@ const Container = styled.div`
 
 const Text = styled(TextTicker)`
   font-family: "FiraCode-Medium";
-  color: rgba(255, 255, 255, 0.8);
+  color: #000000;
   margin-left: 20px;
   margin-top: 3px;
   margin-bottom: 3px;
