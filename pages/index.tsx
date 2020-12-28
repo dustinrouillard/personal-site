@@ -54,8 +54,8 @@ export default function Home(props: { playing: any }) {
                 </Text>
 
                 <Text>
-                  Currently living in a small town in New Mexico, United States,
-                  yes it’s really a desert here
+                  Currently living in a small town in New Mexico, United States.
+                  yes, it’s really a desert here
                 </Text>
 
                 <SocialLinks />
