@@ -55,7 +55,7 @@ const Container = styled.div`
 
 const Text = styled(TextTicker)`
   font-family: "FiraCode-Medium";
-  color: #000000;
+  color: #ffffff;
   margin-left: 20px;
   margin-top: 3px;
   margin-bottom: 3px;
