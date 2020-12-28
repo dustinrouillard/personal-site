@@ -1,1 +1,5 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+# Dustin's Personal Site
+
+The code behind my personal site. :)
+
+Hosted on Vercel - [dustin.sh](https://dustin.sh)
