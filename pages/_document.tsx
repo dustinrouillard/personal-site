@@ -36,7 +36,15 @@ export default class MyDocument extends Document<any> {
   render() {
     return (
       <Html>
-        <Head>{this.props.styleTags /*rendering the actual stylesheet*/}</Head>
+        <Head>
+          {this.props.styleTags}
+
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon='{"token": "4b40e97dac6f424dbd75340a29064659"}'
+          ></script>
+        </Head>
         <body>
           <Main />
           <NextScript />
