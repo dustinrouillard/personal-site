@@ -1,3 +1,4 @@
+import { default as NextLink } from "next/link";
 import { ReactElement } from "react";
 
 import styled from "styled-components";
@@ -16,7 +17,9 @@ export function Footer(): ReactElement {
           display: "flex",
         }}
       >
-        <Text>Dustin Rouillard</Text>
+        <NextLink href="/" passHref>
+          <Link>Dustin Rouillard</Link>
+        </NextLink>
         <Text style={{ paddingLeft: "10px", paddingRight: "10px" }}>•</Text>
         <Text>1999 - {new Date().getFullYear()}</Text>
       </div>
@@ -31,12 +34,17 @@ export function Footer(): ReactElement {
       >
         <SocialLinks small />
         <Text style={{ paddingLeft: "10px", paddingRight: "10px" }}>•</Text>
-        <Link
-          target="_blank"
-          href={"https://github.com/dustinrouillard/personal-site"}
+        <NextLink
+          href="https://github.com/dustinrouillard/personal-site"
+          passHref
         >
-          View Source
-        </Link>
+          <ExtLink
+            target="_blank"
+            href={"https://github.com/dustinrouillard/personal-site"}
+          >
+            View Source
+          </ExtLink>
+        </NextLink>
       </div>
     </Container>
   );
@@ -48,11 +56,28 @@ const Text = styled.div`
   opacity: 50%;
 `;
 
-const Link = styled.a`
+const ExtLink = styled.a`
   font-family: "FiraCode-Light";
   color: black;
   text-decoration: none;
   opacity: 50%;
+  :hover {
+    cursor: pointer;
+    color: #127796;
+    text-decoration: underline;
+  }
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  font-family: "FiraCode-Light";
+  color: black;
+  opacity: 50%;
+  :hover {
+    cursor: pointer;
+    color: #127796;
+    text-decoration: underline;
+  }
 `;
 
 const Container = styled.div`

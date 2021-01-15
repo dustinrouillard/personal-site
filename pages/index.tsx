@@ -1,9 +1,8 @@
-import Head from "next/head";
 import Image from "next/image";
-import { useEffect } from "react";
+import { default as NextLink } from "next/link";
 
 import styled from "styled-components";
-import { Footer } from "../components/footer";
+import { PageHead } from "../components/head";
 import { SocialLinks } from "../components/socials";
 import { Spotify } from "../components/spotify";
 
@@ -11,124 +10,95 @@ export default function Home(props: { playing: any }) {
   return (
     <>
       {props.playing.is_playing && <Spotify playing={props.playing} />}
-      <div className="container">
-        <Head>
-          <title>Dustin Rouillard • Vibing</title>
+      <Container>
+        <PageHead name="Vibing" />
 
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-          <meta name="author" content="Dustin Rouillard" />
-          <meta name="copyright" content="Dustin Rouillard" />
-          <meta name="rating" content="General" />
-          <meta name="url" content="https://dustin.sh" />
-          <meta
-            name="description"
-            content="Dustin Rouillard - Software Engineer, Networking/Systems Administrator"
-          />
-          <meta name="twitter:creator" content="@dustinrouillard" />
-          <meta name="twitter:site" content="@dustinrouillard" />
-          <meta
-            name="keywords"
-            content="Software Engineer, Networking/Systems Administrator, Developer"
-          />
+        <Sections>
+          <Info>
+            <Links>
+              <NextLink href="/blog" passHref>
+                <PageLink>Blog</PageLink>
+              </NextLink>
+              <NextLink href="/stats" passHref>
+                <PageLink>Stats</PageLink>
+              </NextLink>
+            </Links>
+            <Name>Dustin Rouillard</Name>
+            <Description>
+              <Text>Hi there 👋🏼 I’m Dustin</Text>
 
-          <link
-            rel="icon"
-            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👋🏻</text></svg>"
-          />
-        </Head>
+              <Text>
+                I’m a 21 year old software engineer and network/systems
+                administrator
+              </Text>
 
-        <main>
-          <Sections>
-            <Info>
-              <Name>Dustin Rouillard</Name>
-              <Description>
-                <Text>Hi there 👋🏼 I’m Dustin</Text>
+              <Text>
+                Currently living in a small town in New Mexico, United States.
+                yes, it’s really a desert here
+              </Text>
 
-                <Text>
-                  I’m a 21 year old software engineer and network/systems
-                  administrator
-                </Text>
+              <SocialLinks />
+            </Description>
+          </Info>
 
-                <Text>
-                  Currently living in a small town in New Mexico, United States.
-                  yes, it’s really a desert here
-                </Text>
-
-                <SocialLinks />
-              </Description>
-            </Info>
-
-            <Picture>
-              <div
-                style={{
-                  position: "relative",
-                  width: "350px",
-                  height: "470px",
-                  marginLeft: "30px",
-                }}
-              >
-                <Image
-                  src="/pic.jpeg"
-                  layout="fill"
-                  objectFit="cover"
-                  className="picture"
-                />
-              </div>
-            </Picture>
-          </Sections>
-
-          <Footer />
-        </main>
-
-        <style jsx global>{`
-          .picture {
-            border-radius: 10px;
-          }
-
-          .container {
-            min-height: 100vh;
-            padding: 0 0.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          }
-        `}</style>
-
-        <style jsx global>{`
-          html,
-          body {
-            padding: 0;
-            margin: 0;
-          }
-
-          * {
-            box-sizing: border-box;
-          }
-        `}</style>
-      </div>
+          <Picture>
+            <StyledImage src="/pic.jpeg" layout="fill" objectFit="cover" />
+          </Picture>
+        </Sections>
+      </Container>
     </>
   );
 }
 
 const Info = styled.div`
-  margin-top: 40px;
+  margin-top: 20px;
   width: 50%;
+`;
+
+const StyledImage: typeof Image = styled(Image)`
+  border-radius: 10px;
+`;
+
+const Links = styled.div`
+  display: flex;
+  flex-direction: row;
+  float: right;
+`;
+
+const PageLink = styled.div`
+  font-family: "FiraCode-Light";
+  color: black;
+  text-decoration: none;
+  opacity: 50%;
+  padding-left: 20px;
+  display: block;
+  text-align: right;
+  :hover {
+    cursor: pointer;
+    color: #127796;
+    text-decoration: underline;
+  }
+`;
+
+const Container = styled.div`
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Name = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
-  font-size: 1.8em;
+  font-size: 1.9em;
   text-align: right;
   color: black;
   margin-bottom: 30px;
   font-weight: normal;
-  margin-top: 0px;
+  padding-top: 30px;
+  margin-top: 10px;
 `;
 
 const Text = styled.div`
@@ -156,7 +126,10 @@ const Sections = styled.div`
 `;
 
 const Picture = styled.div`
-  flex: 1;
+  position: relative;
+  width: 350px;
+  height: 470px;
+  margin-left: 30px;
 `;
 
 export async function getServerSideProps() {

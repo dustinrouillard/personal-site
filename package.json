@@ -19,6 +19,7 @@
     "react-native-text-ticker": "^1.10.0",
     "react-scroll-text": "^1.0.1",
     "react-text-marquee": "^1.0.1",
+    "react-tooltip": "^4.2.11",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
