@@ -3,10 +3,12 @@ import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
 import NextLink from "next/link";
 
-import { FormatTimeSince } from "../utils/time";
+import { useTimeSince } from "../utils/time";
 import { BlogPost } from "../utils/posts";
 
 export function Post(props: BlogPost): ReactElement {
+  const time = useTimeSince(new Date(props.date));
+
   return (
     <Card>
       <NextLink href={`/blog/post/${props.id}`} passHref>
@@ -26,7 +28,7 @@ export function Post(props: BlogPost): ReactElement {
           arrowColor="#000000"
         />
         <Created data-tip={new Date(props.date).toLocaleString()}>
-          {FormatTimeSince(new Date(props.date))}
+          {time}
         </Created>
       </Footer>
     </Card>
@@ -65,6 +67,7 @@ const Title = styled.h1`
   margin-bottom: 15px;
   font-weight: normal;
   margin-top: 0px;
+  max-width: fit-content;
   :hover {
     cursor: pointer;
     color: #127796;
