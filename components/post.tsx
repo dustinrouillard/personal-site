@@ -86,6 +86,7 @@ const Summary = styled.h4`
 `;
 
 const Created = styled.text`
+  color: var(--text);
   font-family: "FiraCode-Medium";
   font-size: 0.8em;
   padding-bottom: 9px;
