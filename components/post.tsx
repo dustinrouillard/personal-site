@@ -36,6 +36,7 @@ export function Post(props: BlogPost): ReactElement {
 }
 
 const SeperatorDot = styled.span`
+  color: var(--text);
   padding-left: 8px;
   padding-right: 8px;
   font-size: 0.8em;

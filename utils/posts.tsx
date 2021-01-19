@@ -19,6 +19,6 @@ export default [
     title: "Second Testing Post",
     summary: "Test post 2 summary",
     content: `# TESTING 123\n## TESTING\n\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n### TEST BRO\n# BOTTOM`,
-    date: new Date("01/15/2021 22:10:00").toISOString(),
+    date: new Date("12/15/2020 22:10:00").toISOString(),
   },
 ] as BlogPost[];
