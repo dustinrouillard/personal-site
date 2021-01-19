@@ -2,7 +2,6 @@ import NextImage, { ImageProps } from "next/image";
 import remark from "remark";
 import html from "remark-html";
 
-import { MDXProvider } from "@mdx-js/react";
 import hydrate from "next-mdx-remote/hydrate";
 import renderToString from "next-mdx-remote/render-to-string";
 
@@ -12,7 +11,6 @@ import { PageHead } from "../../../components/head";
 import { LinkHead } from "../../../components/linkhead";
 
 import blog_posts from "../../../utils/posts";
-import { ReactElement } from "react";
 
 export default function BlogPost({ post, content }) {
   const cnt = hydrate(content);
