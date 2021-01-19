@@ -1,5 +1,10 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import NextImage, { ImageProps } from "next/image";
+import remark from "remark";
+import html from "remark-html";
+
+import { MDXProvider } from "@mdx-js/react";
+import hydrate from "next-mdx-remote/hydrate";
+import renderToString from "next-mdx-remote/render-to-string";
 
 import styled from "styled-components";
 
@@ -7,12 +12,10 @@ import { PageHead } from "../../../components/head";
 import { LinkHead } from "../../../components/linkhead";
 
 import blog_posts from "../../../utils/posts";
+import { ReactElement } from "react";
 
-export default function BlogPost() {
-  const router = useRouter();
-  const { id } = router.query;
-
-  const [post, setPost] = useState(blog_posts.find((post) => post.id == id));
+export default function BlogPost({ post, content }) {
+  const cnt = hydrate(content);
 
   return (
     <Container>
@@ -22,7 +25,7 @@ export default function BlogPost() {
 
       <Title>{post.title}</Title>
       <Sections>
-        <Summary>{post.content}</Summary>
+        <Content>{cnt}</Content>
       </Sections>
     </Container>
   );
@@ -38,7 +41,6 @@ const Container = styled.div`
 
 const Title = styled.h1`
   padding-top: 10px;
-  padding-bottom: 30px;
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.8em;
@@ -47,7 +49,7 @@ const Title = styled.h1`
   margin-top: 0px;
 `;
 
-const Summary = styled.p`
+const Content = styled.div`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1em;
@@ -56,7 +58,13 @@ const Summary = styled.p`
   font-weight: normal;
   margin-top: 0px;
   width: 800px;
+  max-width: 800px;
   white-space: pre-line;
+
+  img {
+    height: auto;
+    max-width: 100%;
+  }
 `;
 
 const Sections = styled.div`
@@ -64,8 +72,15 @@ const Sections = styled.div`
   flex-direction: row;
   padding: 10px;
   margin: 50px;
+  margin-top: 10px;
+  max-width: 800px;
 `;
 
-export async function getServerSideProps() {
-  return { props: {} };
+// This is server side props to prepare for the api call to get blog post
+export async function getServerSideProps({ params }) {
+  const { id } = params;
+  const post = blog_posts.find((post) => post.id == id);
+  const content = await renderToString(post.content);
+
+  return { props: { post, content } };
 }

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
-import { default as NextLink } from "next/link";
+import NextLink from "next/link";
 
 import { FormatTimeSince } from "../utils/time";
 import { BlogPost } from "../utils/posts";
@@ -15,7 +15,7 @@ export function Post(props: BlogPost): ReactElement {
       <Summary>{props.summary}</Summary>
       <Footer>
         <NextLink href={`/blog/post/${props.id}`} passHref>
-          <Read>Read</Read>
+          <Read>Read Post</Read>
         </NextLink>
         <SeperatorDot>•</SeperatorDot>
         <Tooltip
@@ -26,7 +26,7 @@ export function Post(props: BlogPost): ReactElement {
           arrowColor="#000000"
         />
         <Created data-tip={new Date(props.date).toLocaleString()}>
-          {FormatTimeSince(new Date(props.date))} ago
+          {FormatTimeSince(new Date(props.date))}
         </Created>
       </Footer>
     </Card>
