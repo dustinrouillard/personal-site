@@ -28,6 +28,10 @@ const GlobalStyle = createGlobalStyle`
     --widget-background: #ffffff;
     --background: #ffffff;
   }
+
+  .__react_component_tooltip {
+    box-shadow: 2px 2px 10px 0px #00000026;
+  }
 `;
 
 export default function App({ Component, pageProps }) {
