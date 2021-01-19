@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import styled from "styled-components";
-import ReactTooltip from "react-tooltip";
 import NextLink from "next/link";
+import { ReactElement } from "react";
+import ReactTooltip from "react-tooltip";
+import styled from "styled-components";
 
 import { useTimeSince } from "../utils/time";
 import { BlogPost } from "../utils/posts";

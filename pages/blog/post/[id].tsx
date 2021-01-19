@@ -1,7 +1,6 @@
+import styled from "styled-components";
 import hydrate from "next-mdx-remote/hydrate";
 import renderToString from "next-mdx-remote/render-to-string";
-
-import styled from "styled-components";
 
 import { PageHead } from "../../../components/head";
 import { LinkHead } from "../../../components/linkhead";
@@ -67,6 +66,7 @@ const Sections = styled.div`
   padding: 10px;
   margin: 50px;
   margin-top: 10px;
+  margin-bottom: 120px;
   max-width: 800px;
 `;
 

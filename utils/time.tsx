@@ -19,9 +19,9 @@ export function FormatTimeSince(date: Date): string {
 
 export function useTimeSince(date: Date) {
   const [time, setTime] = useState(FormatTimeSince(date));
+
   useEffect(() => {
     const intervalId = setInterval(() => setTime(FormatTimeSince(date)), 1000);
-
     return () => clearInterval(intervalId);
   }, []);
 

@@ -1,37 +1,20 @@
-import { default as NextLink } from "next/link";
+import NextLink from "next/link";
 import { ReactElement } from "react";
-
 import styled from "styled-components";
+
 import { SocialLinks } from "./socials";
 
 export function Footer(): ReactElement {
   return (
     <Container>
-      <div
-        style={{
-          position: "fixed",
-          left: 0,
-          marginLeft: "40px",
-          marginRight: "40px",
-          flexDirection: "row",
-          display: "flex",
-        }}
-      >
+      <LeftContainer>
         <NextLink href="/" passHref>
           <Link>Dustin Rouillard</Link>
         </NextLink>
         <Text style={{ paddingLeft: "10px", paddingRight: "10px" }}>•</Text>
         <Text>1999 - {new Date().getFullYear()}</Text>
-      </div>
-      <div
-        style={{
-          position: "fixed",
-          right: 0,
-          marginRight: "40px",
-          flexDirection: "row",
-          display: "flex",
-        }}
-      >
+      </LeftContainer>
+      <RightContainer>
         <SocialLinks small />
         <Text style={{ paddingLeft: "10px", paddingRight: "10px" }}>•</Text>
         <NextLink
@@ -45,7 +28,7 @@ export function Footer(): ReactElement {
             View Source
           </ExtLink>
         </NextLink>
-      </div>
+      </RightContainer>
     </Container>
   );
 }
@@ -54,6 +37,24 @@ const Text = styled.div`
   font-family: "FiraCode-Light";
   color: black;
   opacity: 50%;
+`;
+
+const LeftContainer = styled.div`
+  position: fixed;
+  left: 0;
+  margin-left: 40px;
+  margin-right: 40px;
+  flex-direction: row;
+  display: flex;
+`;
+
+const RightContainer = styled.div`
+  position: fixed;
+  right: 0;
+  margin-left: 40px;
+  margin-right: 40px;
+  flex-direction: row;
+  display: flex;
 `;
 
 const ExtLink = styled.a`
@@ -83,7 +84,13 @@ const Link = styled.a`
 const Container = styled.div`
   position: fixed;
   bottom: 0;
-  margin: 50px;
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
+  min-width: fit-content;
+  background-color: #ffffff;
+  padding-top: 40px;
+  height: 100px;
+  width: 100%;
+  max-height: max-content;
 `;
