@@ -1,8 +1,11 @@
 import NextLink from "next/link";
 import { ReactElement } from "react";
 import styled from "styled-components";
+import { Icon } from "./icon";
 
+import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { SocialLinks } from "./socials";
+import { ToggleTheme } from "../utils/theme";
 
 export function Footer(): ReactElement {
   return (
@@ -15,6 +18,15 @@ export function Footer(): ReactElement {
         <Text>1999 - {new Date().getFullYear()}</Text>
       </LeftContainer>
       <RightContainer>
+        <IconWrapped>
+          <Icon
+            onClick={ToggleTheme}
+            icon={faMoon}
+            size={15}
+            highlight="var(--highlight-color)"
+          />
+        </IconWrapped>
+        <Text style={{ paddingLeft: "10px", paddingRight: "10px" }}>•</Text>
         <SocialLinks small />
         <Text style={{ paddingLeft: "10px", paddingRight: "10px" }}>•</Text>
         <NextLink
@@ -35,7 +47,11 @@ export function Footer(): ReactElement {
 
 const Text = styled.div`
   font-family: "FiraCode-Light";
-  color: black;
+  color: var(--text);
+  opacity: 50%;
+`;
+
+const IconWrapped = styled.div`
   opacity: 50%;
 `;
 
@@ -59,7 +75,7 @@ const RightContainer = styled.div`
 
 const ExtLink = styled.a`
   font-family: "FiraCode-Light";
-  color: black;
+  color: var(--text);
   text-decoration: none;
   opacity: 50%;
   :hover {
@@ -72,7 +88,7 @@ const ExtLink = styled.a`
 const Link = styled.a`
   text-decoration: none;
   font-family: "FiraCode-Light";
-  color: black;
+  color: var(--text);
   opacity: 50%;
   :hover {
     cursor: pointer;
@@ -88,7 +104,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   min-width: fit-content;
-  background-color: #ffffff;
+  background-color: var(--background);
   padding-top: 40px;
   height: 100px;
   width: 100%;

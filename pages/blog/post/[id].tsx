@@ -37,7 +37,7 @@ const Title = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.8em;
-  color: black;
+  color: var(--text);
   font-weight: normal;
   margin-top: 0px;
 `;
@@ -46,7 +46,7 @@ const Content = styled.div`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1em;
-  color: black;
+  color: var(--text);
   margin-bottom: 15px;
   font-weight: normal;
   margin-top: 0px;

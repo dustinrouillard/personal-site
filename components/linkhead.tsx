@@ -29,7 +29,7 @@ const Links = styled.div`
 
 const PageLink = styled.div`
   font-family: "FiraCode-Light";
-  color: black;
+  color: var(--text);
   text-decoration: none;
   opacity: 50%;
   padding-right: 10px;

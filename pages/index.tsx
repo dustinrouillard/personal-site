@@ -67,7 +67,7 @@ const Links = styled.div`
 
 const PageLink = styled.div`
   font-family: "FiraCode-Light";
-  color: black;
+  color: var(--text);
   text-decoration: none;
   opacity: 50%;
   padding-left: 20px;
@@ -94,7 +94,7 @@ const Name = styled.h1`
   font-family: "FiraCode-Bold";
   font-size: 1.9em;
   text-align: right;
-  color: black;
+  color: var(--text);
   margin-bottom: 30px;
   font-weight: normal;
   padding-top: 30px;
@@ -112,7 +112,7 @@ const Description = styled.div`
   flex-direction: column;
   font-family: "FiraCode-Medium";
   font-size: 1.3em;
-  color: black;
+  color: var(--text);
   width: 65%;
   flex: 1;
   float: right;

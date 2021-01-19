@@ -23,9 +23,9 @@ export function Post(props: BlogPost): ReactElement {
         <Tooltip
           place="top"
           effect="solid"
-          textColor="#ffffff"
-          backgroundColor="#000000"
-          arrowColor="#000000"
+          textColor="var(--text)"
+          backgroundColor="var(--background)"
+          arrowColor="var(--background)"
         />
         <Created data-tip={new Date(props.date).toLocaleString()}>
           {time}
@@ -43,7 +43,7 @@ const SeperatorDot = styled.span`
 `;
 
 const Read = styled.div`
-  color: black;
+  color: var(--text);
   font-family: "FiraCode-Medium";
   font-size: 0.8em;
   font-weight: normal;
@@ -63,7 +63,7 @@ const Title = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.4em;
-  color: black;
+  color: var(--text);
   margin-bottom: 15px;
   font-weight: normal;
   margin-top: 0px;
@@ -79,7 +79,7 @@ const Summary = styled.h4`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 0.8em;
-  color: black;
+  color: var(--text);
   margin-bottom: 15px;
   font-weight: normal;
   margin-top: 0px;

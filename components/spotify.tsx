@@ -47,7 +47,8 @@ const Container = styled.div`
   border-radius: 10px;
   width: 400px;
   height: 75px;
-  background-color: #000000;
+  background-color: var(--widget-background);
+  box-shadow: 2px 2px 20px 0px #00000086;
   margin: 15px;
   padding: 20px;
   align-items: center;
@@ -56,7 +57,7 @@ const Container = styled.div`
 
 const Text = styled(TextTicker)<{ size?: number }>`
   font-family: "FiraCode-Medium";
-  color: #ffffff;
+  color: var(--text);
   margin-left: 20px;
   margin-top: 3px;
   margin-bottom: 3px;
