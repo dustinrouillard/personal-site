@@ -1,7 +1,3 @@
-import NextImage, { ImageProps } from "next/image";
-import remark from "remark";
-import html from "remark-html";
-
 import hydrate from "next-mdx-remote/hydrate";
 import renderToString from "next-mdx-remote/render-to-string";
 
