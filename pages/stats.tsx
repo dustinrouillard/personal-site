@@ -1,26 +1,37 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { PageHead } from "../components/head";
 import { LinkHead } from "../components/linkhead";
 import { StatCard } from "../components/statcard";
 
-export default function Stats(props: { stats: any }) {
+export default function Stats() {
+  const [stats, setStats] = useState<any>();
+
+  async function fetchData() {
+    const res = await fetch(`https://dustin.rest/stats`);
+    const data = await res.json();
+
+    setStats(data.data);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Container>
       <PageHead name="Stats" />
-
       <LinkHead />
-
       <Title>Stats</Title>
       <SectionTitle>7-day stats</SectionTitle>
-      <Sections>
-        <StatCard type="commands" stat={props.stats.weekly.commands_ran} />
-        <StatCard type="builds" stat={props.stats.weekly.builds_ran} />
-        <StatCard
-          type="dev_time"
-          stat={props.stats.weekly.development_seconds}
-        />
-      </Sections>
+      {!!stats && !!stats.weekly && (
+        <Sections>
+          <StatCard type="commands" stat={stats.weekly?.commands_ran} />
+          <StatCard type="builds" stat={stats.weekly?.builds_ran} />
+          <StatCard type="dev_time" stat={stats.weekly?.development_seconds} />
+        </Sections>
+      )}
     </Container>
   );
 }
@@ -60,7 +71,7 @@ const Sections = styled.div`
   margin: 50px;
 `;
 
-export async function getServerSideProps() {
+export async function getInitalProps() {
   const res = await fetch(`https://dustin.rest/stats`);
   const data = await res.json();
 

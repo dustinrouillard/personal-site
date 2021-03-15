@@ -16,9 +16,6 @@ export default function Home() {
         <Sections>
           <Info>
             <Links>
-              <NextLink href="/blog" passHref>
-                <PageLink>Blog</PageLink>
-              </NextLink>
               <NextLink href="/stats" passHref>
                 <PageLink>Stats</PageLink>
               </NextLink>
@@ -137,10 +134,3 @@ const Picture = styled.div`
   height: 470px;
   margin-left: 30px;
 `;
-
-// export async function getServerSideProps() {
-//   const res = await fetch(`https://dustin.rest/spotify`);
-//   const data = await res.json();
-
-//   return { props: { playing: data.data } };
-// }

@@ -9,9 +9,9 @@ export function LinkHead(): ReactElement {
       <NextLink href="/" passHref>
         <PageLink>Home</PageLink>
       </NextLink>
-      <NextLink href="/blog" passHref>
+      {/* <NextLink href="/blog" passHref>
         <PageLink>Blog</PageLink>
-      </NextLink>
+      </NextLink> */}
       <NextLink href="/stats" passHref>
         <PageLink>Stats</PageLink>
       </NextLink>
