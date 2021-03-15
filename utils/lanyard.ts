@@ -82,9 +82,6 @@ export class Lanyard extends EventEmitter {
       case Op.Event:
         switch (data.t) {
           case Event.INIT_STATE:
-            this.emit("presence", data.d);
-
-            break;
           case Event.PRESENCE_UPDATE:
             this.emit("presence", data.d);
 
