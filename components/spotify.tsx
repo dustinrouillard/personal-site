@@ -1,9 +1,11 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import TextTicker from "react-text-marquee";
 
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import styled from "styled-components";
 import { Icon } from "./icon";
+import { Lanyard } from "../utils/lanyard";
+import { LanyardPresence, LanyardSpotify } from "../types/lanyard";
 
 export interface Playing {
   item_name: string;
@@ -11,34 +13,52 @@ export interface Playing {
   item_id: string;
 }
 
-export function Spotify(props: { playing: Playing }): ReactElement {
-  return (
-    <Container>
-      <Icon
-        link={`https://open.spotify.com/track/${props.playing.item_id}`}
-        size={38}
-        color="#1DB954"
-        icon={faSpotify}
-      />
-      <SpotifyInfo>
-        <Text
-          text={props.playing.item_name}
-          leading={2 * 1e3}
-          trailing={3 * 1e3}
-          hoverToStop
-          loop
-        />
+export function Spotify(): ReactElement {
+  const [spotify, setSpotify] = useState<LanyardSpotify>();
+  const [listening, setListening] = useState<boolean>(false);
 
-        <Text
-          size={10}
-          text={props.playing.item_author}
-          leading={2 * 1e3}
-          trailing={3 * 1e3}
-          hoverToStop
-          loop
+  useEffect(() => {
+    const lanyard = new Lanyard("156114103033790464");
+    lanyard.on("presence", (data) => {
+      if (data.listening_to_spotify) {
+        setSpotify(data.spotify);
+        setListening(data.listening_to_spotify);
+      } else {
+        setListening(data.listening_to_spotify);
+        setSpotify(null);
+      }
+    });
+  }, []);
+
+  return (
+    listening && (
+      <Container>
+        <Icon
+          link={`https://open.spotify.com/track/${spotify.track_id}`}
+          size={38}
+          color="#1DB954"
+          icon={faSpotify}
         />
-      </SpotifyInfo>
-    </Container>
+        <SpotifyInfo>
+          <Text
+            text={spotify.song}
+            leading={2 * 1e3}
+            trailing={3 * 1e3}
+            hoverToStop
+            loop
+          />
+
+          <Text
+            size={10}
+            text={spotify.artist}
+            leading={2 * 1e3}
+            trailing={3 * 1e3}
+            hoverToStop
+            loop
+          />
+        </SpotifyInfo>
+      </Container>
+    )
   );
 }
 

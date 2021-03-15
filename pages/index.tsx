@@ -1,15 +1,15 @@
-import Image from "next/image";
 import { default as NextLink } from "next/link";
 
 import styled from "styled-components";
 import { PageHead } from "../components/head";
 import { SocialLinks } from "../components/socials";
 import { Spotify } from "../components/spotify";
+import { getAge } from "../utils/birthday";
 
-export default function Home(props: { playing: any }) {
+export default function Home() {
   return (
     <>
-      {props.playing.is_playing && <Spotify playing={props.playing} />}
+      <Spotify />
       <Container>
         <PageHead name="Vibing" />
 
@@ -28,8 +28,8 @@ export default function Home(props: { playing: any }) {
               <Text>Hi there 👋🏼 I’m Dustin</Text>
 
               <Text>
-                I’m a 21 year old software engineer and network/systems
-                administrator
+                I’m a {getAge().toString()} year old software engineer and
+                network/systems administrator
               </Text>
 
               <Text>
@@ -42,7 +42,7 @@ export default function Home(props: { playing: any }) {
           </Info>
 
           <Picture>
-            <StyledImage src="/pic.jpeg" layout="fill" objectFit="cover" />
+            <StyledImage src="/pic.jpeg" />
           </Picture>
         </Sections>
       </Container>
@@ -55,8 +55,14 @@ const Info = styled.div`
   width: 50%;
 `;
 
-const StyledImage: typeof Image = styled(Image)`
+const StyledImage = styled.img`
   border-radius: 10px;
+  position: absolute;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  object-fit: cover;
 `;
 
 const Links = styled.div`
@@ -132,9 +138,9 @@ const Picture = styled.div`
   margin-left: 30px;
 `;
 
-export async function getServerSideProps() {
-  const res = await fetch(`https://dustin.rest/spotify`);
-  const data = await res.json();
+// export async function getServerSideProps() {
+//   const res = await fetch(`https://dustin.rest/spotify`);
+//   const data = await res.json();
 
-  return { props: { playing: data.data } };
-}
+//   return { props: { playing: data.data } };
+// }
