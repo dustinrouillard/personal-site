@@ -1,12 +1,14 @@
+import NextLink from "next/link";
 import { ReactElement } from "react";
-import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
-import { default as NextLink } from "next/link";
+import styled from "styled-components";
 
-import { FormatTimeSince } from "../utils/time";
+import { useTimeSince } from "../utils/time";
 import { BlogPost } from "../utils/posts";
 
 export function Post(props: BlogPost): ReactElement {
+  const time = useTimeSince(new Date(props.date));
+
   return (
     <Card>
       <NextLink href={`/blog/post/${props.id}`} passHref>
@@ -15,18 +17,18 @@ export function Post(props: BlogPost): ReactElement {
       <Summary>{props.summary}</Summary>
       <Footer>
         <NextLink href={`/blog/post/${props.id}`} passHref>
-          <Read>Read</Read>
+          <Read>Read Post</Read>
         </NextLink>
         <SeperatorDot>•</SeperatorDot>
         <Tooltip
           place="top"
           effect="solid"
-          textColor="#ffffff"
-          backgroundColor="#000000"
-          arrowColor="#000000"
+          textColor="var(--text)"
+          backgroundColor="var(--background)"
+          arrowColor="var(--background)"
         />
         <Created data-tip={new Date(props.date).toLocaleString()}>
-          {FormatTimeSince(new Date(props.date))} ago
+          {time}
         </Created>
       </Footer>
     </Card>
@@ -34,6 +36,7 @@ export function Post(props: BlogPost): ReactElement {
 }
 
 const SeperatorDot = styled.span`
+  color: var(--text);
   padding-left: 8px;
   padding-right: 8px;
   font-size: 0.8em;
@@ -41,7 +44,7 @@ const SeperatorDot = styled.span`
 `;
 
 const Read = styled.div`
-  color: black;
+  color: var(--text);
   font-family: "FiraCode-Medium";
   font-size: 0.8em;
   font-weight: normal;
@@ -61,10 +64,11 @@ const Title = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.4em;
-  color: black;
+  color: var(--text);
   margin-bottom: 15px;
   font-weight: normal;
   margin-top: 0px;
+  max-width: fit-content;
   :hover {
     cursor: pointer;
     color: #127796;
@@ -76,13 +80,14 @@ const Summary = styled.h4`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 0.8em;
-  color: black;
+  color: var(--text);
   margin-bottom: 15px;
   font-weight: normal;
   margin-top: 0px;
 `;
 
 const Created = styled.text`
+  color: var(--text);
   font-family: "FiraCode-Medium";
   font-size: 0.8em;
   padding-bottom: 9px;

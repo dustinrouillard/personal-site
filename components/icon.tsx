@@ -11,6 +11,7 @@ interface IconProps {
   icon: IconDefinition;
   link?: string;
   color?: string;
+  onClick?: () => void;
 }
 
 export function Icon(props: IconProps): ReactElement {
@@ -30,6 +31,7 @@ export function Icon(props: IconProps): ReactElement {
       )}
       {!props.link && (
         <FaIcon
+          onClick={props.onClick}
           width={props.size}
           height={props.size}
           icon={props.icon}
@@ -43,7 +45,7 @@ export function Icon(props: IconProps): ReactElement {
 }
 
 const Link = styled.a`
-  color: black;
+  color: var(--text);
   text-decoration: none;
 `;
 
@@ -53,7 +55,7 @@ const FaIcon = styled(FontAwesomeIcon)<{
   link?: boolean;
 }>`
   cursor: ${(props) => (props.link ? "pointer" : "default")};
-  color: ${(props) => (props.color ? props.color : "#000000")};
+  color: ${(props) => (props.color ? props.color : "var(--text)")};
   transition: opacity 0.2s ease-out;
   transition: color 0.2s ease-out;
 
