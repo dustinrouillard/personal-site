@@ -1,11 +1,13 @@
 import { ReactElement, useEffect, useState } from "react";
 import TextTicker from "react-text-marquee";
+import ReactTooltip from "react-tooltip";
+import styled from "styled-components";
 
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
-import styled from "styled-components";
 import { Icon } from "./icon";
 import { Lanyard } from "../utils/lanyard";
 import { LanyardPresence, LanyardSpotify } from "../types/lanyard";
+import { faTag } from "@fortawesome/free-solid-svg-icons";
 
 export interface Playing {
   item_name: string;
@@ -57,6 +59,23 @@ export function Spotify(): ReactElement {
             loop
           />
         </SpotifyInfo>
+        <PoweredBy>
+          <Tooltip
+            place="right"
+            effect="solid"
+            textColor="var(--text)"
+            backgroundColor="var(--background)"
+            arrowColor="var(--background)"
+          />
+          <Icon
+            link="https://github.com/Phineas/lanyard"
+            color="var(--text)"
+            highlight="rgb(222 196 142)"
+            icon={faTag}
+            size={12}
+            data-tip="Powered by Lanyard"
+          />
+        </PoweredBy>
       </Container>
     )
   );
@@ -73,6 +92,18 @@ const Container = styled.div`
   padding: 20px;
   align-items: center;
   display: flex;
+`;
+
+const Tooltip = styled(ReactTooltip)`
+  font-family: "FiraCode-Light";
+  z-index: 1000;
+`;
+
+const PoweredBy = styled.div`
+  position: absolute;
+  right: 0;
+  padding: 12px;
+  bottom: 0;
 `;
 
 const Text = styled(TextTicker)<{ size?: number }>`

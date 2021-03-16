@@ -20,6 +20,7 @@ export function Icon(props: IconProps): ReactElement {
       {!!props.link && (
         <Link href={props.link} target="_blank">
           <FaIcon
+            {...(props as any)}
             width={props.size}
             height={props.size}
             icon={props.icon}
@@ -31,6 +32,7 @@ export function Icon(props: IconProps): ReactElement {
       )}
       {!props.link && (
         <FaIcon
+          {...(props as any)}
           onClick={props.onClick}
           width={props.size}
           height={props.size}
