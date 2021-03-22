@@ -9,7 +9,7 @@ export default function Stats() {
   const [stats, setStats] = useState<any>();
 
   async function fetchData() {
-    const res = await fetch(`https://dustin.rest/stats`);
+    const res = await fetch(`https://rest.dstn.to/stats`);
     const data = await res.json();
 
     setStats(data.data);
@@ -70,10 +70,3 @@ const Sections = styled.div`
   padding: 10px;
   margin: 50px;
 `;
-
-export async function getInitalProps() {
-  const res = await fetch(`https://rest.dstn.to/stats`);
-  const data = await res.json();
-
-  return { props: { stats: data.data } };
-}
