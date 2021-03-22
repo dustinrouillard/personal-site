@@ -72,7 +72,7 @@ const Sections = styled.div`
 `;
 
 export async function getInitalProps() {
-  const res = await fetch(`https://dustin.rest/stats`);
+  const res = await fetch(`https://rest.dstn.to/stats`);
   const data = await res.json();
 
   return { props: { stats: data.data } };
