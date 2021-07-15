@@ -19,6 +19,14 @@ export function SocialLinks(props: {
 }): ReactElement {
   return (
     <Icons small={props.small}>
+      <IconWrapped small={props.small} last>
+        <Icon
+          size={props.small ? 15 : 25}
+          icon="polywork"
+          highlight="#6661af"
+          link="https://p.dstn.to"
+        />
+      </IconWrapped>
       <IconWrapped small={props.small}>
         <Icon
           size={props.small ? 15 : 25}
@@ -63,7 +71,7 @@ export function SocialLinks(props: {
         <Icon
           size={props.small ? 15 : 25}
           icon={faEnvelope}
-          highlight="#1B1B1B"
+          highlight="#6257fc"
           link="mailto:dustin@rouillard.dev"
         />
       </IconWrapped>
