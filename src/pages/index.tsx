@@ -4,9 +4,12 @@ import styled from "styled-components";
 import { PageHead } from "../components/head";
 import { SocialLinks } from "../components/socials";
 import { Spotify } from "../components/spotify";
+import { useYearsAgo } from "../hooks/useTimeAgo";
 import { getAge } from "../utils/birthday";
 
 export default function Home() {
+  const age = useYearsAgo(new Date('07/15/1999'));
+
   return (
     <>
       <Spotify />
@@ -25,13 +28,8 @@ export default function Home() {
               <Text>Hi there 👋🏼 I’m Dustin</Text>
 
               <Text>
-                I’m a {getAge().toString()} year old software engineer and
+                I’m a <Span alt={age.toString()}>{Math.floor(age)}</Span> year old software engineer and
                 network/systems administrator
-              </Text>
-
-              <Text>
-                Currently living in a small town in New Mexico, United States.
-                yes, it’s really a desert here
               </Text>
 
               <SocialLinks />
@@ -51,6 +49,8 @@ const Info = styled.div`
   margin-top: 20px;
   width: 50%;
 `;
+
+const Span = styled.span<{ alt?: string }>``;
 
 const StyledImage = styled.img`
   border-radius: 10px;

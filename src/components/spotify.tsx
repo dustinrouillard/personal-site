@@ -1,12 +1,11 @@
 import { ReactElement, useEffect, useState } from "react";
-import TextTicker from "react-text-marquee";
 import ReactTooltip from "react-tooltip";
 import styled from "styled-components";
 
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { Icon } from "./icon";
 import { Lanyard } from "../utils/lanyard";
-import { LanyardPresence, LanyardSpotify } from "../types/lanyard";
+import { LanyardSpotify } from "../types/lanyard";
 import { faTag } from "@fortawesome/free-solid-svg-icons";
 
 export interface Playing {
@@ -42,22 +41,10 @@ export function Spotify(): ReactElement {
           icon={faSpotify}
         />
         <SpotifyInfo>
-          <Text
-            text={spotify.song}
-            leading={2 * 1e3}
-            trailing={3 * 1e3}
-            hoverToStop
-            loop
-          />
+          <Text>{spotify.song}</Text>
 
           <Text
-            size={10}
-            text={spotify.artist}
-            leading={2 * 1e3}
-            trailing={3 * 1e3}
-            hoverToStop
-            loop
-          />
+            size={10}>{spotify.artist}</Text>
         </SpotifyInfo>
         <PoweredBy>
           <Tooltip
@@ -84,8 +71,8 @@ export function Spotify(): ReactElement {
 const Container = styled.div`
   position: absolute;
   border-radius: 10px;
-  width: 400px;
-  height: 75px;
+  width: 420px;
+  height: 100px;
   background-color: var(--widget-background);
   box-shadow: 2px 2px 20px 0px #00000086;
   margin: 15px;
@@ -106,13 +93,13 @@ const PoweredBy = styled.div`
   bottom: 0;
 `;
 
-const Text = styled(TextTicker)<{ size?: number }>`
+const Text = styled.p<{ size?: number }>`
   font-family: "FiraCode-Medium";
   color: var(--text);
   margin-left: 20px;
   margin-top: 3px;
   margin-bottom: 3px;
-  width: 280px;
+  width: auto;
   font-size: ${(props) => `${props.size || 15}px`};
 `;
 
