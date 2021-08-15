@@ -5,10 +5,11 @@ import { PageHead } from "../components/head";
 import { SocialLinks } from "../components/socials";
 import { Spotify } from "../components/spotify";
 import { useYearsAgo } from "../hooks/useTimeAgo";
-import { getAge } from "../utils/birthday";
+
+const date = new Date('07/15/1999');
 
 export default function Home() {
-  const age = useYearsAgo(new Date('07/15/1999'));
+  const age = useYearsAgo(date);
 
   return (
     <>

@@ -4,9 +4,8 @@ import styled from "styled-components";
 
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { Icon } from "./icon";
-import { Lanyard } from "../utils/lanyard";
-import { LanyardSpotify } from "../types/lanyard";
-import { faTag } from "@fortawesome/free-solid-svg-icons";
+import { InternalPlayerResponse } from "../types/gateway";
+import { gateway } from "../utils/gateway";
 
 export interface Playing {
   item_name: string;
@@ -15,54 +14,43 @@ export interface Playing {
 }
 
 export function Spotify(): ReactElement {
-  const [spotify, setSpotify] = useState<LanyardSpotify>();
+  const [spotify, setSpotify] = useState<InternalPlayerResponse>();
   const [listening, setListening] = useState<boolean>(false);
 
   useEffect(() => {
-    const lanyard = new Lanyard("156114103033790464");
-    lanyard.on("presence", (data) => {
-      if (data.listening_to_spotify) {
-        setSpotify(data.spotify);
-        setListening(data.listening_to_spotify);
-      } else {
-        setListening(data.listening_to_spotify);
-        setSpotify(null);
-      }
-    });
+    const newListener = (data: InternalPlayerResponse) => {
+      if ('is_playing' in data) setListening(data.is_playing);
+      setSpotify(data);
+    }
+    gateway.on('spotify', newListener);
+
+    const changeListener = (data: InternalPlayerResponse) => {
+      if ('is_playing' in data) setListening(data.is_playing);
+      setSpotify(state => { return { ...state, ...data }; });
+    }
+    gateway.on('spotify_changed', changeListener);
+
+    return () => {
+      gateway.removeListener('spotify', newListener);
+      gateway.removeListener('spotify_changed', changeListener);
+    }
   }, []);
 
   return (
-    listening && (
+    listening && !!spotify && (
       <Container>
         <Icon
-          link={`https://open.spotify.com/track/${spotify.track_id}`}
+          link={`https://open.spotify.com/track/${spotify.item_id}`}
           size={38}
           color="#1DB954"
           icon={faSpotify}
         />
         <SpotifyInfo>
-          <Text>{spotify.song}</Text>
+          <Text>{spotify.item_name}</Text>
 
           <Text
-            size={10}>{spotify.artist}</Text>
+            size={10}>{spotify.item_author}</Text>
         </SpotifyInfo>
-        <PoweredBy>
-          <Tooltip
-            place="right"
-            effect="solid"
-            textColor="var(--text)"
-            backgroundColor="var(--background)"
-            arrowColor="var(--background)"
-          />
-          <Icon
-            link="https://github.com/Phineas/lanyard"
-            color="var(--text)"
-            highlight="rgb(222 196 142)"
-            icon={faTag}
-            size={12}
-            data-tip="Powered by Lanyard"
-          />
-        </PoweredBy>
       </Container>
     )
   );
