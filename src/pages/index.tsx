@@ -47,7 +47,7 @@ export default function Home() {
 }
 
 const Info = styled.div`
-  margin-top: 20px;
+  /* margin-top: 20px; */
   width: 50%;
 `;
 
