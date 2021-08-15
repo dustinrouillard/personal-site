@@ -1,9 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
-import ReactTooltip from "react-tooltip";
 import styled from "styled-components";
 
-import { faSpotify } from "@fortawesome/free-brands-svg-icons";
-import { Icon } from "./icon";
 import { InternalPlayerResponse } from "../types/gateway";
 import { gateway } from "../utils/gateway";
 
@@ -18,21 +15,17 @@ export function Spotify(): ReactElement {
   const [listening, setListening] = useState<boolean>(false);
 
   useEffect(() => {
-    const newListener = (data: InternalPlayerResponse) => {
-      if ('is_playing' in data) setListening(data.is_playing);
-      setSpotify(data);
-    }
-    gateway.on('spotify', newListener);
-
-    const changeListener = (data: InternalPlayerResponse) => {
+    const listener = (data: InternalPlayerResponse) => {
       if ('is_playing' in data) setListening(data.is_playing);
       setSpotify(state => { return { ...state, ...data }; });
     }
-    gateway.on('spotify_changed', changeListener);
+
+    gateway.on('spotify', listener);
+    gateway.on('spotify_changed', listener);
 
     return () => {
-      gateway.removeListener('spotify', newListener);
-      gateway.removeListener('spotify_changed', changeListener);
+      gateway.removeListener('spotify', listener);
+      gateway.removeListener('spotify_changed', listener);
     }
   }, []);
 
@@ -59,6 +52,7 @@ export function Spotify(): ReactElement {
 const Link = styled.a`
   color: var(--text);
   text-decoration: none;
+  display: inherit;
 `;
 
 const Container = styled.div`
@@ -72,18 +66,6 @@ const Container = styled.div`
   padding: 20px;
   align-items: center;
   display: flex;
-`;
-
-const Tooltip = styled(ReactTooltip)`
-  font-family: "FiraCode-Light";
-  z-index: 1000;
-`;
-
-const PoweredBy = styled.div`
-  position: absolute;
-  right: 0;
-  padding: 12px;
-  bottom: 0;
 `;
 
 const Text = styled.p<{ size?: number }>`
