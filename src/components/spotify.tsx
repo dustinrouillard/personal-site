@@ -39,12 +39,12 @@ export function Spotify(): ReactElement {
   return (
     listening && !!spotify && (
       <Container>
-        <Icon
-          link={`https://open.spotify.com/track/${spotify.item_id}`}
-          size={38}
-          color="#1DB954"
-          icon={faSpotify}
-        />
+        <Link target={'_blank'} href={`https://open.spotify.com/track/${spotify.item_id}`}>
+          <Image
+            src={spotify.item_image}
+            width="50px"
+          />
+        </Link>
         <SpotifyInfo>
           <Text>{spotify.item_name}</Text>
 
@@ -55,6 +55,11 @@ export function Spotify(): ReactElement {
     )
   );
 }
+
+const Link = styled.a`
+  color: var(--text);
+  text-decoration: none;
+`;
 
 const Container = styled.div`
   position: absolute;
@@ -89,6 +94,10 @@ const Text = styled.p<{ size?: number }>`
   margin-bottom: 3px;
   width: auto;
   font-size: ${(props) => `${props.size || 15}px`};
+`;
+
+const Image = styled.img`
+  cursor: pointer;
 `;
 
 const SpotifyInfo = styled.div`
