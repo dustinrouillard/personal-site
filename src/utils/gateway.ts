@@ -23,6 +23,9 @@ export interface Gateway {
   ws: WebSocket;
   heartbeat: NodeJS.Timer;
 
+  connectionAttempt: number;
+  connectionTimeout: NodeJS.Timeout | null;
+
   url: string;
   encoding: string; // 'etf' | 'json'
   compression: string; // 'zlib' | 'none'
@@ -32,7 +35,6 @@ export interface Gateway {
   on(event: "connected", listener: () => void): this;
   on(event: "init", listener: () => void): this;
 }
-
 export class Gateway extends EventEmitter {
   constructor(url = 'wss://gw.dstn.to', encoding = 'json', compression = 'zlib') {
     super();
@@ -41,11 +43,20 @@ export class Gateway extends EventEmitter {
     this.encoding = encoding;
     this.url = url;
 
+    this.connectionAttempt = 0;
+
+    this.init();
+  }
+
+  private init(): void {
     this.ws = new WebSocket(`${this.url}/socket?encoding=${this.encoding}&compression=${this.compression}`);
     if (this.compression != 'none') this.ws.binaryType = 'arraybuffer';
 
     // Socket open handler
-    this.ws.addEventListener("open", () => this.emit("connected"));
+    this.ws.addEventListener("open", () => this.opened());
+
+    // @ts-ignore
+    window.ws = this.ws;
 
     // Message listener
     this.ws.addEventListener("message", (e) => {
@@ -57,7 +68,17 @@ export class Gateway extends EventEmitter {
     });
 
     // Close event for websocket
-    this.ws.addEventListener("close", () => clearInterval(this.heartbeat));
+    this.ws.addEventListener("close", () => this.closed());
+  }
+
+  private resetConnectionThrottle(): void {
+    this.connectionAttempt = 0;
+    if (this.connectionTimeout) clearTimeout(this.connectionTimeout);
+  }
+
+  private reconnectThrottle(): void {
+    this.connectionAttempt++;
+    this.connectionTimeout = setTimeout(() => this.init(), this.connectionAttempt == 1 ? 1000 * 10 : this.connectionAttempt == 2 ? 1000 * 40 : this.connectionAttempt == 3 ? 1000 * 60 * 1 : 1000 * 60 * 10); // 10sx40sx1mx10m*
   }
 
   private send(op: Op, d?: any): void {
@@ -94,6 +115,18 @@ export class Gateway extends EventEmitter {
       default:
         break;
     }
+  }
+
+  private opened(): void {
+    console.log('%cGateway%c Socket connection opened', 'padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;', 'font-size: 1em;');
+    this.emit("connected");
+    this.resetConnectionThrottle();
+  }
+
+  private closed(): void {
+    console.log('%cGateway%c Socket connection closed', 'padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;', 'font-size: 1em;');
+    clearInterval(this.heartbeat);
+    this.reconnectThrottle();
   }
 }
 
