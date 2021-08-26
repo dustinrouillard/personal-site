@@ -7,13 +7,16 @@ import { Icon } from "../components/icon";
 import { SocialLinks } from "../components/socials";
 import { Spotify } from "../components/spotify";
 import { useYearsAgo } from "../hooks/useTimeAgo";
+import { InternalPlayerResponse } from "../types/gateway";
 import { LanyardPresence } from "../types/lanyard";
+import { gateway } from "../utils/gateway";
 import { lanyard } from "../utils/lanyard";
 
 const date = new Date("07/15/1999");
 
 export default function Home() {
   const age = useYearsAgo(date);
+
   const [status, setStatus] = useState<string>();
 
   function presenceChange(data: LanyardPresence) {
@@ -22,6 +25,7 @@ export default function Home() {
 
   useEffect(() => {
     lanyard.on("presence", presenceChange);
+
     return () => {
       lanyard.removeListener("presence", presenceChange);
     };
@@ -29,12 +33,11 @@ export default function Home() {
 
   return (
     <>
-      <Spotify />
       <Container>
         <PageHead name="Vibing" />
 
         <Sections>
-          <Info>
+          <ProfileInfo>
             <Links>
               <NextLink href="/stats" passHref>
                 <PageLink>Stats</PageLink>
@@ -51,7 +54,7 @@ export default function Home() {
 
               <SocialLinks />
             </Description>
-          </Info>
+          </ProfileInfo>
 
           <Picture>
             {!!status && (
@@ -61,6 +64,7 @@ export default function Home() {
               </LanyardStatus>
             )}
             <StyledImage src="/pic.jpeg" />
+            <Spotify />
           </Picture>
         </Sections>
       </Container>
@@ -68,8 +72,9 @@ export default function Home() {
   );
 }
 
-const Info = styled.div`
+const ProfileInfo = styled.div`
   width: 50%;
+  align-self: center;
 `;
 
 const Span = styled.span<{ alt?: string }>``;
@@ -125,10 +130,8 @@ const StatusText = styled.p`
 
 const StyledImage = styled.img`
   border-radius: 10px;
-  position: absolute;
   min-width: 100%;
   max-width: 100%;
-  min-height: 100%;
   max-height: 100%;
   object-fit: cover;
 `;
@@ -202,6 +205,6 @@ const Sections = styled.div`
 const Picture = styled.div`
   position: relative;
   width: 350px;
-  height: 470px;
+  max-height: 470px;
   margin-left: 30px;
 `;

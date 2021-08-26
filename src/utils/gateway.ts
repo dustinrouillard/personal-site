@@ -108,7 +108,7 @@ export class Gateway extends EventEmitter {
 
         break;
       case Op.SpotifyChanged:
-        this.emit('spotify_changed', data.d);
+        this.emit('spotify', data.d);
 
         break;
 

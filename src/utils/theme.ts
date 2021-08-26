@@ -1,11 +1,13 @@
 const themes = {
   dark: {
+    'alt-text': "#000000",
     text: "#ffffff",
     "highlight-color": "#127796",
     "widget-background": "#393939",
     background: "#181a1b",
   },
   light: {
+    'alt-text': "#ffffff",
     text: "#000000",
     "highlight-color": "#127796",
     "widget-background": "#c8c8c8",
