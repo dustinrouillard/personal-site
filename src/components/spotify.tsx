@@ -140,6 +140,8 @@ const ProgressBar = styled.div`
   width: ${(props: { progress: number }) =>
     props.progress ? `${props.progress}%` : "0%"};
   transition: all 1000ms linear;
+  transition: color 100ms linear;
+  transition: background-color 100ms linear;
 `;
 
 const ProgressText = styled.p<{ inverted?: boolean }>`
