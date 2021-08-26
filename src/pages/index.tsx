@@ -54,10 +54,12 @@ export default function Home() {
           </Info>
 
           <Picture>
-            <LanyardStatus>
-              <StatusText>{status.toUpperCase()}</StatusText>
-              <StatusIcon status={status} />
-            </LanyardStatus>
+            {!!status && (
+              <LanyardStatus>
+                <StatusText>{status.toUpperCase()}</StatusText>
+                <StatusIcon status={status} />
+              </LanyardStatus>
+            )}
             <StyledImage src="/pic.jpeg" />
           </Picture>
         </Sections>
