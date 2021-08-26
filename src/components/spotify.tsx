@@ -17,11 +17,10 @@ export function Spotify(): ReactElement {
 
   useEffect(() => {
     const listener = (data: InternalPlayerResponse) => {
-      if ("is_playing" in data) setListening(true);
-      if (data.item_name !== null)
-        setSpotify((state) => {
-          return { ...state, ...data };
-        });
+      if ("is_playing" in data) setListening(data.is_playing);
+      setSpotify((state) => {
+        return { ...state, ...data };
+      });
     };
 
     gateway.on("spotify", listener);
