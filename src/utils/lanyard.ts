@@ -37,7 +37,7 @@ export class Lanyard extends EventEmitter {
     super();
 
     this.user_id = id;
-    this.ws = new WebSocket("wss://api.lanyard.rest/socket");
+    this.ws = new WebSocket("wss://lanyard.rest/socket");
 
     // Socket open handler
     this.ws.addEventListener("open", () => this.emit("connected"));
@@ -46,7 +46,7 @@ export class Lanyard extends EventEmitter {
     this.ws.addEventListener("message", (e) => {
       try {
         this.message(JSON.parse(e.data));
-      } catch (error) {}
+      } catch (error) { }
     });
 
     // Close event for websocket
@@ -97,3 +97,5 @@ export class Lanyard extends EventEmitter {
     }
   }
 }
+
+export const lanyard = typeof window != 'undefined' && new Lanyard('156114103033790464');

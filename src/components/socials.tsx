@@ -30,6 +30,14 @@ export function SocialLinks(props: {
       <IconWrapped small={props.small}>
         <Icon
           size={props.small ? 15 : 25}
+          icon={"discord"}
+          highlight="#7289DA"
+          link="https://dstn.to/discord"
+        />
+      </IconWrapped>
+      <IconWrapped small={props.small}>
+        <Icon
+          size={props.small ? 15 : 25}
           icon={faSnapchatGhost}
           highlight="#FFFC00"
           link="https://dstn.to/snapchat"
@@ -57,14 +65,6 @@ export function SocialLinks(props: {
           icon={faSpotify}
           highlight="#1DB954"
           link="https://dstn.to/mixtape"
-        />
-      </IconWrapped>
-      <IconWrapped small={props.small}>
-        <Icon
-          size={props.small ? 15 : 25}
-          icon={faDiscord}
-          highlight="#7289DA"
-          link="https://dstn.to/discord"
         />
       </IconWrapped>
       <IconWrapped small={props.small} last>

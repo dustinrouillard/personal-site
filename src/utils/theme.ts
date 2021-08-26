@@ -2,13 +2,13 @@ const themes = {
   dark: {
     text: "#ffffff",
     "highlight-color": "#127796",
-    "widget-background": "#000000",
+    "widget-background": "#393939",
     background: "#181a1b",
   },
   light: {
     text: "#000000",
     "highlight-color": "#127796",
-    "widget-background": "#ffffff",
+    "widget-background": "#c8c8c8",
     background: "#ffffff",
   },
 };

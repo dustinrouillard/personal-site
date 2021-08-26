@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Polywork as PolyworkIcon } from "./icons/Polywork";
+import { Discord as DiscordIcon } from "./icons/Discord";
 import { useState } from "react";
 
 interface IconProps {
@@ -22,8 +23,8 @@ export function Icon(props: IconProps): ReactElement {
 
   function getSvg(icon: string, props: any) {
     switch (icon) {
-      case 'polywork':
-        return (<Polywork {...props} />)
+      case "polywork":
+        return <Polywork {...props} />;
     }
   }
 
@@ -37,7 +38,7 @@ export function Icon(props: IconProps): ReactElement {
 
   return (
     <IconBase onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {!!props.link && typeof props.icon != 'string' && (
+      {!!props.link && typeof props.icon != "string" && (
         <Link href={props.link} target="_blank">
           <FaIcon
             width={props.size}
@@ -48,7 +49,7 @@ export function Icon(props: IconProps): ReactElement {
           />
         </Link>
       )}
-      {!props.link && typeof props.icon != 'string' && (
+      {!props.link && typeof props.icon != "string" && (
         <FaIcon
           onClick={props.onClick}
           width={props.size}
@@ -58,8 +59,50 @@ export function Icon(props: IconProps): ReactElement {
           color={props.color}
         />
       )}
-      {!!props.link && typeof props.icon == 'string' && <Link href={props.link} target="_blank"><Polywork size={props.size} hovered={hovered} highlight={props.highlight} link={!!props.link} /></Link>}
-      {!props.link && typeof props.icon == 'string' && <Polywork size={props.size} hovered={hovered} highlight={props.highlight} link={!!props.link} />}
+      {!!props.link &&
+        typeof props.icon == "string" &&
+        props.icon == "polywork" && (
+          <Link href={props.link} target="_blank">
+            <Polywork
+              size={props.size}
+              hovered={hovered}
+              highlight={props.highlight}
+              link={!!props.link}
+            />
+          </Link>
+        )}
+      {!props.link &&
+        typeof props.icon == "string" &&
+        props.icon == "polywork" && (
+          <Polywork
+            size={props.size}
+            hovered={hovered}
+            highlight={props.highlight}
+            link={!!props.link}
+          />
+        )}
+      {!!props.link &&
+        typeof props.icon == "string" &&
+        props.icon == "discord" && (
+          <Link href={props.link} target="_blank">
+            <Discord
+              size={props.size}
+              hovered={hovered}
+              highlight={props.highlight}
+              link={!!props.link}
+            />
+          </Link>
+        )}
+      {!props.link &&
+        typeof props.icon == "string" &&
+        props.icon == "discord" && (
+          <Discord
+            size={props.size}
+            hovered={hovered}
+            highlight={props.highlight}
+            link={!!props.link}
+          />
+        )}
     </IconBase>
   );
 }
@@ -71,7 +114,7 @@ const Link = styled.a`
 
 const IconBase = styled.div``;
 
-const FaIcon = styled(FontAwesomeIcon) <{
+const FaIcon = styled(FontAwesomeIcon)<{
   highlight: string;
   color?: string;
   link?: boolean;
@@ -87,7 +130,19 @@ const FaIcon = styled(FontAwesomeIcon) <{
   }
 `;
 
-const Polywork = styled(PolyworkIcon) <{
+const Polywork = styled(PolyworkIcon)<{
+  size?: number;
+  highlight: string;
+  hovered?: boolean;
+  link?: boolean;
+}>`
+  height: ${(props) => `${props.size}px`};
+  cursor: ${(props) => (props.link ? "default" : "pointer")};
+  transition: opacity 0.2s ease-out;
+  transition: color 0.2s ease-out;
+`;
+
+const Discord = styled(DiscordIcon)<{
   size?: number;
   highlight: string;
   hovered?: boolean;
