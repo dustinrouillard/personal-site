@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: var(--background)
+    background-color: var(--background);    
   }
 
   html,
@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    transition: all 150ms linear;
   }
 
   :root {

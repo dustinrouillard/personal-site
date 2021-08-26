@@ -104,7 +104,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   min-width: fit-content;
-  background-color: var(--background);
   padding-top: 40px;
   height: 100px;
   width: 100%;

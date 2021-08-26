@@ -126,7 +126,7 @@ const Progress = styled.div`
   background-color: var(--widget-background);
   filter: brightness(70%);
 
-  /* overflow: hidden; */
+  overflow: hidden;
   flex-direction: row;
   display: flex;
 `;
@@ -151,5 +151,5 @@ const ProgressText = styled.p<{ inverted?: boolean }>`
   font-size: 8px;
   filter: ${({ inverted }) => (inverted ? "invert()" : "none")};
   font-family: "FiraCode-Medium";
-  transition: all 1000ms linear;
+  transition: all 500ms linear;
 `;
