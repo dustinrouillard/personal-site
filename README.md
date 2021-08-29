@@ -2,7 +2,7 @@
 
 The code behind my personal site. :)
 
-Hosted on Vercel - [dustin.sh](https://dustin.sh)
+Hosted on Cloudflare Pages - [dustin.sh](https://dustin.sh)
 
 ## Powered By
 
