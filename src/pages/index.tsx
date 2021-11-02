@@ -63,7 +63,7 @@ export default function Home() {
                 <StatusIcon status={status} />
               </LanyardStatus>
             )}
-            <StyledImage src="/pic.jpeg" />
+            <StyledImage src="/avatar.png" />
             <Spotify />
           </Picture>
         </Sections>
