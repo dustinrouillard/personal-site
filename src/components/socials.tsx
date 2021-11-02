@@ -72,7 +72,7 @@ export function SocialLinks(props: {
           size={props.small ? 15 : 25}
           icon={faEnvelope}
           highlight="#6257fc"
-          link="mailto:dustin@rouillard.dev"
+          link="mailto:comms@dstn.to"
         />
       </IconWrapped>
     </Icons>
