@@ -56,16 +56,18 @@ export default function Home() {
             </Description>
           </ProfileInfo>
 
-          <Picture>
-            {!!status && (
-              <LanyardStatus>
-                <StatusText>{status.toUpperCase()}</StatusText>
-                <StatusIcon status={status} />
-              </LanyardStatus>
-            )}
-            <StyledImage src="/avatar.png" />
+          <RightSide>
+            <Picture>
+              {!!status && (
+                <LanyardStatus>
+                  <StatusText>{status.toUpperCase()}</StatusText>
+                  <StatusIcon status={status} />
+                </LanyardStatus>
+              )}
+              <StyledImage src="/avatar.png" />
+            </Picture>
             <Spotify />
-          </Picture>
+          </RightSide>
         </Sections>
       </Container>
     </>
@@ -206,5 +208,12 @@ const Picture = styled.div`
   position: relative;
   width: 350px;
   max-height: 470px;
+`;
+
+const RightSide = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
   margin-left: 30px;
+  width: 350px;
 `;
