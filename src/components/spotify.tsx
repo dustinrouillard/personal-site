@@ -36,7 +36,7 @@ export function Spotify(): ReactElement {
         <Container>
           <Link
             target={"_blank"}
-            href={`https://open.spotify.com/track/${spotify.item_id}`}
+            href={`https://open.spotify.com/${spotify.item_type}/${spotify.item_id}`}
           >
             <Image src={spotify.item_image} width="75px" />
           </Link>
