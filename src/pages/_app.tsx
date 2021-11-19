@@ -3,6 +3,7 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import FontStyle from "../components/fonts";
 import { Footer } from "../components/footer";
 import { SetTheme } from "../utils/theme";
+import styled from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -10,6 +11,8 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     background-color: var(--background);    
+    min-height: 100%;
+    position: relative;
   }
 
   html,
@@ -24,15 +27,25 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --text: #000000;
+    /* --text: #000000;
     --highlight-color: #127796;
-    --widget-background: #ffffff;
-    --background: #ffffff;
+    --widget-background: #c8c8c8;
+    --background: #ffffff; */
+
+    --alt-text: #000000
+    --text: #ffffff
+    --highlight-color: #127796
+    --widget-background: #393939
+    --background: #181a1b
   }
 
   .__react_component_tooltip {
     box-shadow: 2px 2px 10px 0px #00000026;
   }
+`;
+
+const Page = styled.div`
+  margin-bottom: 100px;
 `;
 
 export default function App({ Component, pageProps }) {
@@ -43,9 +56,11 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <FontStyle />
-      <GlobalStyle />
-      <Component {...pageProps} />
+      <Page>
+        <FontStyle />
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </Page>
       <Footer />
     </>
   );

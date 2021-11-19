@@ -2,8 +2,9 @@ import { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { InternalPlayerResponse } from "../types/gateway";
-import { gateway } from "../utils/gateway";
+
 import { millisToMinutesAndSeconds } from "../utils/time";
+import { gateway } from "../utils/gateway";
 
 export interface Playing {
   item_name: string;
@@ -50,14 +51,14 @@ export function Spotify(): ReactElement {
           <ProgressBar
             progress={(spotify.item_progress / spotify.item_length_ms) * 100}
           >
-            {(spotify.item_progress / spotify.item_length_ms) * 100 > 20 && (
+            {(spotify.item_progress / spotify.item_length_ms) * 100 > 15 && (
               <ProgressText inverted>
                 {millisToMinutesAndSeconds(spotify.item_progress)} :{" "}
                 {millisToMinutesAndSeconds(spotify.item_length_ms)}
               </ProgressText>
             )}
           </ProgressBar>
-          {(spotify.item_progress / spotify.item_length_ms) * 100 < 20 && (
+          {(spotify.item_progress / spotify.item_length_ms) * 100 < 15 && (
             <ProgressText>
               {millisToMinutesAndSeconds(spotify.item_progress)} :{" "}
               {millisToMinutesAndSeconds(spotify.item_length_ms)}
@@ -84,8 +85,9 @@ const Root = styled.div<{ visible: boolean }>`
   align-items: center;
   visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
   display: ${({ visible }) => (visible ? "flex" : "none")};
-  margin-top: 20px;
+  margin-top: 25px;
   flex-direction: column;
+  text-align: left;
 `;
 
 const Container = styled.div`

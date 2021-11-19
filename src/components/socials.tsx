@@ -1,76 +1,44 @@
 import { ReactElement } from "react";
-
 import styled from "styled-components";
-
-import {
-  faSnapchatGhost,
-  faTwitter,
-  faGithubAlt,
-  faSpotify,
-  faDiscord,
-} from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 import { Icon } from "./icon";
 
-export function SocialLinks(props: {
-  size?: number;
-  small?: boolean;
-}): ReactElement {
+import { Github } from "./icons/Github";
+import { LinkedIn } from "./icons/LinkedIn";
+import { Mail } from "./icons/Mail";
+import { Twitter } from "./icons/Twitter";
+
+export function SocialLinks(props: any): ReactElement {
   return (
-    <Icons small={props.small}>
-      <IconWrapped small={props.small} last>
+    <Icons {...props}>
+      <IconWrapped first>
         <Icon
-          size={props.small ? 15 : 25}
-          icon="polywork"
-          highlight="#6661af"
-          link="https://p.dstn.to"
-        />
-      </IconWrapped>
-      <IconWrapped small={props.small}>
-        <Icon
-          size={props.small ? 15 : 25}
-          icon={"discord"}
-          highlight="#7289DA"
-          link="https://dstn.to/discord"
-        />
-      </IconWrapped>
-      <IconWrapped small={props.small}>
-        <Icon
-          size={props.small ? 15 : 25}
-          icon={faSnapchatGhost}
-          highlight="#FFFC00"
-          link="https://dstn.to/snapchat"
-        />
-      </IconWrapped>
-      <IconWrapped small={props.small}>
-        <Icon
-          size={props.small ? 15 : 25}
-          icon={faTwitter}
+          size={25}
+          icon={Twitter}
           highlight="#1DA1F2"
           link="https://dstn.to/twitter"
         />
       </IconWrapped>
-      <IconWrapped small={props.small}>
+      <IconWrapped>
         <Icon
-          size={props.small ? 15 : 25}
-          icon={faGithubAlt}
-          highlight="#333333"
+          size={25}
+          icon={Github}
+          highlight="#9CDAF1"
           link="https://dstn.to/github"
         />
       </IconWrapped>
-      <IconWrapped small={props.small}>
+      <IconWrapped>
         <Icon
-          size={props.small ? 15 : 25}
-          icon={faSpotify}
-          highlight="#1DB954"
-          link="https://dstn.to/mixtape"
+          size={25}
+          icon={LinkedIn}
+          highlight="#2867b2"
+          link="https://dstn.to/linkedin"
         />
       </IconWrapped>
-      <IconWrapped small={props.small} last>
+      <IconWrapped last>
         <Icon
-          size={props.small ? 15 : 25}
-          icon={faEnvelope}
+          size={25}
+          icon={Mail}
           highlight="#6257fc"
           link="mailto:comms@dstn.to"
         />
@@ -79,16 +47,18 @@ export function SocialLinks(props: {
   );
 }
 
-const Icons = styled.div<{ small: boolean }>`
-  margin-top: ${(props) => (!props.small ? "50px" : "0px")};
+const Icons = styled.div`
   display: flex;
   flex-direction: row;
-  float: right;
-  align-self: flex-end;
 `;
 
-const IconWrapped = styled.div<{ small?: boolean; last?: boolean }>`
-  padding-left: ${(props) => (!props.small ? "7px" : "4px")};
+const IconWrapped = styled.div<{
+  small?: boolean;
+  first?: boolean;
+  last?: boolean;
+}>`
+  padding-left: ${(props) =>
+    !props.first ? (!props.small ? "7px" : "4px") : "0px"};
   padding-right: ${(props) =>
     !props.last ? (!props.small ? "7px" : "4px") : "0px"};
   opacity: ${(props) => (!props.small ? "100%" : "50%")};

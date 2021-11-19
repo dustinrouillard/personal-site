@@ -11,3 +11,15 @@ export interface InternalPlayerResponse {
     item_length_ms?: number;
     started_at?: number;
 }
+
+interface Stats {
+    builds: number;
+    commands: number;
+    dev_hours: number;
+}
+
+export interface StatsResponse {
+    daily: Stats;
+    weekly: Stats;
+    monthly: Stats;
+}

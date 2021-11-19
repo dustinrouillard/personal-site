@@ -1,23 +1,28 @@
-import { default as NextLink } from "next/link";
 import { useState, useEffect } from "react";
-
 import styled from "styled-components";
+import NextLink from "next/link";
+
 import { PageHead } from "../components/head";
-import { Icon } from "../components/icon";
-import { SocialLinks } from "../components/socials";
 import { Spotify } from "../components/spotify";
+import { SocialLinks } from "../components/socials";
+
 import { useYearsAgo } from "../hooks/useTimeAgo";
-import { InternalPlayerResponse } from "../types/gateway";
 import { LanyardPresence } from "../types/lanyard";
-import { gateway } from "../utils/gateway";
 import { lanyard } from "../utils/lanyard";
+import { Repository } from "../components/Repository";
+import { PinnedRepository } from "../types/github";
+import { getPinnedRepositories } from "../utils/github";
 
 const date = new Date("07/15/1999");
 
-export default function Home() {
+export default function Home(props: {
+  stats: any;
+  pinnedRepos: PinnedRepository[];
+}) {
   const age = useYearsAgo(date);
 
   const [status, setStatus] = useState<string>();
+  const [right, setRight] = useState(true);
 
   function presenceChange(data: LanyardPresence) {
     setStatus(data.discord_status || "offline");
@@ -31,74 +36,203 @@ export default function Home() {
     };
   }, []);
 
+  if (typeof window != "undefined")
+    useEffect(() => {
+      // if (typeof window == "undefined") return () => {};
+      if (window.innerWidth < 1080) setRight(false);
+      else setRight(true);
+    }, [window.innerWidth]);
+
   return (
     <>
-      <Container>
+      <Outter>
         <PageHead name="Vibing" />
+        <Container>
+          <Sections>
+            {!right && (
+              <RightSide>
+                <Picture>
+                  <StyledImage src="/avatar.png" />
+                </Picture>
+              </RightSide>
+            )}
 
-        <Sections>
-          <ProfileInfo>
-            <Links>
-              <NextLink href="/stats" passHref>
-                <PageLink>Stats</PageLink>
-              </NextLink>
-            </Links>
-            <Name>Dustin Rouillard</Name>
-            <Description>
-              <Text>Hi there 👋🏼 I’m Dustin</Text>
+            <ProfileInfo>
+              <NameAndStatus>
+                <Name>Dustin Rouillard</Name>
+                <StatusIcon status={status} />
+              </NameAndStatus>
+              <Description>
+                <Text>
+                  Hi there 👋🏼 I’m Dustin, I’m{" "}
+                  <Span alt={age.toString()}>{Math.floor(age)}</Span> years old.
+                </Text>
+                <Text>Backend developer and network/systems administrator</Text>
+                <SocialWrapped />
+                <Spotify />
+              </Description>
+            </ProfileInfo>
 
-              <Text>
-                I’m a <Span alt={age.toString()}>{Math.floor(age)}</Span> year
-                old software engineer and network/systems administrator
-              </Text>
+            {right && (
+              <RightSide>
+                <Picture>
+                  <StyledImage src="/avatar.png" />
+                </Picture>
+              </RightSide>
+            )}
+          </Sections>
+        </Container>
 
-              <SocialLinks />
-            </Description>
-          </ProfileInfo>
+        <SeperatorLine />
 
-          <RightSide>
-            <Picture>
-              {!!status && (
-                <LanyardStatus>
-                  <StatusText>{status.toUpperCase()}</StatusText>
-                  <StatusIcon status={status} />
-                </LanyardStatus>
-              )}
-              <StyledImage src="/avatar.png" />
-            </Picture>
-            <Spotify />
-          </RightSide>
-        </Sections>
-      </Container>
+        <BottomSections>
+          {!!props.pinnedRepos && (
+            <>
+              <SectionTitle>Pinned Repositories</SectionTitle>
+              <Repositories>
+                <RepositoriesRow>
+                  {props.pinnedRepos.slice(0, 3).map((repo) => (
+                    <Repository repo={repo} />
+                  ))}
+                </RepositoriesRow>
+                <RepositoriesRow>
+                  {props.pinnedRepos.slice(3, 6).map((repo) => (
+                    <Repository repo={repo} />
+                  ))}
+                </RepositoriesRow>
+              </Repositories>
+            </>
+          )}
+
+          <SectionTitle>Activity Statistics</SectionTitle>
+          <Activity>
+            <>
+              <ActivityContainer>
+                <ActivityStatBold>
+                  {props.stats.weekly?.commands_ran.toLocaleString()}
+                </ActivityStatBold>
+                <ActivityStat>commands run</ActivityStat>
+              </ActivityContainer>
+              <ActivityContainer>
+                <ActivityStatBold>
+                  {props.stats.weekly?.builds_ran.toLocaleString()}
+                </ActivityStatBold>
+                <ActivityStat>docker builds assembled</ActivityStat>
+              </ActivityContainer>
+              <ActivityContainer>
+                <ActivityStatBold>
+                  {(props.stats.weekly?.development_seconds / 3600).toFixed(2)}
+                </ActivityStatBold>
+                <ActivityStat>hours behind an editor</ActivityStat>
+              </ActivityContainer>
+            </>
+          </Activity>
+        </BottomSections>
+      </Outter>
     </>
   );
 }
 
 const ProfileInfo = styled.div`
-  width: 50%;
   align-self: center;
+
+  @media only screen and (max-width: 1080px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Span = styled.span<{ alt?: string }>``;
 
-const LanyardStatus = styled.div`
+const ActivityContainer = styled.div`
+  font-family: "FiraCode-Light";
   display: flex;
-  position: absolute;
-  z-index: 10;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  margin: 5px;
+`;
 
-  background-color: var(--widget-background);
-  border-radius: 10px;
+const ActivityStat = styled.p`
+  margin: 0;
+  color: var(--text);
+`;
 
-  margin-bottom: -10px;
-  margin-right: -10px;
-  margin-left: 10px;
+const ActivityStatBold = styled.p`
+  font-family: "FiraCode-Bold";
+  margin: 0;
+  margin-right: 10px;
+  color: var(--text);
+`;
+
+const SocialWrapped = styled(SocialLinks)`
+  margin-top: 20px;
+`;
+
+const Repositories = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  @media only screen and (max-width: 1080px) {
+    flex-direction: column;
+  }
+`;
+
+const RepositoriesRow = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (max-width: 1080px) {
+    flex-direction: column;
+  }
+`;
+
+const Activity = styled.div`
+  font-family: "FiraCode-Light";
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
   margin-top: 10px;
+`;
 
-  padding: 5px;
-  bottom: 0;
-  right: 0;
+const SectionTitle = styled.h3`
+  font-family: "FiraCode-Bold";
+  font-size: 1.2em;
+  color: var(--text);
+  font-weight: normal;
+  margin-top: 50px;
+`;
+
+const BottomSections = styled.div`
+  display: flex;
+  flex-direction: column;
 
   align-items: center;
+  justify-content: center;
+`;
+
+const SeperatorLine = styled.div`
+  display: flex;
+  background-color: var(--background);
+  filter: brightness(90%);
+  height: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+`;
+
+const Outter = styled.div`
+  min-height: 75vh;
+`;
+
+const NameAndStatus = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  @media only screen and (max-width: 1080px) {
+    justify-content: center;
+  }
 `;
 
 const StatusIcon = styled.span<{ status: string }>`
@@ -111,23 +245,13 @@ const StatusIcon = styled.span<{ status: string }>`
       ? "green"
       : "grey"};
 
+  display: flex;
   border-radius: 50%;
   border: 0.2px solid var(--text);
   width: 10px;
   height: 10px;
-
   margin: 0;
-  margin-left: 3px;
-  margin-right: 3px;
-`;
-
-const StatusText = styled.p`
-  font-size: 1em;
-  font-family: "FiraCode-Light";
-  color: var(--text);
-  margin: 0;
-  padding-left: 5px;
-  padding-right: 5px;
+  margin-left: 20px;
 `;
 
 const StyledImage = styled.img`
@@ -138,33 +262,12 @@ const StyledImage = styled.img`
   object-fit: cover;
 `;
 
-const Links = styled.div`
-  display: flex;
-  flex-direction: row;
-  float: right;
-`;
-
-const PageLink = styled.div`
-  font-family: "FiraCode-Light";
-  color: var(--text);
-  text-decoration: none;
-  opacity: 50%;
-  padding-left: 20px;
-  display: block;
-  text-align: right;
-  :hover {
-    cursor: pointer;
-    color: #127796;
-    text-decoration: underline;
-  }
-`;
-
 const Container = styled.div`
-  min-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
+  margin-top: 75px;
+  margin-bottom: 75px;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 `;
 
@@ -172,17 +275,16 @@ const Name = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.9em;
-  text-align: right;
   color: var(--text);
-  margin-bottom: 30px;
   font-weight: normal;
-  padding-top: 30px;
-  margin-top: 10px;
+
+  @media only screen and (max-width: 1080px) {
+    justify-content: center;
+  }
 `;
 
 const Text = styled.div`
   display: block;
-  text-align: right;
   padding-top: 30px;
 `;
 
@@ -192,16 +294,26 @@ const Description = styled.div`
   font-family: "FiraCode-Medium";
   font-size: 1.3em;
   color: var(--text);
-  width: 65%;
+  width: 80%;
   flex: 1;
-  float: right;
+
+  @media only screen and (max-width: 1080px) {
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+  }
 `;
 
 const Sections = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 50px;
-  margin: 50px;
+
+  @media only screen and (max-width: 1080px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const Picture = styled.div`
@@ -217,3 +329,15 @@ const RightSide = styled.div`
   margin-left: 30px;
   width: 350px;
 `;
+
+export async function getServerSideProps() {
+  const res = await fetch(`https://rest.dstn.to/stats`).then((r) => r.json());
+  const pinned = await getPinnedRepositories();
+
+  return {
+    props: {
+      pinnedRepos: pinned,
+      stats: res.data,
+    },
+  };
+}

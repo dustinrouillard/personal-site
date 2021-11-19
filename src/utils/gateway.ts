@@ -1,12 +1,13 @@
 import { EventEmitter } from "events";
 import { inflate, deflate } from "pako";
-import { InternalPlayerResponse } from "../types/gateway";
+import { InternalPlayerResponse, StatsResponse } from "../types/gateway";
 
 enum Op {
   Init,
   Heartbeat,
   Spotify,
-  SpotifyChanged
+  SpotifyChanged,
+  Stats
 }
 
 interface SocketData {
@@ -30,10 +31,13 @@ export interface Gateway {
   encoding: string; // 'etf' | 'json'
   compression: string; // 'zlib' | 'none'
 
+  on(event: "stats", listener: (stats: StatsResponse) => void): this;
+
   on(event: "spotify", listener: (data: InternalPlayerResponse) => void): this;
   on(event: "spotify_changed", listener: (data: InternalPlayerResponse) => void): this;
-  on(event: "connected", listener: () => void): this;
+
   on(event: "init", listener: () => void): this;
+  on(event: "connected", listener: () => void): this;
 }
 export class Gateway extends EventEmitter {
   constructor(url = 'wss://gw.dstn.to', encoding = 'json', compression = 'zlib') {
@@ -109,6 +113,10 @@ export class Gateway extends EventEmitter {
         break;
       case Op.SpotifyChanged:
         this.emit('spotify', data.d);
+
+        break;
+      case Op.Stats:
+        this.emit('stats', data.d);
 
         break;
 
