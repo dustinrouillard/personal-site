@@ -1,5 +1,6 @@
 import NextLink from "next/link";
 import { ReactElement } from "react";
+import ReactTooltip from "react-tooltip";
 import styled from "styled-components";
 import { ToggleTheme } from "../utils/theme";
 import { Icon } from "./icon";
@@ -16,7 +17,14 @@ export function Footer(): ReactElement {
         <Text>{new Date().getFullYear()}</Text>
       </LeftContainer>
       <RightContainer>
-        <MoonIcon icon={Moon} size={15} onClick={ToggleTheme} />
+        <ReactTooltip id={"theme-toggle"}>Toggle Theme (T)</ReactTooltip>
+        <MoonIcon
+          data-tip=""
+          data-for="theme-toggle"
+          icon={Moon}
+          size={15}
+          onClick={ToggleTheme}
+        />
         <Text style={{ paddingLeft: "10px", paddingRight: "10px" }}>•</Text>
         <NextLink
           href="https://github.com/dustinrouillard/personal-site"

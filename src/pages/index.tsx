@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import NextLink from "next/link";
+import ReactTooltip from "react-tooltip";
 
 import { PageHead } from "../components/head";
 import { Spotify } from "../components/spotify";
@@ -21,7 +21,7 @@ export default function Home(props: {
 }) {
   const age = useYearsAgo(date);
 
-  const [status, setStatus] = useState<string>();
+  const [status, setStatus] = useState<string>("offline");
   const [right, setRight] = useState(true);
 
   function presenceChange(data: LanyardPresence) {
@@ -58,7 +58,17 @@ export default function Home(props: {
             <ProfileInfo>
               <NameAndStatus>
                 <Name>Dustin Rouillard</Name>
-                <StatusIcon status={status} />
+                <ReactTooltip id={"presence"}>
+                  {status == "dnd"
+                    ? "Do not disturb"
+                    : status.replace(
+                        /\w\S*/g,
+                        (txt) =>
+                          txt.charAt(0).toUpperCase() +
+                          txt.substr(1).toLowerCase()
+                      )}
+                </ReactTooltip>
+                <StatusIcon data-tip="" data-for="presence" status={status} />
               </NameAndStatus>
               <Description>
                 <Text>
@@ -103,17 +113,47 @@ export default function Home(props: {
           <SectionTitle>Activity Statistics</SectionTitle>
           <Activity>
             <>
-              <ActivityContainer>
+              <ReactTooltip id={"weekly-commands"}>
+                <ActivityContainer>
+                  <ActivityStatBold>{0}</ActivityStatBold>
+                  <ActivityStat right>Linux</ActivityStat>
+                  <ActivityStatBold>{0}</ActivityStatBold>
+                  <ActivityStat>Mac</ActivityStat>
+                </ActivityContainer>
+              </ReactTooltip>
+              <ActivityContainer data-tip="" data-for={"weekly-commands"}>
                 <ActivityStatBold>
                   {props.stats.weekly?.commands_ran.toLocaleString()}
                 </ActivityStatBold>
-                <ActivityStat>commands run</ActivityStat>
+                <ActivityStat>commands executed</ActivityStat>
               </ActivityContainer>
-              <ActivityContainer>
+              <ReactTooltip id={"weekly-builds"}>
+                <ActivityContainer>
+                  <ActivityStatBold>{0}</ActivityStatBold>
+                  <ActivityStat right>Linux</ActivityStat>
+                  <ActivityStatBold>{0}</ActivityStatBold>
+                  <ActivityStat>Mac</ActivityStat>
+                </ActivityContainer>
+              </ReactTooltip>
+              <ActivityContainer data-tip="" data-for={"weekly-builds"}>
                 <ActivityStatBold>
                   {props.stats.weekly?.builds_ran.toLocaleString()}
                 </ActivityStatBold>
                 <ActivityStat>docker builds assembled</ActivityStat>
+              </ActivityContainer>
+              <ReactTooltip id={"weekly-kubectl"}>
+                <ActivityContainer>
+                  <ActivityStatBold>{0}</ActivityStatBold>
+                  <ActivityStat right>Linux</ActivityStat>
+                  <ActivityStatBold>{0}</ActivityStatBold>
+                  <ActivityStat>Mac</ActivityStat>
+                </ActivityContainer>
+              </ReactTooltip>
+              <ActivityContainer data-tip="" data-for={"weekly-kubectl"}>
+                <ActivityStatBold>
+                  {props.stats.weekly?.kubectl_commands?.toLocaleString() || 0}
+                </ActivityStatBold>
+                <ActivityStat>kubectl commands executed</ActivityStat>
               </ActivityContainer>
               <ActivityContainer>
                 <ActivityStatBold>
@@ -149,9 +189,10 @@ const ActivityContainer = styled.div`
   margin: 5px;
 `;
 
-const ActivityStat = styled.p`
+const ActivityStat = styled.p<{ right?: boolean }>`
   margin: 0;
   color: var(--text);
+  margin-right: ${(props) => (props.right ? "10px" : "0px")};
 `;
 
 const ActivityStatBold = styled.p`
