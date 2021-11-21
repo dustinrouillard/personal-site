@@ -71,9 +71,13 @@ export default function Home(props: {
                 <StatusIcon data-tip="" data-for="presence" status={status} />
               </NameAndStatus>
               <Description>
+                <ReactTooltip id={"age"}>{age.toFixed(8)}</ReactTooltip>
                 <Text>
                   Hi there 👋🏼 I’m Dustin, I’m{" "}
-                  <Span alt={age.toString()}>{Math.floor(age)}</Span> years old.
+                  <Span data-tip="" data-for="age" alt={age.toString()}>
+                    {Math.floor(age)}
+                  </Span>{" "}
+                  years old.
                 </Text>
                 <Text>Backend developer and network/systems administrator</Text>
                 <SocialWrapped />
@@ -178,7 +182,9 @@ const ProfileInfo = styled.div`
   }
 `;
 
-const Span = styled.span<{ alt?: string }>``;
+const Span = styled.span<{ alt?: string }>`
+  text-decoration: underline;
+`;
 
 const ActivityContainer = styled.div`
   font-family: "FiraCode-Light";
