@@ -1,52 +1,51 @@
-import { MouseEventHandler, ReactElement } from "react";
+import React, { MouseEventHandler, ReactElement } from "react";
 import styled from "styled-components";
+
 import { PinnedRepository } from "../types/github";
 import { Fork } from "./icons/Fork";
 import { Star } from "./icons/Star";
 
 export function Repository(props: { repo: PinnedRepository }): ReactElement {
   return (
-    <Container
-      onClick={() => {
-        window.open(props.repo.url, "_blank");
-      }}
-    >
-      <Name>{props.repo.name}</Name>
-      <Description>
-        {props.repo.description.length > 83
-          ? `${props.repo.description.substring(0, 80).trim()}..`
-          : props.repo.description}
-      </Description>
+    <Link href={props.repo.url} target="_blank">
+      <Container>
+        <Name>{props.repo.name}</Name>
+        <Description>
+          {props.repo.description.length > 83
+            ? `${props.repo.description.substring(0, 80).trim()}..`
+            : props.repo.description}
+        </Description>
 
-      <Footer>
-        {props.repo.primaryLanguage && (
-          <>
-            <LanguageContainer>
-              <LanguageDot color={props.repo.primaryLanguage.color} />
-              <Language>{props.repo.primaryLanguage.name}</Language>
-            </LanguageContainer>
-          </>
-        )}
-        {!!props.repo.stargazerCount && (
-          <>
-            <Stars>
-              <Star size={12} />
-              <StarsCount>
-                {props.repo.stargazerCount.toLocaleString()}
-              </StarsCount>
-            </Stars>
-          </>
-        )}
-        {!!props.repo.forkCount && (
-          <>
-            <Forks>
-              <Fork size={12} />
-              <ForksCount>{props.repo.forkCount.toLocaleString()}</ForksCount>
-            </Forks>
-          </>
-        )}
-      </Footer>
-    </Container>
+        <Footer>
+          {props.repo.primaryLanguage && (
+            <>
+              <LanguageContainer>
+                <LanguageDot color={props.repo.primaryLanguage.color} />
+                <Language>{props.repo.primaryLanguage.name}</Language>
+              </LanguageContainer>
+            </>
+          )}
+          {!!props.repo.stargazerCount && (
+            <>
+              <Stars>
+                <Star size={12} />
+                <StarsCount>
+                  {props.repo.stargazerCount.toLocaleString()}
+                </StarsCount>
+              </Stars>
+            </>
+          )}
+          {!!props.repo.forkCount && (
+            <>
+              <Forks>
+                <Fork size={12} />
+                <ForksCount>{props.repo.forkCount.toLocaleString()}</ForksCount>
+              </Forks>
+            </>
+          )}
+        </Footer>
+      </Container>
+    </Link>
   );
 }
 
@@ -134,4 +133,9 @@ const Footer = styled.div`
   margin-top: 10px;
   display: flex;
   flex-direction: row;
+`;
+
+const Link = styled.a`
+  color: var(--text);
+  text-decoration: none;
 `;
