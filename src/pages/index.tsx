@@ -23,9 +23,16 @@ export default function Home(props: {
 
   const [status, setStatus] = useState<string>("offline");
   const [right, setRight] = useState(true);
+  const [headSpin, setHeadSpin] = useState("0deg");
 
   function presenceChange(data: LanyardPresence) {
     setStatus(data.discord_status || "offline");
+  }
+
+  function spinHead() {
+    const deg = `${Math.floor(Math.random() * 300) + 60}deg`;
+    setHeadSpin(deg);
+    setTimeout(setHeadSpin, 1000, "0deg");
   }
 
   useEffect(() => {
@@ -38,7 +45,6 @@ export default function Home(props: {
 
   if (typeof window != "undefined")
     useEffect(() => {
-      // if (typeof window == "undefined") return () => {};
       if (window.innerWidth < 1080) setRight(false);
       else setRight(true);
     }, [window.innerWidth]);
@@ -51,7 +57,7 @@ export default function Home(props: {
           <Sections>
             <TopSide>
               <Picture>
-                <StyledImage src="/avatar.png" />
+                <StyledImage rotate={headSpin} src="/avatar.png" />
               </Picture>
             </TopSide>
 
@@ -73,8 +79,14 @@ export default function Home(props: {
               <Description>
                 <ReactTooltip id={"age"}>{age.toFixed(8)}</ReactTooltip>
                 <Text>
-                  Hi there 👋🏼 I’m Dustin, I’m{" "}
-                  <Span data-tip="" data-for="age" alt={age.toString()}>
+                  Hi there <Span onClick={() => spinHead()}>👋🏼</Span> I’m
+                  Dustin, I’m{" "}
+                  <Span
+                    underline
+                    data-tip=""
+                    data-for="age"
+                    alt={age.toString()}
+                  >
                     {Math.floor(age)}
                   </Span>{" "}
                   years old.
@@ -87,7 +99,7 @@ export default function Home(props: {
 
             <RightSide>
               <Picture>
-                <StyledImage src="/avatar.png" />
+                <StyledImage rotate={headSpin} src="/avatar.png" />
               </Picture>
             </RightSide>
           </Sections>
@@ -182,8 +194,8 @@ const ProfileInfo = styled.div`
   }
 `;
 
-const Span = styled.span<{ alt?: string }>`
-  text-decoration: underline;
+const Span = styled.span<{ alt?: string; underline?: boolean }>`
+  text-decoration: ${(props) => (props.underline ? "underline" : "none")};
 `;
 
 const ActivityContainer = styled.div`
@@ -298,12 +310,13 @@ const StatusIcon = styled.span<{ status: string }>`
   margin-left: 20px;
 `;
 
-const StyledImage = styled.img`
+const StyledImage = styled.img<{ rotate?: string }>`
   border-radius: 10px;
   min-width: 100%;
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
+  transform: ${(props) => (props.rotate ? `rotate(${props.rotate})` : "none")};
 `;
 
 const Container = styled.div`
