@@ -92,6 +92,10 @@ const Container = styled.div`
   justify-content: space-between;
   padding-bottom: 40px;
   background-color: var(--background);
+
+  @media only screen and (max-width: 1080px) {
+    visibility: hidden;
+  }
 `;
 
 const MoonIcon = styled(Icon)`

@@ -10,7 +10,7 @@ export function PageHead(props: IHeadProps): ReactElement {
     <Head>
       <title>{props.name} • Dustin Rouillard</title>
 
-      <meta name="viewport" content="width=device-width, initial-scale=0.5" />
+      {/* <meta name="viewport" content="width=device-width, initial-scale=0.5" /> */}
       <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <meta name="author" content="Dustin Rouillard" />
       <meta name="copyright" content="Dustin Rouillard" />

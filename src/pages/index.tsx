@@ -49,13 +49,11 @@ export default function Home(props: {
         <PageHead name="Vibing" />
         <Container>
           <Sections>
-            {!right && (
-              <RightSide>
-                <Picture>
-                  <StyledImage src="/avatar.png" />
-                </Picture>
-              </RightSide>
-            )}
+            <TopSide>
+              <Picture>
+                <StyledImage src="/avatar.png" />
+              </Picture>
+            </TopSide>
 
             <ProfileInfo>
               <NameAndStatus>
@@ -73,13 +71,11 @@ export default function Home(props: {
               </Description>
             </ProfileInfo>
 
-            {right && (
-              <RightSide>
-                <Picture>
-                  <StyledImage src="/avatar.png" />
-                </Picture>
-              </RightSide>
-            )}
+            <RightSide>
+              <Picture>
+                <StyledImage src="/avatar.png" />
+              </Picture>
+            </RightSide>
           </Sections>
         </Container>
 
@@ -194,6 +190,7 @@ const Activity = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 10px;
+  margin-bottom: 100px;
 `;
 
 const SectionTitle = styled.h3`
@@ -248,8 +245,8 @@ const StatusIcon = styled.span<{ status: string }>`
   display: flex;
   border-radius: 50%;
   border: 0.2px solid var(--text);
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   margin: 0;
   margin-left: 20px;
 `;
@@ -328,6 +325,26 @@ const RightSide = styled.div`
   position: relative;
   margin-left: 30px;
   width: 350px;
+
+  @media only screen and (max-width: 1080px) {
+    visibility: hidden;
+    display: none;
+  }
+`;
+
+const TopSide = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-left: 30px;
+  width: 350px;
+  visibility: hidden;
+  display: none;
+
+  @media only screen and (max-width: 1080px) {
+    visibility: visible;
+    display: flex;
+  }
 `;
 
 export async function getServerSideProps() {
