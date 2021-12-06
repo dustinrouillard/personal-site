@@ -22,8 +22,8 @@ export default function Home(props: {
   const age = useYearsAgo(date);
 
   const [status, setStatus] = useState<string>("offline");
-  const [right, setRight] = useState(true);
   const [headSpin, setHeadSpin] = useState("0deg");
+  const [headTimeout, setHeadTimeout] = useState<NodeJS.Timeout>();
 
   function presenceChange(data: LanyardPresence) {
     setStatus(data.discord_status || "offline");
@@ -32,7 +32,8 @@ export default function Home(props: {
   function spinHead() {
     const deg = `${Math.floor(Math.random() * 300) + 60}deg`;
     setHeadSpin(deg);
-    setTimeout(setHeadSpin, 1000, "0deg");
+    clearTimeout(headTimeout);
+    setHeadTimeout(setTimeout(setHeadSpin, 1000, "0deg"));
   }
 
   useEffect(() => {
@@ -42,12 +43,6 @@ export default function Home(props: {
       lanyard.removeListener("presence", presenceChange);
     };
   }, []);
-
-  if (typeof window != "undefined")
-    useEffect(() => {
-      if (window.innerWidth < 1080) setRight(false);
-      else setRight(true);
-    }, [window.innerWidth]);
 
   return (
     <>
@@ -126,7 +121,7 @@ export default function Home(props: {
             </>
           )}
 
-          <SectionTitle>Activity Statistics</SectionTitle>
+          <SectionTitle>Weekly Activity Statistics</SectionTitle>
           <Activity>
             <>
               <ReactTooltip id={"weekly-commands"}>

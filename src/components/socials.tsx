@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import styled from "styled-components";
 
 import { Icon } from "./icon";
+import { Dollar } from "./icons/Dollar";
 
 import { Github } from "./icons/Github";
 import { LinkedIn } from "./icons/LinkedIn";
@@ -27,6 +28,15 @@ export function SocialLinks(props: any): ReactElement {
           highlight="#9CDAF1"
           tooltip="Github"
           link="https://dstn.to/github"
+        />
+      </IconWrapped>
+      <IconWrapped>
+        <Icon
+          size={25}
+          icon={Dollar}
+          highlight="#9CDAF1"
+          tooltip="Sponsor"
+          link="https://dstn.to/sponsor"
         />
       </IconWrapped>
       <IconWrapped>
