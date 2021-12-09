@@ -23,9 +23,9 @@ export function Post(props: BlogPost): ReactElement {
         <Tooltip
           place="top"
           effect="solid"
-          textColor="var(--text)"
-          backgroundColor="var(--background)"
-          arrowColor="var(--background)"
+          textColor="var(--text, #000000)"
+          backgroundColor="var(--background, #ffffff)"
+          arrowColor="var(--background, #ffffff)"
         />
         <Created data-tip={new Date(props.date).toLocaleString()}>
           {time}
@@ -36,7 +36,7 @@ export function Post(props: BlogPost): ReactElement {
 }
 
 const SeperatorDot = styled.span`
-  color: var(--text);
+  color: var(--text, #000000);
   padding-left: 8px;
   padding-right: 8px;
   font-size: 0.8em;
@@ -44,7 +44,7 @@ const SeperatorDot = styled.span`
 `;
 
 const Read = styled.div`
-  color: var(--text);
+  color: var(--text, #000000);
   font-family: "FiraCode-Medium";
   font-size: 0.8em;
   font-weight: normal;
@@ -64,7 +64,7 @@ const Title = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.4em;
-  color: var(--text);
+  color: var(--text, #000000);
   margin-bottom: 15px;
   font-weight: normal;
   margin-top: 0px;
@@ -80,14 +80,14 @@ const Summary = styled.h4`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 0.8em;
-  color: var(--text);
+  color: var(--text, #000000);
   margin-bottom: 15px;
   font-weight: normal;
   margin-top: 0px;
 `;
 
 const Created = styled.text`
-  color: var(--text);
+  color: var(--text, #000000);
   font-family: "FiraCode-Medium";
   font-size: 0.8em;
   padding-bottom: 9px;

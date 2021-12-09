@@ -97,7 +97,7 @@ const Light = styled.li`
   :before {
     content: "";
     position: absolute;
-    background: var(--text);
+    background: var(--text, #000000);
     width: 10px;
     height: 9.333px;
     border-radius: 3px;
@@ -111,7 +111,7 @@ const Light = styled.li`
     position: absolute;
     width: 52px;
     height: 18.666px;
-    border-bottom: solid var(--text) 2px;
+    border-bottom: solid var(--text, #000000) 2px;
     border-radius: 50%;
   }
   :last-child:after {

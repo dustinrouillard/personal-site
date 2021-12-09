@@ -206,7 +206,7 @@ const ActivityContainer = styled.div`
 
 const ActivityStat = styled.p<{ right?: boolean }>`
   margin: 0;
-  color: var(--text);
+  color: var(--text, #000000);
   margin-right: ${(props) => (props.right ? "10px" : "0px")};
 `;
 
@@ -214,7 +214,7 @@ const ActivityStatBold = styled.p`
   font-family: "FiraCode-Bold";
   margin: 0;
   margin-right: 10px;
-  color: var(--text);
+  color: var(--text, #000000);
 `;
 
 const SocialWrapped = styled(SocialLinks)`
@@ -252,7 +252,7 @@ const Activity = styled.div`
 const SectionTitle = styled.h3`
   font-family: "FiraCode-Bold";
   font-size: 1.2em;
-  color: var(--text);
+  color: var(--text, #000000);
   font-weight: normal;
   margin-top: 50px;
 `;
@@ -267,7 +267,7 @@ const BottomSections = styled.div`
 
 const SeperatorLine = styled.div`
   display: flex;
-  background-color: var(--background);
+  background-color: var(--background, #ffffff);
   filter: brightness(90%);
   height: 20px;
   width: 100%;
@@ -301,7 +301,7 @@ const StatusIcon = styled.span<{ status: string }>`
 
   display: flex;
   border-radius: 50%;
-  border: 0.2px solid var(--text);
+  border: 0.2px solid var(--text, #000000);
   width: 20px;
   height: 20px;
   margin: 0;
@@ -330,7 +330,7 @@ const Name = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.9em;
-  color: var(--text);
+  color: var(--text, #000000);
   font-weight: normal;
 
   @media only screen and (max-width: 1080px) {
@@ -348,7 +348,7 @@ const Description = styled.div`
   flex-direction: column;
   font-family: "FiraCode-Medium";
   font-size: 1.3em;
-  color: var(--text);
+  color: var(--text, #000000);
   width: 80%;
   flex: 1;
 

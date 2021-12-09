@@ -71,7 +71,7 @@ export function Spotify(): ReactElement {
 }
 
 const Link = styled.a`
-  color: var(--text);
+  color: var(--text, #000000);
   text-decoration: none;
   display: inherit;
 `;
@@ -80,7 +80,7 @@ const Root = styled.div<{ visible: boolean }>`
   border-radius: 10px;
   width: 100%;
   height: 85px;
-  background-color: var(--widget-background);
+  background-color: var(--widget-background, #c8c8c8);
   box-shadow: 2px 2px 20px 0px #00000086;
   align-items: center;
   visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
@@ -99,7 +99,7 @@ const Container = styled.div`
 
 const Text = styled.p<{ size?: number }>`
   font-family: "FiraCode-Medium";
-  color: var(--text);
+  color: var(--text, #000000);
   margin-left: 10px;
   margin-top: 1px;
   margin-bottom: 3px;
@@ -124,7 +124,7 @@ const Progress = styled.div`
   border-bottom-right-radius: 30px;
   width: 100%;
   height: 10px;
-  background-color: var(--widget-background);
+  background-color: var(--widget-background, #c8c8c8);
   filter: brightness(70%);
 
   overflow: hidden;
@@ -136,8 +136,8 @@ const ProgressBar = styled.div`
   height: 10px;
   border-bottom-left-radius: 30px;
   overflow: hidden;
-  color: var(--alt-text);
-  background-color: var(--text);
+  color: var(--alt-text, #ffffff);
+  background-color: var(--text, #000000);
   width: ${(props: { progress: number }) =>
     props.progress ? `${props.progress}%` : "0%"};
   transition: all 1000ms linear;
@@ -149,7 +149,7 @@ const ProgressText = styled.p<{ inverted?: boolean }>`
   float: right;
   padding-right: 5px;
   padding-left: 5px;
-  color: var(--text);
+  color: var(--text, #000000);
   margin: 0px;
   font-size: 8px;
   filter: ${({ inverted }) => (inverted ? "invert()" : "none")};

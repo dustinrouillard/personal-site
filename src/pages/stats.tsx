@@ -50,7 +50,7 @@ const Title = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.8em;
-  color: var(--text);
+  color: var(--text, #000000);
   font-weight: normal;
   margin-top: 0px;
 `;
@@ -59,7 +59,7 @@ const SectionTitle = styled.h1`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1.8em;
-  color: var(--text);
+  color: var(--text, #000000);
   font-weight: normal;
   margin-bottom: 0px;
 `;

@@ -40,7 +40,7 @@ const Name = styled.h3`
   display: block;
   font-family: "FiraCode-Bold";
   font-size: 1em;
-  color: var(--text);
+  color: var(--text, #000000);
   font-weight: normal;
   text-align: center;
 `;
@@ -49,7 +49,7 @@ const Stat = styled.h2`
   display: block;
   font-family: "FiraCode-Medium";
   font-size: 1.6em;
-  color: var(--text);
+  color: var(--text, #000000);
   font-weight: normal;
   text-align: center;
 `;
@@ -57,7 +57,7 @@ const Stat = styled.h2`
 const Card = styled.div`
   border-radius: 10px;
   box-shadow: 2px 2px 20px 0px #00000036;
-  background-color: var(--widget-background)
+  background-color: var(--widget-background, #c8c8c8)
   padding: 10px;
   min-width: 200px;
   max-width: 200px;

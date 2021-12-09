@@ -53,8 +53,8 @@ const Container = styled.div<{
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }>`
   font-family: "FiraCode-Medium";
-  background-color: var(--widget-background);
-  color: var(--text);
+  background-color: var(--widget-background, #c8c8c8);
+  color: var(--text, #000000);
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
@@ -136,6 +136,6 @@ const Footer = styled.div`
 `;
 
 const Link = styled.a`
-  color: var(--text);
+  color: var(--text, #000000);
   text-decoration: none;
 `;

@@ -66,7 +66,7 @@ export function Icon(props: IconProps): JSX.Element {
 }
 
 const Link = styled.a`
-  color: var(--text);
+  color: var(--text, #000000);
   text-decoration: none;
 `;
 

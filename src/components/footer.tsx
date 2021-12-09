@@ -44,7 +44,7 @@ export function Footer(): ReactElement {
 
 const Text = styled.div`
   font-family: "FiraCode-Light";
-  color: var(--text);
+  color: var(--text, #000000);
   opacity: 50%;
 `;
 
@@ -66,7 +66,7 @@ const RightContainer = styled.div`
 
 const ExtLink = styled.a`
   font-family: "FiraCode-Light";
-  color: var(--text);
+  color: var(--text, #000000);
   text-decoration: none;
   opacity: 50%;
   :hover {
@@ -79,7 +79,7 @@ const ExtLink = styled.a`
 const Link = styled.a`
   text-decoration: none;
   font-family: "FiraCode-Light";
-  color: var(--text);
+  color: var(--text, #000000);
   opacity: 50%;
   :hover {
     cursor: pointer;
@@ -99,7 +99,7 @@ const Container = styled.div`
   max-height: max-content;
   justify-content: space-between;
   padding-bottom: 40px;
-  background-color: var(--background);
+  background-color: var(--background, #ffffff);
 
   @media only screen and (max-width: 1080px) {
     visibility: hidden;
@@ -109,7 +109,7 @@ const Container = styled.div`
 const MoonIcon = styled(Icon)`
   text-decoration: none;
   font-family: "FiraCode-Light";
-  color: var(--text);
+  color: var(--text, #000000);
   opacity: 50%;
   :hover {
     cursor: pointer;

@@ -8,7 +8,7 @@ import styled from "styled-components";
 const GlobalStyle = createGlobalStyle`
   body {
     box-sizing: border-box;
-    background-color: var(--background);    
+    background-color: var(--background, #ffffff);    
     min-height: 100%;
     position: relative;
   }
@@ -25,17 +25,17 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --alt-text: #000000
-    --text: #ffffff
+    --alt-text: #ffffff
+    --text: #000000
     --highlight-color: #127796
-    --widget-background: #393939
-    --background: #181a1b
+    --widget-background: #c8c8c8
+    --background: #ffffff
   }
 
   .__react_component_tooltip {
     font-family: "FiraCode-Light";
-    color: var(--text);
-    background-color: var(--widget-background);
+    color: var(--text, #000000);
+    background-color: var(--widget-background, #c8c8c8);
     box-shadow: 2px 2px 10px 0px #00000026;
   }
 `;
