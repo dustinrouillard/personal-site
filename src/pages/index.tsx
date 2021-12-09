@@ -12,6 +12,7 @@ import { lanyard } from "../utils/lanyard";
 import { Repository } from "../components/Repository";
 import { PinnedRepository } from "../types/github";
 import { getPinnedRepositories } from "../utils/github";
+import { ChristmasLights } from "../components/ChristmasLights";
 
 const date = new Date("07/15/1999");
 
@@ -52,7 +53,7 @@ export default function Home(props: {
           <Sections>
             <TopSide>
               <Picture>
-                <StyledImage rotate={headSpin} src="/avatar.png" />
+                <StyledImage rotate={headSpin} src="/christmas-avatar.png" />
               </Picture>
             </TopSide>
 
@@ -94,13 +95,14 @@ export default function Home(props: {
 
             <RightSide>
               <Picture>
-                <StyledImage rotate={headSpin} src="/avatar.png" />
+                <StyledImage rotate={headSpin} src="/christmas-avatar.png" />
               </Picture>
             </RightSide>
           </Sections>
         </Container>
 
         <SeperatorLine />
+        <ChristmasLights />
 
         <BottomSections>
           {!!props.pinnedRepos && (
@@ -270,6 +272,7 @@ const SeperatorLine = styled.div`
   height: 20px;
   width: 100%;
   margin-bottom: 10px;
+  z-index: 1;
 `;
 
 const Outter = styled.div`
