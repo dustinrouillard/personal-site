@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
 
@@ -268,7 +268,7 @@ const BottomSections = styled.div`
 const SeperatorLine = styled.div`
   display: flex;
   background-color: var(--background, #ffffff);
-  filter: brightness(90%);
+  filter: brightness(70%);
   height: 20px;
   width: 100%;
   margin-bottom: 10px;
@@ -301,7 +301,6 @@ const StatusIcon = styled.span<{ status: string }>`
 
   display: flex;
   border-radius: 50%;
-  border: 0.2px solid var(--text, #000000);
   width: 20px;
   height: 20px;
   margin: 0;

@@ -1,16 +1,16 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import FontStyle from "../components/fonts";
 import { Footer } from "../components/footer";
 import { SetTheme, ToggleTheme } from "../utils/theme";
 import styled from "styled-components";
+import Snowfall from "react-snowfall";
 
 const GlobalStyle = createGlobalStyle`
   body {
     box-sizing: border-box;
     background-color: var(--background, #ffffff);    
     min-height: 100%;
-    position: relative;
   }
 
   html,
@@ -25,11 +25,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --alt-text: #ffffff
-    --text: #000000
-    --highlight-color: #127796
-    --widget-background: #c8c8c8
-    --background: #ffffff
+    --alt-text: #000000;
+    --text: #ffffff;
+    --highlight-color: #127796;
+    --widget-background: #393939;
+    --background: #181a1b;
+    --lightstrand: #a5a5a5;
   }
 
   .__react_component_tooltip {
@@ -45,12 +46,32 @@ const Page = styled.div`
 `;
 
 export default function App({ Component, pageProps }) {
+  const [snowflakes, setSnowflakes] = useState<boolean>(() => {
+    if (typeof window == "undefined") return false;
+    if (
+      !localStorage.getItem("theme-name") ||
+      localStorage.getItem("theme-name") == "dark"
+    )
+      return true;
+    return true;
+  });
+  const [themeName, setThemeName] = useState<string>(() => {
+    if (typeof window == "undefined") return "dark";
+    if (!localStorage.getItem("theme-name")) return "dark";
+    return localStorage.getItem("theme-name");
+  });
+
+  useEffect(() => {
+    if (themeName == "light") setSnowflakes(false);
+    else setSnowflakes(true);
+  }, [themeName]);
+
   useEffect(() => {
     if (localStorage.getItem("theme-name"))
       SetTheme(localStorage.getItem("theme-name") as "light" | "dark");
 
     function keydown(event: KeyboardEvent) {
-      if (event.key == "t") ToggleTheme();
+      if (event.key == "t") setThemeName(ToggleTheme());
     }
 
     if (typeof document != "undefined")
@@ -64,6 +85,17 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      {snowflakes && (
+        <Snowfall
+          speed={[0.5, 3.5]}
+          snowflakeCount={60}
+          wind={[-0.5, 2]}
+          radius={[1, 2]}
+          style={{
+            zIndex: -1,
+          }}
+        />
+      )}
       <Page>
         <FontStyle />
         <GlobalStyle />

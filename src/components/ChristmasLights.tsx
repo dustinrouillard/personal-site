@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export function ChristmasLights(): ReactElement {
   return (
@@ -21,39 +21,42 @@ const Lights = styled.ul`
   padding: 0;
   pointer-events: none;
   width: 100%;
+  height: 10%;
+`;
 
-  @keyframes flash-1 {
-    0%,
-    100% {
-      background: rgba(0, 247, 165, 1);
-      box-shadow: 0px 4.666 24px 3px rgba(0, 247, 165, 1);
-    }
-    50% {
-      background: rgba(0, 247, 165, 0.4);
-      box-shadow: 0px 4.666 24px 3px rgba(0, 247, 165, 0.2);
-    }
+const flash1 = keyframes`
+  0%,
+  100% {
+    background: #00f7a5;
+    box-shadow: 0px 4.6666666667px 24px 3px #00f7a5;
   }
-  @keyframes flash-2 {
-    0%,
-    100% {
-      background: rgba(0, 255, 255, 1);
-      box-shadow: 0px 4.666 24px 3px rgba(0, 255, 255, 1);
-    }
-    50% {
-      background: rgba(0, 255, 255, 0.4);
-      box-shadow: 0px 4.666 24px 3px rgba(0, 255, 255, 0.2);
-    }
+  50% {
+    background: rgba(0, 247, 165, 0.4);
+    box-shadow: 0px 4.6666666667px 24px 3px rgba(0, 247, 165, 0.2);
   }
-  @keyframes flash-3 {
-    0%,
-    100% {
-      background: rgba(247, 0, 148, 1);
-      box-shadow: 0px 4.666 24px 3px rgba(247, 0, 148, 1);
-    }
-    50% {
-      background: rgba(247, 0, 148, 0.4);
-      box-shadow: 0px 4.666 24px 3px rgba(247, 0, 148, 0.2);
-    }
+`;
+
+const flash2 = keyframes`
+  0%,
+ 100% {
+    background: #3e256e;
+    box-shadow: 0px 4.6666666667px 24px 3px #3e256e;
+  }
+  50% {
+    background: rgba(0, 153, 255, 0.4);
+    box-shadow: 0px 4.6666666667px 24px 3px rgba(0, 153, 255, 0.4);
+  }
+`;
+
+const flash3 = keyframes`
+  0%,
+  100% {
+    background: #f70094;
+    box-shadow: 0px 4.6666666667px 24px 3px #f70094;
+  }
+  50% {
+    background: rgba(247, 0, 148, 0.4);
+    box-shadow: 0px 4.6666666667px 24px 3px rgba(247, 0, 148, 0.2);
   }
 `;
 
@@ -74,18 +77,18 @@ const Light = styled.li`
   display: inline-block;
   background: rgba(0, 247, 165, 1);
   box-shadow: 0px 4.666 24px 3px rgba(0, 247, 165, 1);
-  animation-name: flash-1;
+  animation-name: ${flash1};
   animation-duration: 2s;
   :nth-child(2n + 1) {
     background: rgba(0, 255, 255, 1);
     box-shadow: 0px 4.666 24px 3px rgba(0, 255, 255, 0.5);
-    animation-name: flash-2;
+    animation-name: ${flash2};
     animation-duration: 0.4s;
   }
   :nth-child(4n + 2) {
     background: rgba(247, 0, 148, 1);
     box-shadow: 0px 4.666 24px 3px rgba(247, 0, 148, 1);
-    animation-name: flash-3;
+    animation-name: ${flash3};
     animation-duration: 1.1s;
   }
   :nth-child(odd) {
@@ -97,7 +100,7 @@ const Light = styled.li`
   :before {
     content: "";
     position: absolute;
-    background: var(--text, #000000);
+    background: var(--lightstrand, #ffffff);
     width: 10px;
     height: 9.333px;
     border-radius: 3px;
@@ -111,7 +114,7 @@ const Light = styled.li`
     position: absolute;
     width: 52px;
     height: 18.666px;
-    border-bottom: solid var(--text, #000000) 2px;
+    border-bottom: solid var(--lightstrand, #ffffff) 2px;
     border-radius: 50%;
   }
   :last-child:after {

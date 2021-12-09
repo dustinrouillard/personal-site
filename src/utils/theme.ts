@@ -5,6 +5,7 @@ const themes = {
     "highlight-color": "#127796",
     "widget-background": "#393939",
     background: "#181a1b",
+    lightstrand: "#ffffff"
   },
   light: {
     'alt-text': "#ffffff",
@@ -12,6 +13,7 @@ const themes = {
     "highlight-color": "#127796",
     "widget-background": "#c8c8c8",
     background: "#ffffff",
+    lightstrand: "#436046"
   },
 };
 
@@ -22,8 +24,8 @@ export function SetTheme(theme_name: "light" | "dark") {
   localStorage.setItem("theme-name", theme_name);
 }
 
-export function ToggleTheme() {
+export function ToggleTheme(): string {
   const current_theme = localStorage.getItem("theme-name") || "light";
   SetTheme(current_theme == "light" ? "dark" : "light");
-  return;
+  return current_theme == "light" ? "dark" : "light";
 }
