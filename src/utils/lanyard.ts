@@ -37,7 +37,7 @@ export class Lanyard extends EventEmitter {
     super();
 
     this.user_id = id;
-    this.ws = new WebSocket("wss://lanyard.rest/socket");
+    this.ws = new WebSocket("wss://api.lanyard.rest/socket");
 
     // Socket open handler
     this.ws.addEventListener("open", () => this.emit("connected"));
