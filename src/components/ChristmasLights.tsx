@@ -61,6 +61,7 @@ const flash3 = keyframes`
 `;
 
 const Light = styled.li`
+  transform: translateZ(0);
   z-index: 1;
   position: relative;
   animation-fill-mode: both;

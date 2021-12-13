@@ -96,7 +96,7 @@ const Container = styled.div`
   min-width: fit-content;
   padding-top: 40px;
   width: 100%;
-  z-index: -2;
+  z-index: 2;
   max-height: max-content;
   justify-content: space-between;
   padding-bottom: 40px;
