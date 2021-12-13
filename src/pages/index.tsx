@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
+import NoSSR from "../components/nossr";
 
 import { PageHead } from "../components/head";
 import { Spotify } from "../components/spotify";
@@ -56,16 +57,18 @@ export default function Home(props: {
             <ProfileInfo>
               <NameAndStatus>
                 <Name>Dustin Rouillard</Name>
-                <ReactTooltip id={"presence"}>
-                  {status == "dnd"
-                    ? "Do not disturb"
-                    : status.replace(
-                        /\w\S*/g,
-                        (txt) =>
-                          txt.charAt(0).toUpperCase() +
-                          txt.substr(1).toLowerCase()
-                      )}
-                </ReactTooltip>
+                <NoSSR>
+                  <ReactTooltip id={"presence"}>
+                    {status == "dnd"
+                      ? "Do not disturb"
+                      : status.replace(
+                          /\w\S*/g,
+                          (txt) =>
+                            txt.charAt(0).toUpperCase() +
+                            txt.substr(1).toLowerCase()
+                        )}
+                  </ReactTooltip>
+                </NoSSR>
                 <StatusIcon data-tip="" data-for="presence" status={status} />
               </NameAndStatus>
               <Description>
@@ -112,42 +115,48 @@ export default function Home(props: {
           <SectionTitle>Weekly Activity Statistics</SectionTitle>
           <Activity>
             <>
-              <ReactTooltip id={"weekly-commands"}>
-                <ActivityContainer>
-                  <ActivityStatBold>{0}</ActivityStatBold>
-                  <ActivityStat right>Linux</ActivityStat>
-                  <ActivityStatBold>{0}</ActivityStatBold>
-                  <ActivityStat>Mac</ActivityStat>
-                </ActivityContainer>
-              </ReactTooltip>
+              <NoSSR>
+                <ReactTooltip id={"weekly-commands"}>
+                  <ActivityContainer>
+                    <ActivityStatBold>{0}</ActivityStatBold>
+                    <ActivityStat right>Linux</ActivityStat>
+                    <ActivityStatBold>{0}</ActivityStatBold>
+                    <ActivityStat>Mac</ActivityStat>
+                  </ActivityContainer>
+                </ReactTooltip>
+              </NoSSR>
               <ActivityContainer data-tip="" data-for={"weekly-commands"}>
                 <ActivityStatBold>
                   {props.stats.weekly?.commands_ran.toLocaleString()}
                 </ActivityStatBold>
                 <ActivityStat>commands executed</ActivityStat>
               </ActivityContainer>
-              <ReactTooltip id={"weekly-builds"}>
-                <ActivityContainer>
-                  <ActivityStatBold>{0}</ActivityStatBold>
-                  <ActivityStat right>Linux</ActivityStat>
-                  <ActivityStatBold>{0}</ActivityStatBold>
-                  <ActivityStat>Mac</ActivityStat>
-                </ActivityContainer>
-              </ReactTooltip>
+              <NoSSR>
+                <ReactTooltip id={"weekly-builds"}>
+                  <ActivityContainer>
+                    <ActivityStatBold>{0}</ActivityStatBold>
+                    <ActivityStat right>Linux</ActivityStat>
+                    <ActivityStatBold>{0}</ActivityStatBold>
+                    <ActivityStat>Mac</ActivityStat>
+                  </ActivityContainer>
+                </ReactTooltip>
+              </NoSSR>
               <ActivityContainer data-tip="" data-for={"weekly-builds"}>
                 <ActivityStatBold>
                   {props.stats.weekly?.builds_ran.toLocaleString()}
                 </ActivityStatBold>
                 <ActivityStat>docker builds assembled</ActivityStat>
               </ActivityContainer>
-              <ReactTooltip id={"weekly-kubectl"}>
-                <ActivityContainer>
-                  <ActivityStatBold>{0}</ActivityStatBold>
-                  <ActivityStat right>Linux</ActivityStat>
-                  <ActivityStatBold>{0}</ActivityStatBold>
-                  <ActivityStat>Mac</ActivityStat>
-                </ActivityContainer>
-              </ReactTooltip>
+              <NoSSR>
+                <ReactTooltip id={"weekly-kubectl"}>
+                  <ActivityContainer>
+                    <ActivityStatBold>{0}</ActivityStatBold>
+                    <ActivityStat right>Linux</ActivityStat>
+                    <ActivityStatBold>{0}</ActivityStatBold>
+                    <ActivityStat>Mac</ActivityStat>
+                  </ActivityContainer>
+                </ReactTooltip>
+              </NoSSR>
               <ActivityContainer data-tip="" data-for={"weekly-kubectl"}>
                 <ActivityStatBold>
                   {props.stats.weekly?.kubectl_commands?.toLocaleString() || 0}

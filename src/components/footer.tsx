@@ -1,10 +1,12 @@
-import NextLink from "next/link";
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import ReactTooltip from "react-tooltip";
 import styled from "styled-components";
+import NextLink from "next/link";
+
 import { ToggleTheme } from "../utils/theme";
 import { Icon } from "./icon";
 import { Moon } from "./icons/Moon";
+import NoSSR from "./nossr";
 
 export function Footer(): ReactElement {
   return (
@@ -17,7 +19,9 @@ export function Footer(): ReactElement {
         <Text>{new Date().getFullYear()}</Text>
       </LeftContainer>
       <RightContainer>
-        <ReactTooltip id={"theme-toggle"}>Toggle Theme (T)</ReactTooltip>
+        <NoSSR>
+          <ReactTooltip id={"theme-toggle"}>Toggle Theme (T)</ReactTooltip>
+        </NoSSR>
         <MoonIcon
           data-tip=""
           data-for="theme-toggle"
