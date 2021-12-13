@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ReactTooltip from "react-tooltip";
-
 import styled from "styled-components";
+
+import NoSSR from "./nossr";
 
 interface IconProps {
   size: number;
@@ -30,7 +31,9 @@ export function Icon(props: IconProps): JSX.Element {
   return (
     <>
       {!!props.tooltip && (
-        <ReactTooltip id={props.tooltip}>{props.tooltip}</ReactTooltip>
+        <NoSSR>
+          <ReactTooltip id={props.tooltip}>{props.tooltip}</ReactTooltip>
+        </NoSSR>
       )}
       <IconBase
         onMouseEnter={handleMouseEnter}
