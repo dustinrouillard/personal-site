@@ -6,22 +6,18 @@ import { PageHead } from "../components/head";
 import { Spotify } from "../components/spotify";
 import { SocialLinks } from "../components/socials";
 
-import { useYearsAgo } from "../hooks/useTimeAgo";
 import { LanyardPresence } from "../types/lanyard";
 import { lanyard } from "../utils/lanyard";
 import { Repository } from "../components/Repository";
 import { PinnedRepository } from "../types/github";
 import { getPinnedRepositories } from "../utils/github";
 import { ChristmasLights } from "../components/ChristmasLights";
-
-const date = new Date("07/15/1999");
+import { Age } from "../components/age";
 
 export default function Home(props: {
   stats: any;
   pinnedRepos: PinnedRepository[];
 }) {
-  const age = useYearsAgo(date);
-
   const [status, setStatus] = useState<string>("offline");
   const [headSpin, setHeadSpin] = useState("0deg");
   const [headTimeout, setHeadTimeout] = useState<NodeJS.Timeout>();
@@ -73,19 +69,9 @@ export default function Home(props: {
                 <StatusIcon data-tip="" data-for="presence" status={status} />
               </NameAndStatus>
               <Description>
-                <ReactTooltip id={"age"}>{age.toFixed(8)}</ReactTooltip>
                 <Text>
                   Hi there <Span onClick={() => spinHead()}>👋🏼</Span> I’m
-                  Dustin, I’m{" "}
-                  <Span
-                    underline
-                    data-tip=""
-                    data-for="age"
-                    alt={age.toString()}
-                  >
-                    {Math.floor(age)}
-                  </Span>{" "}
-                  years old.
+                  Dustin, I’m <Age /> years old.
                 </Text>
                 <Text>Backend developer and network/systems administrator</Text>
                 <SocialWrapped />
