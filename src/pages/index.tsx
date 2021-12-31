@@ -22,6 +22,10 @@ export default function Home(props: {
   const [status, setStatus] = useState<string>("offline");
   const [headSpin, setHeadSpin] = useState("0deg");
   const [headTimeout, setHeadTimeout] = useState<NodeJS.Timeout>();
+  const [christmasTime, setChristmasTime] = useState(() => {
+    const currentDate = new Date();
+    return currentDate.getMonth() == 11;
+  });
 
   function presenceChange(data: LanyardPresence) {
     setStatus(data.discord_status || "offline");
@@ -33,6 +37,14 @@ export default function Home(props: {
     clearTimeout(headTimeout);
     setHeadTimeout(setTimeout(setHeadSpin, 1000, "0deg"));
   }
+
+  useEffect(() => {
+    const int = setInterval(() => {
+      const currentDate = new Date();
+      setChristmasTime(currentDate.getMonth() == 11);
+    }, 1000);
+    return () => clearInterval(int);
+  }, []);
 
   useEffect(() => {
     lanyard.on("presence", presenceChange);
@@ -50,7 +62,10 @@ export default function Home(props: {
           <Sections>
             <TopSide>
               <Picture>
-                <StyledImage rotate={headSpin} src="/christmas-avatar.png" />
+                <StyledImage
+                  rotate={headSpin}
+                  src={`/${christmasTime ? "christmas-avatar" : "avatar"}.png`}
+                />
               </Picture>
             </TopSide>
 
@@ -84,14 +99,17 @@ export default function Home(props: {
 
             <RightSide>
               <Picture>
-                <StyledImage rotate={headSpin} src="/christmas-avatar.png" />
+                <StyledImage
+                  rotate={headSpin}
+                  src={`/${christmasTime ? "christmas-avatar" : "avatar"}.png`}
+                />
               </Picture>
             </RightSide>
           </Sections>
         </Container>
 
         <SeperatorLine />
-        <ChristmasLights />
+        {christmasTime && <ChristmasLights />}
 
         <BottomSections>
           {!!props.pinnedRepos && (

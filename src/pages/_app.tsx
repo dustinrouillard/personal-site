@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import FontStyle from "../components/fonts";
 import { Footer } from "../components/footer";
 import { SetTheme, ToggleTheme } from "../utils/theme";
 import styled from "styled-components";
-import Snowfall from "react-snowfall";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -46,25 +45,11 @@ const Page = styled.div`
 `;
 
 export default function App({ Component, pageProps }) {
-  const [snowflakes, setSnowflakes] = useState<boolean>(() => {
-    if (typeof window == "undefined") return false;
-    if (
-      !localStorage.getItem("theme-name") ||
-      localStorage.getItem("theme-name") == "dark"
-    )
-      return true;
-    return true;
-  });
   const [themeName, setThemeName] = useState<string>(() => {
     if (typeof window == "undefined") return "dark";
     if (!localStorage.getItem("theme-name")) return "dark";
     return localStorage.getItem("theme-name");
   });
-
-  useEffect(() => {
-    if (themeName == "light") setSnowflakes(false);
-    else setSnowflakes(true);
-  }, [themeName]);
 
   useEffect(() => {
     if (localStorage.getItem("theme-name"))
@@ -85,17 +70,6 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      {snowflakes && (
-        <Snowfall
-          speed={[0.5, 3.5]}
-          snowflakeCount={60}
-          wind={[-0.5, 2]}
-          radius={[1, 2]}
-          style={{
-            zIndex: -1,
-          }}
-        />
-      )}
       <Page>
         <FontStyle />
         <GlobalStyle />
