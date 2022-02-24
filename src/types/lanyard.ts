@@ -3,12 +3,12 @@ export interface LanyardPresence {
   listening_to_spotify: boolean;
   discord_user: DiscordUser;
   discord_status: string;
-  activities: Activity[];
+  activities: LanyardActivity[];
   active_on_discord_mobile: boolean;
   active_on_discord_desktop: boolean;
 }
 
-interface Activity {
+export interface LanyardActivity {
   type: number;
   state: string;
   name: string;

@@ -1,10 +1,8 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import styled from "styled-components";
 
 import { InternalPlayerResponse } from "../types/gateway";
-
 import { millisToMinutesAndSeconds } from "../utils/time";
-import { gateway } from "../utils/gateway";
 
 export interface Playing {
   item_name: string;
@@ -12,28 +10,20 @@ export interface Playing {
   item_id: string;
 }
 
-export function Spotify(): ReactElement {
-  const [spotify, setSpotify] = useState<InternalPlayerResponse>();
-  const [listening, setListening] = useState<boolean>(false);
+interface SpotifyProps {
+  small?: boolean;
+  listening: boolean;
+  spotify: InternalPlayerResponse;
+}
 
-  useEffect(() => {
-    const listener = (data: InternalPlayerResponse) => {
-      if ("is_playing" in data) setListening(data.is_playing);
-      setSpotify((state) => {
-        return { ...state, ...data };
-      });
-    };
-
-    gateway.on("spotify", listener);
-
-    return () => {
-      gateway.removeListener("spotify", listener);
-    };
-  }, []);
-
+export function Spotify({
+  small,
+  listening,
+  spotify,
+}: SpotifyProps): ReactElement {
   return (
     !!spotify && (
-      <Root visible={listening}>
+      <Root visible={listening} small={small}>
         <Container>
           <Link
             target={"_blank"}
@@ -42,7 +32,11 @@ export function Spotify(): ReactElement {
             <Image src={spotify.item_image} width="75px" />
           </Link>
           <SpotifyInfo>
-            <Text>{spotify.item_name}</Text>
+            <Text>
+              {small && spotify.item_name && spotify.item_name.length > 29
+                ? `${spotify.item_name.substring(0, 30).trim()}...`
+                : spotify.item_name}
+            </Text>
 
             <Text size={10}>{spotify.item_author}</Text>
           </SpotifyInfo>
@@ -76,9 +70,9 @@ const Link = styled.a`
   display: inherit;
 `;
 
-const Root = styled.div<{ visible: boolean }>`
+const Root = styled.div<{ visible: boolean; small: boolean }>`
   border-radius: 10px;
-  width: 100%;
+  width: ${(props) => (props.small ? "50%" : "100%")};
   height: 85px;
   background-color: var(--widget-background, #c8c8c8);
   box-shadow: 2px 2px 20px 0px #00000086;

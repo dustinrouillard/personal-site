@@ -30,9 +30,20 @@ export function useTimeSince(date: Date) {
 }
 
 export function millisToMinutesAndSeconds(millis: number) {
-  var minutes = Math.floor(millis / 60000);
-  var seconds = Number(((millis % 60000) / 1000).toFixed(0));
+  let minutes = Math.floor(millis / 60000);
+  let seconds = Number(((millis % 60000) / 1000).toFixed(0));
   return seconds == 60
     ? minutes + 1 + ":00"
     : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+}
+
+export function msToTime(ms: number) {
+  let seconds = (ms / 1000).toFixed(1);
+  let minutes = (ms / (1000 * 60)).toFixed(1);
+  let hours = (ms / (1000 * 60 * 60)).toFixed(1);
+  let days = (ms / (1000 * 60 * 60 * 24)).toFixed(1);
+  if (~~seconds < 60) return seconds + " Sec";
+  else if (~~minutes < 60) return minutes + " Min";
+  else if (~~hours < 24) return hours + " Hrs";
+  else return days + " Days";
 }

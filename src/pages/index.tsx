@@ -4,7 +4,6 @@ import ReactTooltip from "react-tooltip";
 import NoSSR from "../components/nossr";
 
 import { PageHead } from "../components/head";
-import { Spotify } from "../components/spotify";
 import { SocialLinks } from "../components/socials";
 
 import { LanyardPresence } from "../types/lanyard";
@@ -14,12 +13,14 @@ import { PinnedRepository } from "../types/github";
 import { getPinnedRepositories } from "../utils/github";
 import { ChristmasLights } from "../components/ChristmasLights";
 import { Age } from "../components/age";
+import { Presence } from "../components/presence";
 
 export default function Home(props: {
   stats: any;
   pinnedRepos: PinnedRepository[];
 }) {
   const [status, setStatus] = useState<string>("offline");
+
   const [headSpin, setHeadSpin] = useState("0deg");
   const [headTimeout, setHeadTimeout] = useState<NodeJS.Timeout>();
   const [christmasTime, setChristmasTime] = useState(() => {
@@ -93,8 +94,8 @@ export default function Home(props: {
                 </Text>
                 <Text>Backend developer and network/systems administrator</Text>
                 <SocialWrapped />
-                <Spotify />
               </Description>
+              <Presence />
             </ProfileInfo>
 
             <RightSide>
@@ -197,6 +198,8 @@ export default function Home(props: {
 
 const ProfileInfo = styled.div`
   align-self: center;
+
+  max-width: 653px;
 
   @media only screen and (max-width: 1080px) {
     display: flex;
