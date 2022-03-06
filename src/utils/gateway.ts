@@ -1,13 +1,13 @@
-import { EventEmitter } from "events";
-import { inflate, deflate } from "pako";
-import { InternalPlayerResponse, StatsResponse } from "../types/gateway";
+import { EventEmitter } from 'events';
+import { inflate, deflate } from 'pako';
+import { InternalPlayerResponse, StatusResponse } from '../types/gateway';
 
 enum Op {
   Init,
   Heartbeat,
   Spotify,
   SpotifyChanged,
-  Stats
+  Status,
 }
 
 interface SocketData {
@@ -31,13 +31,11 @@ export interface Gateway {
   encoding: string; // 'etf' | 'json'
   compression: string; // 'zlib' | 'none'
 
-  on(event: "stats", listener: (stats: StatsResponse) => void): this;
-
-  on(event: "spotify", listener: (data: InternalPlayerResponse) => void): this;
-  on(event: "spotify_changed", listener: (data: InternalPlayerResponse) => void): this;
-
-  on(event: "init", listener: () => void): this;
-  on(event: "connected", listener: () => void): this;
+  on(event: 'status', listener: (data: StatusResponse) => void): this;
+  on(event: 'spotify', listener: (data: InternalPlayerResponse) => void): this;
+  on(event: 'spotify_changed', listener: (data: InternalPlayerResponse) => void): this;
+  on(event: 'connected', listener: () => void): this;
+  on(event: 'init', listener: () => void): this;
 }
 export class Gateway extends EventEmitter {
   constructor(url = 'wss://gw.dstn.to', encoding = 'json', compression = 'zlib') {
@@ -57,22 +55,22 @@ export class Gateway extends EventEmitter {
     if (this.compression != 'none') this.ws.binaryType = 'arraybuffer';
 
     // Socket open handler
-    this.ws.addEventListener("open", () => this.opened());
+    this.ws.addEventListener('open', () => this.opened());
 
     // @ts-ignore
     window.ws = this.ws;
 
     // Message listener
-    this.ws.addEventListener("message", (e) => {
+    this.ws.addEventListener('message', (e) => {
       const message = this.compression != 'none' ? JSON.parse(inflate(e.data, { to: 'string' })) : JSON.parse(e.data);
 
       try {
         this.message(message);
-      } catch (error) { }
+      } catch (error) {}
     });
 
     // Close event for websocket
-    this.ws.addEventListener("close", () => this.closed());
+    this.ws.addEventListener('close', () => this.closed());
   }
 
   private resetConnectionThrottle(): void {
@@ -82,7 +80,16 @@ export class Gateway extends EventEmitter {
 
   private reconnectThrottle(): void {
     this.connectionAttempt++;
-    this.connectionTimeout = setTimeout(() => this.init(), this.connectionAttempt == 1 ? 1000 * 10 : this.connectionAttempt == 2 ? 1000 * 40 : this.connectionAttempt == 3 ? 1000 * 60 * 1 : 1000 * 60 * 10); // 10sx40sx1mx10m*
+    this.connectionTimeout = setTimeout(
+      () => this.init(),
+      this.connectionAttempt == 1
+        ? 1000 * 10
+        : this.connectionAttempt == 2
+        ? 1000 * 40
+        : this.connectionAttempt == 3
+        ? 1000 * 60 * 1
+        : 1000 * 60 * 5,
+    ); // 10sx40sx1mx5m*
   }
 
   private send(op: Op, d?: any): void {
@@ -99,10 +106,7 @@ export class Gateway extends EventEmitter {
     switch (data.op) {
       case Op.Init:
         // Got hello, start our heartbeat interval
-        this.heartbeat = setInterval(
-          () => this.sendHeartbeat(),
-          data.d.heartbeat_interval
-        );
+        this.heartbeat = setInterval(() => this.sendHeartbeat(), data.d.heartbeat_interval);
 
         this.emit('init');
 
@@ -115,8 +119,9 @@ export class Gateway extends EventEmitter {
         this.emit('spotify', data.d);
 
         break;
-      case Op.Stats:
-        this.emit('stats', data.d);
+
+      case Op.Status:
+        this.emit('status', data.d);
 
         break;
 
@@ -126,13 +131,21 @@ export class Gateway extends EventEmitter {
   }
 
   private opened(): void {
-    console.log('%cGateway%c Socket connection opened', 'padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;', 'font-size: 1em;');
-    this.emit("connected");
+    console.log(
+      '%cGateway%c Socket connection opened',
+      'padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;',
+      'font-size: 1em;',
+    );
+    this.emit('connected');
     this.resetConnectionThrottle();
   }
 
   private closed(): void {
-    console.log('%cGateway%c Socket connection closed', 'padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;', 'font-size: 1em;');
+    console.log(
+      '%cGateway%c Socket connection closed',
+      'padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;',
+      'font-size: 1em;',
+    );
     clearInterval(this.heartbeat);
     this.reconnectThrottle();
   }

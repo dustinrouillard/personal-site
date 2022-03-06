@@ -1,27 +1,31 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import ReactTooltip from "react-tooltip";
-import NoSSR from "../components/nossr";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import ReactTooltip from 'react-tooltip';
+import NoSSR from '../components/nossr';
 
-import { PageHead } from "../components/head";
-import { SocialLinks } from "../components/socials";
+import { PageHead } from '../components/head';
+import { SocialLinks } from '../components/socials';
 
-import { LanyardPresence } from "../types/lanyard";
-import { lanyard } from "../utils/lanyard";
-import { Repository } from "../components/Repository";
-import { PinnedRepository } from "../types/github";
-import { getPinnedRepositories } from "../utils/github";
-import { ChristmasLights } from "../components/ChristmasLights";
-import { Age } from "../components/age";
-import { Presence } from "../components/presence";
+import { LanyardPresence } from '../types/lanyard';
+import { lanyard } from '../utils/lanyard';
+import { Repository } from '../components/Repository';
+import { PinnedRepository } from '../types/github';
+import { getPinnedRepositories } from '../utils/github';
+import { ChristmasLights } from '../components/ChristmasLights';
+import { Age } from '../components/age';
+import { Presence } from '../components/presence';
+import { Sleeping } from '../components/icons/Sleeping';
+import { Icon } from '../components/icon';
+import { gateway } from '../utils/gateway';
+import { StatusResponse } from '../types/gateway';
 
-export default function Home(props: {
-  stats: any;
-  pinnedRepos: PinnedRepository[];
-}) {
-  const [status, setStatus] = useState<string>("offline");
+export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[] }) {
+  const [status, setStatus] = useState<string>('offline');
 
-  const [headSpin, setHeadSpin] = useState("0deg");
+  const [customStatus, setCustomStatus] = useState<string>();
+  const [customStatusText, setCustomStatusText] = useState<string>();
+
+  const [headSpin, setHeadSpin] = useState('0deg');
   const [headTimeout, setHeadTimeout] = useState<NodeJS.Timeout>();
   const [christmasTime, setChristmasTime] = useState(() => {
     const currentDate = new Date();
@@ -29,14 +33,19 @@ export default function Home(props: {
   });
 
   function presenceChange(data: LanyardPresence) {
-    setStatus(data.discord_status || "offline");
+    setStatus(data.discord_status || 'offline');
+  }
+
+  function statusChange(data: StatusResponse) {
+    setCustomStatus(data.type);
+    setCustomStatusText(data.message);
   }
 
   function spinHead() {
     const deg = `${Math.floor(Math.random() * 300) + 60}deg`;
     setHeadSpin(deg);
     clearTimeout(headTimeout);
-    setHeadTimeout(setTimeout(setHeadSpin, 1000, "0deg"));
+    setHeadTimeout(setTimeout(setHeadSpin, 1000, '0deg'));
   }
 
   useEffect(() => {
@@ -48,10 +57,12 @@ export default function Home(props: {
   }, []);
 
   useEffect(() => {
-    lanyard.on("presence", presenceChange);
+    lanyard.on('presence', presenceChange);
+    gateway.on('status', statusChange);
 
     return () => {
-      lanyard.removeListener("presence", presenceChange);
+      lanyard.removeListener('presence', presenceChange);
+      gateway.removeListener('status', statusChange);
     };
   }, []);
 
@@ -63,10 +74,7 @@ export default function Home(props: {
           <Sections>
             <TopSide>
               <Picture>
-                <StyledImage
-                  rotate={headSpin}
-                  src={`/${christmasTime ? "christmas-avatar" : "avatar"}.png`}
-                />
+                <StyledImage rotate={headSpin} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
               </Picture>
             </TopSide>
 
@@ -74,23 +82,22 @@ export default function Home(props: {
               <NameAndStatus>
                 <Name>Dustin Rouillard</Name>
                 <NoSSR>
-                  <ReactTooltip id={"presence"}>
-                    {status == "dnd"
-                      ? "Do not disturb"
-                      : status.replace(
-                          /\w\S*/g,
-                          (txt) =>
-                            txt.charAt(0).toUpperCase() +
-                            txt.substr(1).toLowerCase()
-                        )}
+                  <ReactTooltip id={'presence'}>
+                    {status == 'dnd'
+                      ? 'Do not disturb'
+                      : status.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())}
                   </ReactTooltip>
                 </NoSSR>
                 <StatusIcon data-tip="" data-for="presence" status={status} />
+                {customStatus == 'sleeping' && (
+                  <CustomStatusIcon>
+                    <Icon icon={Sleeping} size={20} tooltip={customStatusText} />
+                  </CustomStatusIcon>
+                )}
               </NameAndStatus>
               <Description>
                 <Text>
-                  Hi there <Span onClick={() => spinHead()}>👋🏼</Span> I’m
-                  Dustin, I’m <Age /> years old.
+                  Hi there <Span onClick={() => spinHead()}>👋🏼</Span> I’m Dustin, I’m <Age /> years old.
                 </Text>
                 <Text>Backend developer and network/systems administrator</Text>
                 <SocialWrapped />
@@ -100,10 +107,7 @@ export default function Home(props: {
 
             <RightSide>
               <Picture>
-                <StyledImage
-                  rotate={headSpin}
-                  src={`/${christmasTime ? "christmas-avatar" : "avatar"}.png`}
-                />
+                <StyledImage rotate={headSpin} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
               </Picture>
             </RightSide>
           </Sections>
@@ -135,7 +139,7 @@ export default function Home(props: {
           <Activity>
             <>
               <NoSSR>
-                <ReactTooltip id={"weekly-commands"}>
+                <ReactTooltip id={'weekly-commands'}>
                   <ActivityContainer>
                     <ActivityStatBold>{0}</ActivityStatBold>
                     <ActivityStat right>Linux</ActivityStat>
@@ -144,14 +148,12 @@ export default function Home(props: {
                   </ActivityContainer>
                 </ReactTooltip>
               </NoSSR>
-              <ActivityContainer data-tip="" data-for={"weekly-commands"}>
-                <ActivityStatBold>
-                  {props.stats.weekly?.commands_ran.toLocaleString()}
-                </ActivityStatBold>
+              <ActivityContainer data-tip="" data-for={'weekly-commands'}>
+                <ActivityStatBold>{props.stats.weekly?.commands_ran.toLocaleString()}</ActivityStatBold>
                 <ActivityStat>commands executed</ActivityStat>
               </ActivityContainer>
               <NoSSR>
-                <ReactTooltip id={"weekly-builds"}>
+                <ReactTooltip id={'weekly-builds'}>
                   <ActivityContainer>
                     <ActivityStatBold>{0}</ActivityStatBold>
                     <ActivityStat right>Linux</ActivityStat>
@@ -160,14 +162,12 @@ export default function Home(props: {
                   </ActivityContainer>
                 </ReactTooltip>
               </NoSSR>
-              <ActivityContainer data-tip="" data-for={"weekly-builds"}>
-                <ActivityStatBold>
-                  {props.stats.weekly?.builds_ran.toLocaleString()}
-                </ActivityStatBold>
+              <ActivityContainer data-tip="" data-for={'weekly-builds'}>
+                <ActivityStatBold>{props.stats.weekly?.builds_ran.toLocaleString()}</ActivityStatBold>
                 <ActivityStat>docker builds assembled</ActivityStat>
               </ActivityContainer>
               <NoSSR>
-                <ReactTooltip id={"weekly-kubectl"}>
+                <ReactTooltip id={'weekly-kubectl'}>
                   <ActivityContainer>
                     <ActivityStatBold>{0}</ActivityStatBold>
                     <ActivityStat right>Linux</ActivityStat>
@@ -176,16 +176,12 @@ export default function Home(props: {
                   </ActivityContainer>
                 </ReactTooltip>
               </NoSSR>
-              <ActivityContainer data-tip="" data-for={"weekly-kubectl"}>
-                <ActivityStatBold>
-                  {props.stats.weekly?.kubectl_commands?.toLocaleString() || 0}
-                </ActivityStatBold>
+              <ActivityContainer data-tip="" data-for={'weekly-kubectl'}>
+                <ActivityStatBold>{props.stats.weekly?.kubectl_commands?.toLocaleString() || 0}</ActivityStatBold>
                 <ActivityStat>kubectl commands executed</ActivityStat>
               </ActivityContainer>
               <ActivityContainer>
-                <ActivityStatBold>
-                  {(props.stats.weekly?.development_seconds / 3600).toFixed(2)}
-                </ActivityStatBold>
+                <ActivityStatBold>{(props.stats.weekly?.development_seconds / 3600).toFixed(2)}</ActivityStatBold>
                 <ActivityStat>hours behind an editor</ActivityStat>
               </ActivityContainer>
             </>
@@ -208,11 +204,11 @@ const ProfileInfo = styled.div`
 `;
 
 const Span = styled.span<{ alt?: string; underline?: boolean }>`
-  text-decoration: ${(props) => (props.underline ? "underline" : "none")};
+  text-decoration: ${(props) => (props.underline ? 'underline' : 'none')};
 `;
 
 const ActivityContainer = styled.div`
-  font-family: "FiraCode-Light";
+  font-family: 'FiraCode-Light';
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -223,11 +219,11 @@ const ActivityContainer = styled.div`
 const ActivityStat = styled.p<{ right?: boolean }>`
   margin: 0;
   color: var(--text, #000000);
-  margin-right: ${(props) => (props.right ? "10px" : "0px")};
+  margin-right: ${(props) => (props.right ? '10px' : '0px')};
 `;
 
 const ActivityStatBold = styled.p`
-  font-family: "FiraCode-Bold";
+  font-family: 'FiraCode-Bold';
   margin: 0;
   margin-right: 10px;
   color: var(--text, #000000);
@@ -256,7 +252,7 @@ const RepositoriesRow = styled.div`
 `;
 
 const Activity = styled.div`
-  font-family: "FiraCode-Light";
+  font-family: 'FiraCode-Light';
   display: flex;
   text-align: center;
   align-items: center;
@@ -266,7 +262,7 @@ const Activity = styled.div`
 `;
 
 const SectionTitle = styled.h3`
-  font-family: "FiraCode-Bold";
+  font-family: 'FiraCode-Bold';
   font-size: 1.2em;
   color: var(--text, #000000);
   font-weight: normal;
@@ -306,14 +302,7 @@ const NameAndStatus = styled.div`
 `;
 
 const StatusIcon = styled.span<{ status: string }>`
-  background-color: ${({ status }) =>
-    status == "dnd"
-      ? "red"
-      : status == "idle"
-      ? "yellow"
-      : status == "online"
-      ? "green"
-      : "grey"};
+  background-color: ${({ status }) => (status == 'dnd' ? 'red' : status == 'idle' ? 'yellow' : status == 'online' ? 'green' : 'grey')};
 
   display: flex;
   border-radius: 50%;
@@ -323,13 +312,17 @@ const StatusIcon = styled.span<{ status: string }>`
   margin-left: 20px;
 `;
 
+const CustomStatusIcon = styled.div`
+  margin-left: 10px;
+`;
+
 const StyledImage = styled.img<{ rotate?: string }>`
   border-radius: 10px;
   min-width: 100%;
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
-  transform: ${(props) => (props.rotate ? `rotate(${props.rotate})` : "none")};
+  transform: ${(props) => (props.rotate ? `rotate(${props.rotate})` : 'none')};
 `;
 
 const Container = styled.div`
@@ -343,7 +336,7 @@ const Container = styled.div`
 
 const Name = styled.h1`
   display: block;
-  font-family: "FiraCode-Bold";
+  font-family: 'FiraCode-Bold';
   font-size: 1.9em;
   color: var(--text, #000000);
   font-weight: normal;
@@ -361,7 +354,7 @@ const Text = styled.div`
 const Description = styled.div`
   display: flex;
   flex-direction: column;
-  font-family: "FiraCode-Medium";
+  font-family: 'FiraCode-Medium';
   font-size: 1.3em;
   color: var(--text, #000000);
   width: 80%;

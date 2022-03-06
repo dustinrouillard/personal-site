@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import ReactTooltip from "react-tooltip";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
+import styled from 'styled-components';
 
-import NoSSR from "./nossr";
+import NoSSR from './nossr';
 
 interface IconProps {
   size: number;
@@ -35,12 +35,7 @@ export function Icon(props: IconProps): JSX.Element {
           <ReactTooltip id={props.tooltip}>{props.tooltip}</ReactTooltip>
         </NoSSR>
       )}
-      <IconBase
-        onMouseEnter={handleMouseEnter}
-        data-tip=""
-        data-for={props.tooltip}
-        onMouseLeave={handleMouseLeave}
-      >
+      <IconBase onMouseEnter={handleMouseEnter} data-tip="" data-for={props.tooltip} onMouseLeave={handleMouseLeave}>
         {!!props.link && (
           <Link href={props.link} target="_blank">
             <IconProp
@@ -73,4 +68,6 @@ const Link = styled.a`
   text-decoration: none;
 `;
 
-const IconBase = styled.div``;
+const IconBase = styled.div`
+  color: var(--text, #000000);
+`;
