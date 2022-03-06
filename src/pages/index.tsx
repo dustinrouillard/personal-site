@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import ReactTooltip from 'react-tooltip';
-import NoSSR from '../components/nossr';
 
 import { PageHead } from '../components/head';
 import { SocialLinks } from '../components/socials';
@@ -18,9 +16,18 @@ import { Sleeping } from '../components/icons/Sleeping';
 import { Icon } from '../components/icon';
 import { gateway } from '../utils/gateway';
 import { StatusResponse } from '../types/gateway';
+import { Tippy } from '../components/Tippy';
+
+const StatusMap = {
+  dnd: 'hsl(359, calc(var(--saturation-factor, 1) * 82.6%), 59.4%)',
+  online: 'hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)',
+  idle: 'hsl(38, calc(var(--saturation-factor, 1) * 95.7%), 54.1%)',
+  offline: 'hsl(214, calc(var(--saturation-factor, 1) * 9.9%), 50.4%)',
+};
 
 export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[] }) {
   const [status, setStatus] = useState<string>('offline');
+  const [activeOnMobile, setActiveOnMobile] = useState(false);
 
   const [customStatus, setCustomStatus] = useState<string>();
   const [customStatusText, setCustomStatusText] = useState<string>();
@@ -34,6 +41,7 @@ export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[
 
   function presenceChange(data: LanyardPresence) {
     setStatus(data.discord_status || 'offline');
+    setActiveOnMobile(data.active_on_discord_mobile);
   }
 
   function statusChange(data: StatusResponse) {
@@ -81,14 +89,27 @@ export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[
             <ProfileInfo>
               <NameAndStatus>
                 <Name>Dustin Rouillard</Name>
-                <NoSSR>
-                  <ReactTooltip id={'presence'}>
-                    {status == 'dnd'
+                <Tippy
+                  placement="right"
+                  content={
+                    status == 'dnd'
                       ? 'Do not disturb'
-                      : status.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())}
-                  </ReactTooltip>
-                </NoSSR>
-                <StatusIcon data-tip="" data-for="presence" status={status} />
+                      : status == 'online' && activeOnMobile
+                      ? 'Online on Mobile'
+                      : status.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+                  }
+                >
+                  <StatusIcon status={status}>
+                    <svg height="40" width="24">
+                      {!activeOnMobile && (
+                        <rect width="24" height="24" x="0" y="5" fill={StatusMap[status]} mask={`url(#svg-mask-status-${status})`} />
+                      )}
+                      {activeOnMobile && status == 'online' && (
+                        <rect width="24" height="36" x="0" y="0" fill={StatusMap[status]} mask="url(#svg-mask-status-online-mobile)" />
+                      )}
+                    </svg>
+                  </StatusIcon>
+                </Tippy>
                 {customStatus == 'sleeping' && (
                   <CustomStatusIcon>
                     <Icon icon={Sleeping} size={20} tooltip={customStatusText} />
@@ -138,44 +159,14 @@ export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[
           <SectionTitle>Weekly Activity Statistics</SectionTitle>
           <Activity>
             <>
-              <NoSSR>
-                <ReactTooltip id={'weekly-commands'}>
-                  <ActivityContainer>
-                    <ActivityStatBold>{0}</ActivityStatBold>
-                    <ActivityStat right>Linux</ActivityStat>
-                    <ActivityStatBold>{0}</ActivityStatBold>
-                    <ActivityStat>Mac</ActivityStat>
-                  </ActivityContainer>
-                </ReactTooltip>
-              </NoSSR>
               <ActivityContainer data-tip="" data-for={'weekly-commands'}>
                 <ActivityStatBold>{props.stats.weekly?.commands_ran.toLocaleString()}</ActivityStatBold>
                 <ActivityStat>commands executed</ActivityStat>
               </ActivityContainer>
-              <NoSSR>
-                <ReactTooltip id={'weekly-builds'}>
-                  <ActivityContainer>
-                    <ActivityStatBold>{0}</ActivityStatBold>
-                    <ActivityStat right>Linux</ActivityStat>
-                    <ActivityStatBold>{0}</ActivityStatBold>
-                    <ActivityStat>Mac</ActivityStat>
-                  </ActivityContainer>
-                </ReactTooltip>
-              </NoSSR>
               <ActivityContainer data-tip="" data-for={'weekly-builds'}>
                 <ActivityStatBold>{props.stats.weekly?.builds_ran.toLocaleString()}</ActivityStatBold>
                 <ActivityStat>docker builds assembled</ActivityStat>
               </ActivityContainer>
-              <NoSSR>
-                <ReactTooltip id={'weekly-kubectl'}>
-                  <ActivityContainer>
-                    <ActivityStatBold>{0}</ActivityStatBold>
-                    <ActivityStat right>Linux</ActivityStat>
-                    <ActivityStatBold>{0}</ActivityStatBold>
-                    <ActivityStat>Mac</ActivityStat>
-                  </ActivityContainer>
-                </ReactTooltip>
-              </NoSSR>
               <ActivityContainer data-tip="" data-for={'weekly-kubectl'}>
                 <ActivityStatBold>{props.stats.weekly?.kubectl_commands?.toLocaleString() || 0}</ActivityStatBold>
                 <ActivityStat>kubectl commands executed</ActivityStat>
@@ -302,12 +293,11 @@ const NameAndStatus = styled.div`
 `;
 
 const StatusIcon = styled.span<{ status: string }>`
-  background-color: ${({ status }) => (status == 'dnd' ? 'red' : status == 'idle' ? 'yellow' : status == 'online' ? 'green' : 'grey')};
+  /* background-color: ${({ status }) =>
+    status == 'dnd' ? 'red' : status == 'idle' ? 'yellow' : status == 'online' ? 'green' : 'grey'}; */
 
   display: flex;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  /* border-radius: 50%; */
   margin: 0;
   margin-left: 20px;
 `;

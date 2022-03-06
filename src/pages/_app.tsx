@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { createGlobalStyle } from "styled-components";
-import FontStyle from "../components/fonts";
-import { Footer } from "../components/footer";
-import { SetTheme, ToggleTheme } from "../utils/theme";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import { createGlobalStyle } from 'styled-components';
+import FontStyle from '../components/fonts';
+import { Footer } from '../components/footer';
+import { SetTheme, ToggleTheme } from '../utils/theme';
+import styled from 'styled-components';
+import { StatusIdle, StatusOnline, StatusDnd, StatusOffline, StatusOnlineMobile } from '../components/StatusMask';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -46,30 +47,38 @@ const Page = styled.div`
 
 export default function App({ Component, pageProps }) {
   const [themeName, setThemeName] = useState<string>(() => {
-    if (typeof window == "undefined") return "dark";
-    if (!localStorage.getItem("theme-name")) return "dark";
-    return localStorage.getItem("theme-name");
+    if (typeof window == 'undefined') return 'dark';
+    if (!localStorage.getItem('theme-name')) return 'dark';
+    return localStorage.getItem('theme-name');
   });
 
   useEffect(() => {
-    if (localStorage.getItem("theme-name"))
-      SetTheme(localStorage.getItem("theme-name") as "light" | "dark");
+    if (localStorage.getItem('theme-name')) SetTheme(localStorage.getItem('theme-name') as 'light' | 'dark');
 
     function keydown(event: KeyboardEvent) {
-      if (event.key == "t") setThemeName(ToggleTheme());
+      if (event.key == 't') setThemeName(ToggleTheme());
     }
 
-    if (typeof document != "undefined")
-      document.addEventListener("keypress", keydown);
+    if (typeof document != 'undefined') document.addEventListener('keypress', keydown);
 
     return () => {
-      if (typeof document != "undefined")
-        document.removeEventListener("keypress", keydown);
+      if (typeof document != 'undefined') document.removeEventListener('keypress', keydown);
     };
   }, []);
 
   return (
     <>
+      <svg
+        viewBox="0 0 1 1"
+        style={{ position: 'absolute', pointerEvents: 'none', top: '-1px', left: '-1px', width: '1px', height: '1px' }}
+        aria-hidden="true"
+      >
+        <StatusIdle />
+        <StatusOnline />
+        <StatusDnd />
+        <StatusOffline />
+        <StatusOnlineMobile />
+      </svg>
       <Page>
         <FontStyle />
         <GlobalStyle />

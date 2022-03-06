@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Tippy } from '../components/Tippy';
 import styled from 'styled-components';
-
-import NoSSR from './nossr';
+import { Placement } from 'tippy.js';
 
 interface IconProps {
   size: number;
@@ -12,6 +11,7 @@ interface IconProps {
   color?: string;
   hovered?: boolean;
   tooltip?: string;
+  tooltipPosition?: Placement;
   onClick?: () => void;
 }
 
@@ -30,14 +30,21 @@ export function Icon(props: IconProps): JSX.Element {
 
   return (
     <>
-      {!!props.tooltip && (
-        <NoSSR>
-          <ReactTooltip id={props.tooltip}>{props.tooltip}</ReactTooltip>
-        </NoSSR>
-      )}
-      <IconBase onMouseEnter={handleMouseEnter} data-tip="" data-for={props.tooltip} onMouseLeave={handleMouseLeave}>
-        {!!props.link && (
-          <Link href={props.link} target="_blank">
+      <Tippy content={props.tooltip} placement={props.tooltipPosition || 'bottom'} disabled={!props.tooltip}>
+        <IconBase onMouseEnter={handleMouseEnter} data-tip="" data-for={props.tooltip} onMouseLeave={handleMouseLeave}>
+          {!!props.link && (
+            <Link href={props.link} target="_blank">
+              <IconProp
+                size={props.size}
+                hovered={hovered}
+                highlight={props.highlight}
+                link={!!props.link}
+                onClick={props.onClick}
+                {...props}
+              />
+            </Link>
+          )}
+          {!props.link && (
             <IconProp
               size={props.size}
               hovered={hovered}
@@ -46,19 +53,9 @@ export function Icon(props: IconProps): JSX.Element {
               onClick={props.onClick}
               {...props}
             />
-          </Link>
-        )}
-        {!props.link && (
-          <IconProp
-            size={props.size}
-            hovered={hovered}
-            highlight={props.highlight}
-            link={!!props.link}
-            onClick={props.onClick}
-            {...props}
-          />
-        )}
-      </IconBase>
+          )}
+        </IconBase>
+      </Tippy>
     </>
   );
 }

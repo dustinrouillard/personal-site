@@ -1,10 +1,9 @@
-import NextLink from "next/link";
-import { ReactElement } from "react";
-import ReactTooltip from "react-tooltip";
-import styled from "styled-components";
+import NextLink from 'next/link';
+import { ReactElement } from 'react';
+import styled from 'styled-components';
 
-import { useTimeSince } from "../utils/time";
-import { BlogPost } from "../utils/posts";
+import { useTimeSince } from '../utils/time';
+import { BlogPost } from '../utils/posts';
 
 export function Post(props: BlogPost): ReactElement {
   const time = useTimeSince(new Date(props.date));
@@ -20,16 +19,14 @@ export function Post(props: BlogPost): ReactElement {
           <Read>Read Post</Read>
         </NextLink>
         <SeperatorDot>•</SeperatorDot>
-        <Tooltip
+        {/* <Tooltip
           place="top"
           effect="solid"
           textColor="var(--text, #000000)"
           backgroundColor="var(--background, #ffffff)"
           arrowColor="var(--background, #ffffff)"
-        />
-        <Created data-tip={new Date(props.date).toLocaleString()}>
-          {time}
-        </Created>
+        /> */}
+        <Created data-tip={new Date(props.date).toLocaleString()}>{time}</Created>
       </Footer>
     </Card>
   );
@@ -45,7 +42,7 @@ const SeperatorDot = styled.span`
 
 const Read = styled.div`
   color: var(--text, #000000);
-  font-family: "FiraCode-Medium";
+  font-family: 'FiraCode-Medium';
   font-size: 0.8em;
   font-weight: normal;
   text-decoration: none;
@@ -56,13 +53,9 @@ const Read = styled.div`
   }
 `;
 
-const Tooltip = styled(ReactTooltip)`
-  font-family: "FiraCode-Light";
-`;
-
 const Title = styled.h1`
   display: block;
-  font-family: "FiraCode-Bold";
+  font-family: 'FiraCode-Bold';
   font-size: 1.4em;
   color: var(--text, #000000);
   margin-bottom: 15px;
@@ -78,7 +71,7 @@ const Title = styled.h1`
 
 const Summary = styled.h4`
   display: block;
-  font-family: "FiraCode-Bold";
+  font-family: 'FiraCode-Bold';
   font-size: 0.8em;
   color: var(--text, #000000);
   margin-bottom: 15px;
@@ -88,7 +81,7 @@ const Summary = styled.h4`
 
 const Created = styled.text`
   color: var(--text, #000000);
-  font-family: "FiraCode-Medium";
+  font-family: 'FiraCode-Medium';
   font-size: 0.8em;
   padding-bottom: 9px;
   opacity: 40%;
