@@ -21,7 +21,8 @@
     "react-scroll-text": "^1.0.1",
     "react-text-marquee": "^1.0.1",
     "react-tooltip": "^4.2.21",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.0",
+    "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "@types/node": "^16.3.3",

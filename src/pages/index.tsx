@@ -118,13 +118,13 @@ export default function Home(props: {
               <SectionTitle>Pinned Repositories</SectionTitle>
               <Repositories>
                 <RepositoriesRow>
-                  {props.pinnedRepos.slice(0, 3).map((repo) => (
-                    <Repository repo={repo} />
+                  {props.pinnedRepos.slice(0, 3).map((repo, index) => (
+                    <Repository key={index} repo={repo} />
                   ))}
                 </RepositoriesRow>
                 <RepositoriesRow>
-                  {props.pinnedRepos.slice(3, 6).map((repo) => (
-                    <Repository repo={repo} />
+                  {props.pinnedRepos.slice(3, 6).map((repo, index) => (
+                    <Repository key={index} repo={repo} />
                   ))}
                 </RepositoriesRow>
               </Repositories>
