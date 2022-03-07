@@ -102,7 +102,7 @@ export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[
                   <StatusIcon status={status}>
                     <svg height="40" width="24">
                       {!activeOnMobile && (
-                        <rect width="24" height="24" x="0" y="5" fill={StatusMap[status]} mask={`url(#svg-mask-status-${status})`} />
+                        <rect width="24" height="24" x="0" y="7" fill={StatusMap[status]} mask={`url(#svg-mask-status-${status})`} />
                       )}
                       {activeOnMobile && status == 'online' && (
                         <rect width="24" height="36" x="0" y="0" fill={StatusMap[status]} mask="url(#svg-mask-status-online-mobile)" />
