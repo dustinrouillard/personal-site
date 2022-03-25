@@ -120,7 +120,8 @@ export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[
                 <Text>
                   Hi there <Span onClick={() => spinHead()}>👋🏼</Span> I’m Dustin, I’m <Age /> years old.
                 </Text>
-                <Text>Backend developer and network/systems administrator</Text>
+                <Text>Self-taught software engineer</Text>
+                <Text>Experienced with Kubernetes and Linux Systems</Text>
                 <SocialWrapped />
               </Description>
               <Presence />
@@ -186,11 +187,12 @@ export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[
 const ProfileInfo = styled.div`
   align-self: center;
 
-  max-width: 653px;
+  min-width: 650px;
 
   @media only screen and (max-width: 1080px) {
     display: flex;
     flex-direction: column;
+    min-width: inherit;
   }
 `;
 
@@ -347,6 +349,7 @@ const Description = styled.div`
   font-family: 'FiraCode-Medium';
   font-size: 1.3em;
   color: var(--text, #000000);
+  min-width: 80%;
   width: 80%;
   flex: 1;
 
