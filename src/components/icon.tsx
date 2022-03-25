@@ -34,26 +34,10 @@ export function Icon(props: IconProps): JSX.Element {
         <IconBase onMouseEnter={handleMouseEnter} data-tip="" data-for={props.tooltip} onMouseLeave={handleMouseLeave}>
           {!!props.link && (
             <Link href={props.link} target="_blank">
-              <IconProp
-                size={props.size}
-                hovered={hovered}
-                highlight={props.highlight}
-                link={!!props.link}
-                onClick={props.onClick}
-                {...props}
-              />
+              <IconProp size={props.size} hovered={hovered} highlight={props.highlight} onClick={props.onClick} {...props} />
             </Link>
           )}
-          {!props.link && (
-            <IconProp
-              size={props.size}
-              hovered={hovered}
-              highlight={props.highlight}
-              link={!!props.link}
-              onClick={props.onClick}
-              {...props}
-            />
-          )}
+          {!props.link && <IconProp size={props.size} hovered={hovered} highlight={props.highlight} onClick={props.onClick} {...props} />}
         </IconBase>
       </Tippy>
     </>
@@ -63,6 +47,7 @@ export function Icon(props: IconProps): JSX.Element {
 const Link = styled.a`
   color: var(--text, #000000);
   text-decoration: none;
+  cursor: pointer;
 `;
 
 const IconBase = styled.div`

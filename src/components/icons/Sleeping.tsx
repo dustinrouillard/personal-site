@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export function Sleeping(props: { size?: number; highlight?: string; hovered?: boolean; link?: boolean }) {
+export function Sleeping(props: { size?: number; highlight?: string; hovered?: boolean }) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,10 +23,8 @@ const Svg = styled.svg<{
   size?: number;
   highlight?: string;
   hovered?: boolean;
-  link?: boolean;
 }>`
   height: ${(props) => `${props.size}px`};
-  cursor: ${(props) => (props.link ? 'default' : 'pointer')};
   transition: opacity 0.2s ease-out;
   transition: color 0.2s ease-out;
 
