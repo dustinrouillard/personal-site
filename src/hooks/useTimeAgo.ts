@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function getYearsAgo(date: Date): number {
   let timestamp = new Date().getTime() - date.getTime();
-  timestamp /= 1000 * 60 * 60 * 24 * 365;
+  timestamp /= 1000 * 60 * 60 * 24 * 365.25;
   return timestamp;
 }
 
