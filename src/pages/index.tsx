@@ -156,28 +156,6 @@ export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[
               </Repositories>
             </>
           )}
-
-          <SectionTitle>Weekly Activity Statistics</SectionTitle>
-          <Activity>
-            <>
-              <ActivityContainer data-tip="" data-for={'weekly-commands'}>
-                <ActivityStatBold>{props.stats.weekly?.commands_ran.toLocaleString()}</ActivityStatBold>
-                <ActivityStat>commands executed</ActivityStat>
-              </ActivityContainer>
-              <ActivityContainer data-tip="" data-for={'weekly-builds'}>
-                <ActivityStatBold>{props.stats.weekly?.builds_ran.toLocaleString()}</ActivityStatBold>
-                <ActivityStat>docker builds assembled</ActivityStat>
-              </ActivityContainer>
-              <ActivityContainer data-tip="" data-for={'weekly-kubectl'}>
-                <ActivityStatBold>{props.stats.weekly?.kubectl_commands?.toLocaleString() || 0}</ActivityStatBold>
-                <ActivityStat>kubectl commands executed</ActivityStat>
-              </ActivityContainer>
-              <ActivityContainer>
-                <ActivityStatBold>{(props.stats.weekly?.development_seconds / 3600).toFixed(2)}</ActivityStatBold>
-                <ActivityStat>hours behind an editor</ActivityStat>
-              </ActivityContainer>
-            </>
-          </Activity>
         </BottomSections>
       </Outter>
     </>
@@ -407,13 +385,17 @@ const TopSide = styled.div`
 `;
 
 export async function getServerSideProps() {
-  const res = await fetch(`https://rest.dstn.to/stats`).then((r) => r.json());
-  const pinned = await getPinnedRepositories();
+  try {
+    const res = await fetch(`https://rest.dstn.to/stats`).then((r) => r.json());
+    const pinned = await getPinnedRepositories();
 
-  return {
-    props: {
-      pinnedRepos: pinned,
-      stats: res.data,
-    },
-  };
+    return {
+      props: {
+        pinnedRepos: pinned,
+        stats: res.data,
+      },
+    };
+  } catch (error) {
+    return { props: {} };
+  }
 }
