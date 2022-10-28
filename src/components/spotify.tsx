@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
-import styled from "styled-components";
+import { ReactElement } from 'react';
+import styled from 'styled-components';
 
-import { InternalPlayerResponse } from "../types/gateway";
-import { millisToMinutesAndSeconds } from "../utils/time";
+import { SpotifyPlayingData } from '../types/gateway';
+import { millisToMinutesAndSeconds } from '../utils/time';
 
 export interface Playing {
   item_name: string;
@@ -13,49 +13,34 @@ export interface Playing {
 interface SpotifyProps {
   small?: boolean;
   listening: boolean;
-  spotify: InternalPlayerResponse;
+  spotify: SpotifyPlayingData;
 }
 
-export function Spotify({
-  small,
-  listening,
-  spotify,
-}: SpotifyProps): ReactElement {
+export function Spotify({ small, listening, spotify }: SpotifyProps): ReactElement {
   return (
     !!spotify && (
       <Root visible={listening} small={small}>
         <Container>
-          <Link
-            target={"_blank"}
-            href={`https://open.spotify.com/${spotify.item_type}/${spotify.item_id}`}
-          >
-            <Image src={spotify.item_image} width="75px" />
+          <Link target={'_blank'} href={`https://open.spotify.com/${spotify.type}/${spotify.id}`}>
+            <Image src={spotify.image} width="75px" />
           </Link>
           <SpotifyInfo>
-            <Text>
-              {small && spotify.item_name && spotify.item_name.length > 29
-                ? `${spotify.item_name.substring(0, 30).trim()}...`
-                : spotify.item_name}
-            </Text>
+            <Text>{small && spotify.name && spotify.name.length > 29 ? `${spotify.name.substring(0, 30).trim()}...` : spotify.name}</Text>
 
-            <Text size={10}>{spotify.item_author}</Text>
+            <Text size={10}>{spotify.artists.map(({ name }) => name).join(', ')}</Text>
           </SpotifyInfo>
         </Container>
         <Progress>
-          <ProgressBar
-            progress={(spotify.item_progress / spotify.item_length_ms) * 100}
-          >
-            {(spotify.item_progress / spotify.item_length_ms) * 100 > 15 && (
+          <ProgressBar progress={(spotify.progress / spotify.length) * 100}>
+            {(spotify.progress / spotify.length) * 100 > 15 && (
               <ProgressText inverted>
-                {millisToMinutesAndSeconds(spotify.item_progress)} :{" "}
-                {millisToMinutesAndSeconds(spotify.item_length_ms)}
+                {millisToMinutesAndSeconds(spotify.progress)} : {millisToMinutesAndSeconds(spotify.length)}
               </ProgressText>
             )}
           </ProgressBar>
-          {(spotify.item_progress / spotify.item_length_ms) * 100 < 15 && (
+          {(spotify.progress / spotify.length) * 100 < 15 && (
             <ProgressText>
-              {millisToMinutesAndSeconds(spotify.item_progress)} :{" "}
-              {millisToMinutesAndSeconds(spotify.item_length_ms)}
+              {millisToMinutesAndSeconds(spotify.progress)} : {millisToMinutesAndSeconds(spotify.length)}
             </ProgressText>
           )}
         </Progress>
@@ -72,13 +57,13 @@ const Link = styled.a`
 
 const Root = styled.div<{ visible: boolean; small: boolean }>`
   border-radius: 10px;
-  width: ${(props) => (props.small ? "50%" : "100%")};
+  width: ${(props) => (props.small ? '50%' : '100%')};
   height: 85px;
   background-color: var(--widget-background, #c8c8c8);
   box-shadow: 2px 2px 20px 0px #00000086;
   align-items: center;
-  visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
-  display: ${({ visible }) => (visible ? "flex" : "none")};
+  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+  display: ${({ visible }) => (visible ? 'flex' : 'none')};
   margin-top: 25px;
   flex-direction: column;
   text-align: left;
@@ -92,7 +77,7 @@ const Container = styled.div`
 `;
 
 const Text = styled.p<{ size?: number }>`
-  font-family: "FiraCode-Medium";
+  font-family: 'FiraCode-Medium';
   color: var(--text, #000000);
   margin-left: 10px;
   margin-top: 1px;
@@ -132,8 +117,7 @@ const ProgressBar = styled.div`
   overflow: hidden;
   color: var(--alt-text, #ffffff);
   background-color: var(--text, #000000);
-  width: ${(props: { progress: number }) =>
-    props.progress ? `${props.progress}%` : "0%"};
+  width: ${(props: { progress: number }) => (props.progress ? `${props.progress}%` : '0%')};
   transition: all 1000ms linear;
   transition: color 100ms linear;
   transition: background-color 100ms linear;
@@ -146,7 +130,7 @@ const ProgressText = styled.p<{ inverted?: boolean }>`
   color: var(--text, #000000);
   margin: 0px;
   font-size: 8px;
-  filter: ${({ inverted }) => (inverted ? "invert()" : "none")};
-  font-family: "FiraCode-Medium";
+  filter: ${({ inverted }) => (inverted ? 'invert()' : 'none')};
+  font-family: 'FiraCode-Medium';
   transition: all 500ms linear;
 `;

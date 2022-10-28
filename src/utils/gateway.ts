@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import { inflate, deflate } from 'pako';
-import { InternalPlayerResponse, StatusResponse } from '../types/gateway';
+import { SpotifyPlayingData, StatusResponse } from '../types/gateway';
 
 enum Op {
   Init,
@@ -32,8 +32,8 @@ export interface Gateway {
   compression: string; // 'zlib' | 'none'
 
   on(event: 'status', listener: (data: StatusResponse) => void): this;
-  on(event: 'spotify', listener: (data: InternalPlayerResponse) => void): this;
-  on(event: 'spotify_changed', listener: (data: InternalPlayerResponse) => void): this;
+  on(event: 'spotify', listener: (data: SpotifyPlayingData) => void): this;
+  on(event: 'spotify_changed', listener: (data: SpotifyPlayingData) => void): this;
   on(event: 'connected', listener: () => void): this;
   on(event: 'init', listener: () => void): this;
 }

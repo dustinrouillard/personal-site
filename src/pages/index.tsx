@@ -25,7 +25,7 @@ const StatusMap = {
   offline: 'hsl(214, calc(var(--saturation-factor, 1) * 9.9%), 50.4%)',
 };
 
-export default function Home(props: { stats: any; pinnedRepos: PinnedRepository[] }) {
+export default function Home(props: { pinnedRepos: PinnedRepository[] }) {
   const [status, setStatus] = useState<string>('offline');
   const [activeOnMobile, setActiveOnMobile] = useState(false);
 
@@ -386,13 +386,11 @@ const TopSide = styled.div`
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch(`https://rest.dstn.to/stats`).then((r) => r.json());
     const pinned = await getPinnedRepositories();
 
     return {
       props: {
         pinnedRepos: pinned,
-        stats: res.data,
       },
     };
   } catch (error) {
