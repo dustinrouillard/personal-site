@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import styled from 'styled-components';
 
 import { PageHead } from '../components/head';
@@ -81,8 +82,8 @@ export default function Home(props: { pinnedRepos: PinnedRepository[] }) {
         <Container>
           <Sections>
             <TopSide>
-              <Picture>
-                <StyledImage rotate={headSpin} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
+              <Picture rotate={headSpin}>
+                <StyledImage layout="responsive" width={350} height={350} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
               </Picture>
             </TopSide>
 
@@ -128,8 +129,8 @@ export default function Home(props: { pinnedRepos: PinnedRepository[] }) {
             </ProfileInfo>
 
             <RightSide>
-              <Picture>
-                <StyledImage rotate={headSpin} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
+              <Picture rotate={headSpin}>
+                <StyledImage layout="responsive" width={350} height={350} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
               </Picture>
             </RightSide>
           </Sections>
@@ -286,13 +287,12 @@ const CustomStatusIcon = styled.div`
   margin-left: 10px;
 `;
 
-const StyledImage = styled.img<{ rotate?: string }>`
+const StyledImage = styled(Image)`
   border-radius: 10px;
   min-width: 100%;
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
-  transform: ${(props) => (props.rotate ? `rotate(${props.rotate})` : 'none')};
 `;
 
 const Container = styled.div`
@@ -350,10 +350,11 @@ const Sections = styled.div`
   }
 `;
 
-const Picture = styled.div`
+const Picture = styled.div<{ rotate?: string }>`
   position: relative;
   width: 350px;
   max-height: 470px;
+  transform: ${(props) => (props.rotate ? `rotate(${props.rotate})` : 'none')};
 `;
 
 const RightSide = styled.div`
