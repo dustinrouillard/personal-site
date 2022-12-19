@@ -83,7 +83,7 @@ export default function Home(props: { pinnedRepos: PinnedRepository[] }) {
           <Sections>
             <TopSide>
               <Picture rotate={headSpin}>
-                <StyledImage layout="responsive" width={350} height={350} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
+                <StyledImage layout="fixed" width={300} height={300} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
               </Picture>
             </TopSide>
 
@@ -130,7 +130,7 @@ export default function Home(props: { pinnedRepos: PinnedRepository[] }) {
 
             <RightSide>
               <Picture rotate={headSpin}>
-                <StyledImage layout="responsive" width={350} height={350} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
+                <StyledImage layout="fixed" width={350} height={350} src={`/${christmasTime ? 'christmas-avatar' : 'avatar'}.png`} />
               </Picture>
             </RightSide>
           </Sections>
@@ -351,6 +351,8 @@ const Sections = styled.div`
 `;
 
 const Picture = styled.div<{ rotate?: string }>`
+  display: flex;
+  justify-content: center;
   position: relative;
   width: 350px;
   max-height: 470px;
@@ -374,7 +376,6 @@ const TopSide = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-left: 30px;
   width: 350px;
   visibility: hidden;
   display: none;
