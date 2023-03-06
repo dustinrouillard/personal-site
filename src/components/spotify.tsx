@@ -27,7 +27,7 @@ export function Spotify({ small, listening, spotify }: SpotifyProps): ReactEleme
           <SpotifyInfo>
             <Text>{small && spotify.name && spotify.name.length > 29 ? `${spotify.name.substring(0, 30).trim()}...` : spotify.name}</Text>
 
-            <Text size={10}>{spotify.artists.map(({ name }) => name).join(', ')}</Text>
+            {spotify.artists && <Text size={10}>{spotify.artists.map(({ name }) => name).join(', ')}</Text>}
           </SpotifyInfo>
         </Container>
         <Progress>

@@ -5,6 +5,7 @@ import { Footer } from '../components/footer';
 import { SetTheme, ToggleTheme } from '../utils/theme';
 import styled from 'styled-components';
 import { StatusIdle, StatusOnline, StatusDnd, StatusOffline, StatusOnlineMobile } from '../components/StatusMask';
+import PlausibleProvider from 'next-plausible';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -18,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
-
+  
   * {
     box-sizing: border-box;
     transition: all 150ms linear;
@@ -67,7 +68,12 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <>
+    <PlausibleProvider
+      domain="dstn.to"
+      customDomain="https://analytics.dstn.to"
+      enabled={typeof window != 'undefined' && window.location.hostname == 'dstn.to'}
+      selfHosted
+    >
       <svg
         viewBox="0 0 1 1"
         style={{ position: 'absolute', pointerEvents: 'none', top: '-1px', left: '-1px', width: '1px', height: '1px' }}
@@ -85,6 +91,6 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </Page>
       <Footer />
-    </>
+    </PlausibleProvider>
   );
 }
