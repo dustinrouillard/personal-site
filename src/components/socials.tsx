@@ -25,11 +25,8 @@ export function SocialLinks(props: any): ReactElement {
       <IconWrapped>
         <Icon size={25} icon={LinkedIn} highlight="#2867b2" tooltip="Linkedin" link="https://dstn.to/linkedin" />
       </IconWrapped>
-      <IconWrapped>
-        <Icon size={25} icon={Mail} highlight="#6257fc" tooltip="Email" link="mailto:comms@dstn.to" />
-      </IconWrapped>
       <IconWrapped last>
-        <Icon size={25} icon={Network} highlight="#6257fc" tooltip="dstn, llc. - Networking & Contracting" link="https://dstn.llc" />
+        <Icon size={25} icon={Mail} highlight="#6257fc" tooltip="Email" link="mailto:comms@dstn.to" />
       </IconWrapped>
     </Icons>
   );
