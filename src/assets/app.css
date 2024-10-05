@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto Mono', monospace, 'Noto Color Emoji';
+}
+
+@layer base {
+  * {
+    @apply transition-colors;
+  }
+
+  body {
+    @apply text-black bg-white dark:text-white dark:bg-neutral-900 transition-all;
+  }
+}
