@@ -16,7 +16,7 @@ interface Props {
 
 export default function BlogPostBySlug({ post }: Props) {
   return (
-    <Layout pageClass="flex justify-center">
+    <Layout page_class="flex justify-center">
       <div className="flex flex-col max-w-5xl 2xl:w-2/3">
         {post.image ? (
           <div className="flex flex-col items-center">
