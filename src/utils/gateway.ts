@@ -1,6 +1,7 @@
-import { EventEmitter } from 'events';
-import { inflate, deflate } from 'pako';
-import { SpotifyPlayingData, StatusResponse } from '../types/gateway';
+import { EventEmitter } from "events";
+import { inflate, deflate } from "pako";
+import { SpotifyPlayingData, StatusResponse } from "../types/gateway";
+import { BoostedStats } from "../types/core";
 
 enum Op {
   Init,
@@ -8,6 +9,7 @@ enum Op {
   Spotify,
   SpotifyChanged,
   Status,
+  BoostedUpdate,
 }
 
 interface SocketData {
@@ -31,14 +33,22 @@ export interface Gateway {
   encoding: string; // 'etf' | 'json'
   compression: string; // 'zlib' | 'none'
 
-  on(event: 'status', listener: (data: StatusResponse) => void): this;
-  on(event: 'spotify', listener: (data: SpotifyPlayingData) => void): this;
-  on(event: 'spotify_changed', listener: (data: SpotifyPlayingData) => void): this;
-  on(event: 'connected', listener: () => void): this;
-  on(event: 'init', listener: () => void): this;
+  on(event: "status", listener: (data: StatusResponse) => void): this;
+  on(event: "spotify", listener: (data: SpotifyPlayingData) => void): this;
+  on(
+    event: "spotify_changed",
+    listener: (data: SpotifyPlayingData) => void,
+  ): this;
+  on(event: "board_changed", listener: (data: BoostedStats) => void): this;
+  on(event: "connected", listener: () => void): this;
+  on(event: "init", listener: () => void): this;
 }
 export class Gateway extends EventEmitter {
-  constructor(url = 'wss://gw.dstn.to', encoding = 'json', compression = 'zlib') {
+  constructor(
+    url = "wss://gw.dstn.to",
+    encoding = "json",
+    compression = "zlib",
+  ) {
     super();
 
     this.compression = compression;
@@ -51,26 +61,31 @@ export class Gateway extends EventEmitter {
   }
 
   private init(): void {
-    this.ws = new WebSocket(`${this.url}/socket?encoding=${this.encoding}&compression=${this.compression}`);
-    if (this.compression != 'none') this.ws.binaryType = 'arraybuffer';
+    this.ws = new WebSocket(
+      `${this.url}/socket?encoding=${this.encoding}&compression=${this.compression}`,
+    );
+    if (this.compression != "none") this.ws.binaryType = "arraybuffer";
 
     // Socket open handler
-    this.ws.addEventListener('open', () => this.opened());
+    this.ws.addEventListener("open", () => this.opened());
 
     // @ts-ignore
     window.ws = this.ws;
 
     // Message listener
-    this.ws.addEventListener('message', (e) => {
-      const message = this.compression != 'none' ? JSON.parse(inflate(e.data, { to: 'string' })) : JSON.parse(e.data);
+    this.ws.addEventListener("message", (e) => {
+      const message =
+        this.compression != "none"
+          ? JSON.parse(inflate(e.data, { to: "string" }))
+          : JSON.parse(e.data);
 
       try {
         this.message(message);
-      } catch (error) { }
+      } catch (error) {}
     });
 
     // Close event for websocket
-    this.ws.addEventListener('close', () => this.closed());
+    this.ws.addEventListener("close", () => this.closed());
   }
 
   private resetConnectionThrottle(): void {
@@ -94,7 +109,10 @@ export class Gateway extends EventEmitter {
 
   private send(op: Op, d?: any): void {
     if (this.ws.readyState != this.ws.OPEN) return;
-    const data = this.compression != 'none' ? deflate(JSON.stringify({ op, d })) : JSON.stringify({ op, d });
+    const data =
+      this.compression != "none"
+        ? deflate(JSON.stringify({ op, d }))
+        : JSON.stringify({ op, d });
     return this.ws.send(data);
   }
 
@@ -106,22 +124,30 @@ export class Gateway extends EventEmitter {
     switch (data.op) {
       case Op.Init:
         // Got hello, start our heartbeat interval
-        this.heartbeat = setInterval(() => this.sendHeartbeat(), data.d.heartbeat_interval);
+        this.heartbeat = setInterval(
+          () => this.sendHeartbeat(),
+          data.d.heartbeat_interval,
+        );
 
-        this.emit('init');
+        this.emit("init");
 
         break;
       case Op.Spotify:
-        this.emit('spotify', data.d);
+        this.emit("spotify", data.d);
 
         break;
       case Op.SpotifyChanged:
-        this.emit('spotify', data.d);
+        this.emit("spotify", data.d);
 
         break;
 
       case Op.Status:
-        this.emit('status', data.d);
+        this.emit("status", data.d);
+
+        break;
+
+      case Op.BoostedUpdate:
+        this.emit("board_changed", data.d);
 
         break;
 
@@ -132,23 +158,23 @@ export class Gateway extends EventEmitter {
 
   private opened(): void {
     console.log(
-      '%cGateway%c Socket connection opened',
-      'padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;',
-      'font-size: 1em;',
+      "%cGateway%c Socket connection opened",
+      "padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;",
+      "font-size: 1em;",
     );
-    this.emit('connected');
+    this.emit("connected");
     this.resetConnectionThrottle();
   }
 
   private closed(): void {
     console.log(
-      '%cGateway%c Socket connection closed',
-      'padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;',
-      'font-size: 1em;',
+      "%cGateway%c Socket connection closed",
+      "padding: 10px; font-size: 1em; line-height: 1.4em; color: white; background: #151515; border-radius: 15px;",
+      "font-size: 1em;",
     );
     clearInterval(this.heartbeat);
     this.reconnectThrottle();
   }
 }
 
-export const gateway = typeof window != 'undefined' && new Gateway();
+export const gateway = typeof window != "undefined" && new Gateway();
