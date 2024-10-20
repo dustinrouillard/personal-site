@@ -3,24 +3,60 @@ import Image from "next/image";
 import { useBoostedStats } from "../../hooks/useBoostedStats";
 import { useTimeSince } from "../../hooks/useTimeSince";
 import { Tippy } from "../tippy";
+import { useMemo } from "react";
 
 interface Props {
   className: string;
 }
 
+const batteryClasses = {
+  100: "bg-green-400",
+  50: "bg-yellow-400",
+  25: "bg-red-400",
+};
+
 export function BoostedBoardStats({ className }: Props) {
   const boosted = useBoostedStats();
   const lastRide = useTimeSince(new Date(boosted?.latest_ride.ended_at));
+
+  const batteryStep = useMemo(() => {
+    let step = 25;
+    let batt = boosted?.stats.boards[0]?.battery;
+    if (batt >= 50) step = 50;
+    if (batt >= 100) step = 50;
+    return step;
+  }, [boosted]);
 
   return boosted && lastRide ? (
     <div className={className}>
       <div className="group relative text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md w-auto h-40 p-4 flex flex-col justify-center text-center items-center">
         <div className="flex flex-row">
           <div className="flex flex-col text-center space-x-4 justify-between items-center">
-            <span className="text-right">
-              <p className="text-md font-bold text-nowrap">
+            <span className="flex flex-col items-end text-right">
+              <p className="text-sm font-bold text-nowrap">
                 {boosted.stats.boards[0].odometer.toLocaleString()} mi
               </p>
+              <p
+                className={`text-sm font-bold text-nowrap ${boosted.riding ? "text-green-500" : "opacity-40"}`}
+              >
+                {boosted.riding ? "On a Ride" : "Idle"}
+              </p>
+              <div className="flex flex-row space-x-1 items-center">
+                <Tippy placement="auto" content="Battery">
+                  <div className="w-auto opacity-35">
+                    <div className="shadow w-8 rounded border border-gray-400 flex my-1 relative">
+                      <div className="border-l-4 h-2 rounded-l absolute flex border-gray-400 -ml-1 mt-0.5 z-10"></div>
+                      <div
+                        className={`cursor-default rounded-sm text-xs font-bold leading-none flex items-center justify-center m-0.5 py-1 text-center text-white ${batteryClasses[batteryStep] ? batteryClasses[batteryStep] : "bg-gray-400"}`}
+                        style={{ width: `${boosted.stats.boards[0].battery}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </Tippy>
+                <p className="text-xs opacity-35">
+                  {boosted.stats.boards[0].battery}%
+                </p>
+              </div>
               {!boosted.riding ? (
                 <Tippy placement="auto" content="Last ride">
                   <p className="text-sm font-bold text-nowrap opacity-35">
@@ -30,11 +66,6 @@ export function BoostedBoardStats({ className }: Props) {
               ) : (
                 <></>
               )}
-              <p
-                className={`text-sm font-bold text-nowrap ${boosted.riding ? "text-green-500" : "opacity-40"}`}
-              >
-                {boosted.riding ? "On a Ride" : "Idle"}
-              </p>
             </span>
             <p className="text-sm text-nowrap text-center">Board Stats</p>
           </div>
