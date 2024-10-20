@@ -53,7 +53,7 @@ export function BoostedBoardStats({ className }: Props) {
                     </div>
                   </div>
                 </Tippy>
-                <p className="text-xs opacity-35">
+                <p className="text-xs font-bold opacity-35">
                   {boosted.stats.boards[0].battery}%
                 </p>
               </div>
