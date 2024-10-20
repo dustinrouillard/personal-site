@@ -39,7 +39,7 @@ export interface Gateway {
     event: "spotify_changed",
     listener: (data: SpotifyPlayingData) => void,
   ): this;
-  on(event: "board_changed", listener: (data: BoostedStats) => void): this;
+  on(event: "boosted_update", listener: (data: BoostedStats) => void): this;
   on(event: "connected", listener: () => void): this;
   on(event: "init", listener: () => void): this;
 }
@@ -47,7 +47,7 @@ export class Gateway extends EventEmitter {
   constructor(
     url = "wss://gw.dstn.to",
     encoding = "json",
-    compression = "zlib",
+    compression = process.env.NODE_ENV == "development" ? "none" : "zlib",
   ) {
     super();
 
@@ -147,7 +147,7 @@ export class Gateway extends EventEmitter {
         break;
 
       case Op.BoostedUpdate:
-        this.emit("board_changed", data.d);
+        this.emit("boosted_update", data.d);
 
         break;
 

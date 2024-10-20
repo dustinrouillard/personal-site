@@ -19,7 +19,7 @@ export function BoostedBoardStats({ className }: Props) {
           <div className="flex flex-col text-center space-x-4 justify-between items-center">
             <span className="text-right">
               <p className="text-md font-bold text-nowrap">
-                {boosted.stats.boards.distance.toLocaleString()} mi
+                {boosted.stats.boards[0].odometer.toLocaleString()} mi
               </p>
               {!boosted.riding ? (
                 <Tippy placement="auto" content="Last ride">

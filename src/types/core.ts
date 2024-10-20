@@ -74,14 +74,17 @@ export interface LatestRide {
 }
 
 export interface Stats {
-  boards: Boards;
+  boards: Boards[];
   rides: Distance;
   duration: Distance;
   distance: Distance;
 }
 
 export interface Boards {
-  distance: number;
+  id: number;
+  name: string;
+  battery: number;
+  odometer: number;
 }
 
 export interface Distance {

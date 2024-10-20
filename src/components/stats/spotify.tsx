@@ -41,7 +41,7 @@ export function Spotify({ className, ...props }: Props) {
           href={`https://open.spotify.com/${song.type}/${song.id}`}
           target="_blank"
         >
-          <div className="flex flex-row items-center h-40 text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md py-6 px-4 cursor-pointer transition-all relative overflow-hidden">
+          <div className="flex flex-row items-center h-40 max-w-lg text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md py-6 px-4 cursor-pointer transition-all relative overflow-hidden">
             <div
               id="progress"
               className="rounded-t-md w-full h-2 bg-gray-300 dark:bg-gray-600 brightness-75 absolute top-0 left-0 overflow-hidden"
@@ -89,7 +89,7 @@ export function Spotify({ className, ...props }: Props) {
           href={`https://open.spotify.com/${song.type}/${song.id}`}
           target="_blank"
         >
-          <div className="flex flex-row items-center h-40 text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md py-6 px-4 cursor-pointer transition-all overflow-hidden">
+          <div className="flex flex-row items-center h-40 max-w-lg text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md py-6 px-4 cursor-pointer transition-all overflow-hidden">
             <div className="flex flex-row items-center w-full justify-between relative">
               <div className="flex flex-row items-center space-x-3">
                 <img className="rounded-lg w-20 h-20" src={song.image} />
