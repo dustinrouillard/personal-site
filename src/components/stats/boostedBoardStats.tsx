@@ -18,7 +18,9 @@ const batteryClasses = {
 
 export function BoostedBoardStats({ className }: Props) {
   const boosted = useBoostedStats();
-  const lastRide = useTimeSince(new Date(boosted?.latest_ride.ended_at));
+  const lastRide = useTimeSince(
+    boosted?.latest_ride ? new Date(boosted?.latest_ride.ended_at) : null,
+  );
   const [rideTime, setRideTime] = useState("00:00:00");
 
   const batteryStep = useMemo(() => {
@@ -42,7 +44,7 @@ export function BoostedBoardStats({ className }: Props) {
     };
   }, [boosted]);
 
-  return boosted && lastRide ? (
+  return boosted ? (
     <div className={className}>
       <div className="group relative text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md w-auto h-40 p-4 flex flex-col justify-center text-center items-center">
         <div className="flex flex-row">
@@ -66,33 +68,37 @@ export function BoostedBoardStats({ className }: Props) {
               ) : (
                 <></>
               )}
-              <div className="flex flex-row space-x-1 items-center">
-                <Tippy placement="auto" content="Battery">
+              <Tippy placement="auto" content="Battery">
+                <div className="flex flex-row space-x-1 items-center">
                   <div className="w-auto opacity-35">
                     <div className="shadow w-8 rounded border border-gray-400 flex my-1 relative">
                       <div className="border-l-4 h-2 rounded-l absolute flex border-gray-400 -ml-1 mt-0.5 z-10"></div>
                       <div
                         className={`cursor-default rounded-sm text-xs font-bold leading-none flex items-center justify-center m-0.5 py-1 text-center text-white ${batteryClasses[batteryStep] ? batteryClasses[batteryStep] : "bg-gray-400"}`}
-                        style={{ width: `${boosted.stats.boards[0].battery}%` }}
+                        style={{
+                          width: `${boosted.stats.boards[0].battery}%`,
+                        }}
                       ></div>
                     </div>
                   </div>
-                </Tippy>
-                <p className="text-xs font-bold opacity-35">
-                  {boosted.stats.boards[0].battery}%
-                </p>
-              </div>
+                  <p className="text-xs font-bold opacity-35">
+                    {boosted.stats.boards[0].battery}%
+                  </p>
+                </div>
+              </Tippy>
               {!boosted.riding ? (
                 <Tippy placement="auto" content="Last ride">
                   <p className="text-sm font-bold text-nowrap opacity-35">
-                    {lastRide} ago
+                    {lastRide ? `${lastRide} ago` : "..."}
                   </p>
                 </Tippy>
               ) : (
                 <></>
               )}
             </span>
-            <p className="text-sm text-nowrap">Board Stats</p>
+            <p className="text-sm text-nowrap">
+              {boosted.stats.boards[0].name}
+            </p>
           </div>
           <div>
             <Image
