@@ -3,7 +3,8 @@ import Image from "next/image";
 import { useBoostedStats } from "../../hooks/useBoostedStats";
 import { useTimeSince } from "../../hooks/useTimeSince";
 import { Tippy } from "../tippy";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { msToHHMMSS } from "../../utils/time";
 
 interface Props {
   className: string;
@@ -18,6 +19,7 @@ const batteryClasses = {
 export function BoostedBoardStats({ className }: Props) {
   const boosted = useBoostedStats();
   const lastRide = useTimeSince(new Date(boosted?.latest_ride.ended_at));
+  const [rideTime, setRideTime] = useState("00:00:00");
 
   const batteryStep = useMemo(() => {
     let step = 25;
@@ -27,11 +29,24 @@ export function BoostedBoardStats({ className }: Props) {
     return step;
   }, [boosted]);
 
+  useEffect(() => {
+    let timer = setInterval(() => {
+      if (!boosted?.current_ride) return;
+      let startTime = new Date(boosted.current_ride.started_at);
+      let ms = new Date().getTime() - startTime.getTime();
+      setRideTime(msToHHMMSS(ms));
+    }, 1000);
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [boosted]);
+
   return boosted && lastRide ? (
     <div className={className}>
       <div className="group relative text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md w-auto h-40 p-4 flex flex-col justify-center text-center items-center">
         <div className="flex flex-row">
-          <div className="flex flex-col text-center space-x-4 justify-between items-center">
+          <div className="flex flex-col text-right space-x-4 justify-between items-end">
             <span className="flex flex-col items-end text-right">
               <p className="text-sm font-bold text-nowrap">
                 {boosted.stats.boards[0].odometer.toLocaleString()} mi
@@ -41,6 +56,16 @@ export function BoostedBoardStats({ className }: Props) {
               >
                 {boosted.riding ? "On a Ride" : "Idle"}
               </p>
+              {boosted.riding && boosted.current_ride ? (
+                <>
+                  <p className={`text-xs font-bold text-nowrap`}>
+                    {boosted.current_ride.distance} mi
+                  </p>
+                  <p className={`text-xs font-bold text-nowrap`}>{rideTime}</p>
+                </>
+              ) : (
+                <></>
+              )}
               <div className="flex flex-row space-x-1 items-center">
                 <Tippy placement="auto" content="Battery">
                   <div className="w-auto opacity-35">
@@ -67,7 +92,7 @@ export function BoostedBoardStats({ className }: Props) {
                 <></>
               )}
             </span>
-            <p className="text-sm text-nowrap text-center">Board Stats</p>
+            <p className="text-sm text-nowrap">Board Stats</p>
           </div>
           <div>
             <Image

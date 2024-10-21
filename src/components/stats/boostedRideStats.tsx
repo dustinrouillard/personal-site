@@ -1,5 +1,5 @@
 import { useBoostedStats } from "../../hooks/useBoostedStats";
-import { msToHHMMSS } from "../../utils/time";
+import { shortMsFormat } from "../../utils/time";
 import { Tippy } from "../tippy";
 
 interface Props {
@@ -16,7 +16,7 @@ export function BoostedRideStats({ className }: Props) {
           {boosted.stats.rides.day ? (
             <Tippy placement="auto" content="Rides in the last 24h">
               <p className="text-md font-bold text-nowrap">
-                {msToHHMMSS(boosted.stats.duration.day * 1000)} -{" "}
+                {shortMsFormat(boosted.stats.duration.day * 1000)} -{" "}
                 {boosted.stats.distance.day} mi - {boosted.stats.rides.day} ride
                 {boosted.stats.rides.day > 1 ? "s" : ""}
                 <span className="opacity-40">/24h</span>
@@ -28,7 +28,7 @@ export function BoostedRideStats({ className }: Props) {
           {boosted.stats.rides.week ? (
             <Tippy placement="auto" content="Rides in the last week">
               <p className="text-md font-bold text-nowrap">
-                {msToHHMMSS(boosted.stats.duration.week * 1000)} -{" "}
+                {shortMsFormat(boosted.stats.duration.week * 1000)} -{" "}
                 {boosted.stats.distance.week} mi - {boosted.stats.rides.week}{" "}
                 ride
                 {boosted.stats.rides.week > 1 ? "s" : ""}
@@ -41,7 +41,7 @@ export function BoostedRideStats({ className }: Props) {
           {boosted.stats.rides.month ? (
             <Tippy placement="auto" content="Rides in the last month">
               <p className="text-md font-bold text-nowrap">
-                {msToHHMMSS(boosted.stats.duration.month * 1000)} -{" "}
+                {shortMsFormat(boosted.stats.duration.month * 1000)} -{" "}
                 {boosted.stats.distance.month} mi - {boosted.stats.rides.month}{" "}
                 ride
                 {boosted.stats.rides.month > 1 ? "s" : ""}

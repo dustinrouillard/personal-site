@@ -62,8 +62,15 @@ export interface BlogPost {
 
 export interface BoostedStats {
   riding: boolean;
+  current_ride: CurrentRide;
   latest_ride: LatestRide;
   stats: Stats;
+}
+
+export interface CurrentRide {
+  started_at: string;
+  duration: number;
+  distance: number;
 }
 
 export interface LatestRide {
