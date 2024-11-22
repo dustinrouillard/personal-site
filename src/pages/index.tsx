@@ -19,7 +19,12 @@ import { Spotify } from "../components/stats/spotify";
 import { gateway } from "../utils/gateway";
 import { getPinnedRepositories, getRecentListens } from "../utils/core";
 
-import { RecentSong, Repository, BlogPost as TBlogPost } from "../types/core";
+import {
+  HighlightedTool,
+  RecentSong,
+  Repository,
+  BlogPost as TBlogPost,
+} from "../types/core";
 import { SpotifyPlayingData } from "../types/gateway";
 import { LocalTimeConditions } from "../components/stats/local";
 import { CommandsToday } from "../components/stats/commandsToday";
@@ -27,6 +32,8 @@ import { DiscordActivity } from "../components/stats/activity";
 import { BoostedLastRide } from "../components/stats/boostedLastRide";
 import { BoostedRideStats } from "../components/stats/boostedRideStats";
 import { BoostedBoardStats } from "../components/stats/boostedBoardStats";
+import { Tool } from "../components/tool";
+import { HightlightedTools } from "../components/tools";
 
 interface Props {
   posts: TBlogPost[];
@@ -176,6 +183,16 @@ export default function Index(props: Props) {
           <></>
         )}
       </div> */}
+
+      <div className="flex flex-col space-y-6">
+        <h2 className="text-2xl font-bold">Tools & Things</h2>
+
+        <div className="grid xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+          {HightlightedTools.map((tool, index) => (
+            <Tool key={index} tool={tool} />
+          ))}
+        </div>
+      </div>
 
       <div className="flex flex-col space-y-6">
         <h2 className="text-2xl font-bold">Highlighted Github Repositories</h2>

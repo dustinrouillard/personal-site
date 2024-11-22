@@ -1,3 +1,11 @@
+export interface HighlightedTool {
+  name: string;
+  description: string;
+  url: string;
+  color: string;
+  icon: JSX.Element;
+}
+
 export interface Repository {
   owner: string;
   name: string;
