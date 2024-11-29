@@ -19,12 +19,7 @@ import { Spotify } from "../components/stats/spotify";
 import { gateway } from "../utils/gateway";
 import { getPinnedRepositories, getRecentListens } from "../utils/core";
 
-import {
-  HighlightedTool,
-  RecentSong,
-  Repository,
-  BlogPost as TBlogPost,
-} from "../types/core";
+import { RecentSong, Repository, BlogPost as TBlogPost } from "../types/core";
 import { SpotifyPlayingData } from "../types/gateway";
 import { LocalTimeConditions } from "../components/stats/local";
 import { CommandsToday } from "../components/stats/commandsToday";
@@ -32,6 +27,7 @@ import { DiscordActivity } from "../components/stats/activity";
 import { BoostedLastRide } from "../components/stats/boostedLastRide";
 import { BoostedRideStats } from "../components/stats/boostedRideStats";
 import { BoostedBoardStats } from "../components/stats/boostedBoardStats";
+
 import { Tool } from "../components/tool";
 import { HightlightedTools } from "../components/tools";
 

@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { Meta } from "../components/meta";
 import {
   StatusDnd,
@@ -11,6 +11,7 @@ import {
   StatusOnlineMobile,
 } from "../components/status";
 import Link from "next/link";
+import { ChristmasLights } from "../components/ChristmasLights";
 
 export interface Props extends PropsWithChildren {
   page_class?: string;
@@ -18,6 +19,19 @@ export interface Props extends PropsWithChildren {
 }
 
 export default function Layout(props: Props) {
+  const [christmasTime, setChristmasTime] = useState(() => {
+    const currentDate = new Date();
+    return currentDate.getMonth() == 11;
+  });
+
+  useEffect(() => {
+    const int = setInterval(() => {
+      const currentDate = new Date();
+      setChristmasTime(currentDate.getMonth() == 11);
+    }, 1000);
+    return () => clearInterval(int);
+  }, []);
+
   return (
     <>
       <Head>
@@ -31,11 +45,21 @@ export default function Layout(props: Props) {
         />
       </Head>
 
+      {christmasTime ? (
+        <div className="flex w-full">
+          <ChristmasLights />
+        </div>
+      ) : (
+        <></>
+      )}
+
       <div className="flex flex-col items-center h-screen mx-2 xl:mx-32 2xl:mx-40 space-y-2">
-        <div className="flex justify-center w-full">
+        <div className="flex flex-col justify-center w-full">
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:items-center md:justify-between w-full h-fit text-black dark:text-white bg-neutral-200 dark:bg-black rounded-b-lg py-4 px-3">
             <Link href="/">
-              <div className="flex flex-row space-x-3 items-center">
+              <div
+                className={`flex flex-row space-x-3 items-center ${christmasTime ? "mt-8" : ""}`}
+              >
                 <p className="text-2xl font-bold">Dustin Rouillard</p>
                 <StatusIcon />
               </div>
