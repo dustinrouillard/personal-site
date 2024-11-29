@@ -39,6 +39,11 @@ export default function Index(props: Props) {
   const [repos, setRepos] = useState<Repository[]>();
   const [recentSongs, setRecentSongs] = useState<RecentSong[]>([]);
 
+  const [christmasTime, setChristmasTime] = useState(() => {
+    const currentDate = new Date();
+    return currentDate.getMonth() == 11;
+  });
+
   const spotifyChange = useCallback(
     (data: SpotifyPlayingData) => {
       if (
@@ -70,6 +75,12 @@ export default function Index(props: Props) {
   useEffect(() => {
     (async () => setRepos(await getPinnedRepositories()))();
     (async () => setRecentSongs(await getRecentListens()))();
+
+    const int = setInterval(() => {
+      const currentDate = new Date();
+      setChristmasTime(currentDate.getMonth() == 11);
+    }, 1000);
+    return () => clearInterval(int);
   }, []);
 
   useEffect(() => {
@@ -146,8 +157,8 @@ export default function Index(props: Props) {
             layout="fixed"
             width={400}
             height={400}
-            src="/avatar.png"
-            alt="avatar"
+            src={christmasTime ? "/christmas-avatar.png" : "/avatar.png"}
+            alt={christmasTime ? "Christmas Avatar" : "Avatar"}
           />
         </div>
       </div>
