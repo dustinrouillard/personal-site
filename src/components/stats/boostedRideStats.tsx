@@ -9,7 +9,10 @@ interface Props {
 export function BoostedRideStats({ className }: Props) {
   const boosted = useBoostedStats();
 
-  return boosted ? (
+  return boosted &&
+    (boosted.stats.rides.day ||
+      boosted.stats.rides.week ||
+      boosted.stats.rides.month) ? (
     <div className={className}>
       <div className="relative text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md w-auto h-40 p-4 px-6 flex flex-col justify-center text-center">
         <div className="flex flex-col text-center mb-8">
