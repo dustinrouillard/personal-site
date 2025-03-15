@@ -1,9 +1,9 @@
-import { Tippy } from './tippy';
-import React, { ReactElement } from 'react';
+import { Tippy } from "./tippy";
+import React, { ReactElement } from "react";
 
-import { useYearsAgo } from '../hooks/useYearsAgo';
+import { useYearsAgo } from "../hooks/useYearsAgo";
 
-const date = new Date('07/15/1999');
+const date = new Date("07/15/1999");
 
 export function Age(): ReactElement {
   const age = useYearsAgo(date);
@@ -11,9 +11,7 @@ export function Age(): ReactElement {
   return (
     <>
       <Tippy content={age.toFixed(8)}>
-        <span className="underline">
-          {Math.floor(age)}
-        </span>
+        <span>{Math.floor(age)} years</span>
       </Tippy>
     </>
   );

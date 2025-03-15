@@ -1,6 +1,7 @@
 import Head from "next/head";
+import { GiNightSleep } from "react-icons/gi";
 
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { Meta } from "../components/meta";
 import {
   StatusDnd,
@@ -12,6 +13,10 @@ import {
 } from "../components/status";
 import Link from "next/link";
 import { ChristmasLights } from "../components/ChristmasLights";
+import { Age } from "../components/age";
+import { gateway } from "../utils/gateway";
+import { StatusResponse } from "../types/gateway";
+import { Tippy } from "../components/tippy";
 
 export interface Props extends PropsWithChildren {
   page_class?: string;
@@ -19,6 +24,9 @@ export interface Props extends PropsWithChildren {
 }
 
 export default function Layout(props: Props) {
+  const [customStatus, setCustomStatus] = useState<string>();
+  const [customStatusText, setCustomStatusText] = useState<string>();
+
   const [christmasTime, setChristmasTime] = useState(() => {
     const currentDate = new Date();
     return currentDate.getMonth() == 11;
@@ -31,6 +39,19 @@ export default function Layout(props: Props) {
     }, 1000);
     return () => clearInterval(int);
   }, []);
+
+  const statusChange = useCallback((data: StatusResponse) => {
+    setCustomStatus(data.type);
+    setCustomStatusText(data.message);
+  }, []);
+
+  useEffect(() => {
+    gateway.on("status", statusChange);
+
+    return () => {
+      gateway.removeListener("status", statusChange);
+    };
+  }, [statusChange]);
 
   return (
     <>
@@ -62,6 +83,15 @@ export default function Layout(props: Props) {
               >
                 <p className="text-2xl font-bold">Dustin Rouillard</p>
                 <StatusIcon />
+                {customStatus == "sleeping" && (
+                  <div>
+                    <Tippy placement="right" content={customStatusText}>
+                      <span>
+                        <GiNightSleep size={24} />
+                      </span>
+                    </Tippy>
+                  </div>
+                )}
               </div>
             </Link>
           </div>
@@ -80,7 +110,11 @@ export default function Layout(props: Props) {
           >
             <p className="opacity-60 hover:opacity-100">View Source</p>
           </Link>
-          <p className="opacity-60 cursor-default">dstn.to</p>
+          <div className="cursor-default flex flex-row space-x-4 opacity-60">
+            <Age />
+            <p>•</p>
+            <p>dstn.to</p>
+          </div>
         </div>
       </div>
 
