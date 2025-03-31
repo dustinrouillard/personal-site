@@ -6,6 +6,17 @@ export interface HighlightedTool {
   icon: JSX.Element;
 }
 
+export interface Work {
+  name: string;
+  description?: string;
+  title: string;
+  url: string;
+  color: string;
+  startYear?: number;
+  endYear?: number;
+  icon: JSX.Element;
+}
+
 export interface Repository {
   owner: string;
   name: string;

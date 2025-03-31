@@ -28,8 +28,9 @@ import { BoostedLastRide } from "../components/stats/boostedLastRide";
 import { BoostedRideStats } from "../components/stats/boostedRideStats";
 import { BoostedBoardStats } from "../components/stats/boostedBoardStats";
 
+import { Work } from "../components/work";
 import { Tool } from "../components/tool";
-import { HightlightedTools } from "../components/tools";
+import { HighlightedTools, HighlightedWorks } from "../components/shared";
 
 interface Props {
   posts: TBlogPost[];
@@ -113,9 +114,8 @@ export default function Index(props: Props) {
               I'm a self-taught Software Engineer turned Network Engineer and
               Systems Administrator.
               <br />
-              <br />
-              Well experienced with Kubernetes and just about any Linux based
-              system.
+              <br />I live and breath Kubernetes, really love to break things so
+              I can fix them, and if I'm writing code, it's probably Rust.
             </p>
           </div>
 
@@ -195,8 +195,18 @@ export default function Index(props: Props) {
         <h2 className="text-2xl font-bold">Tools & Things</h2>
 
         <div className="grid xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
-          {HightlightedTools.map((tool, index) => (
+          {HighlightedTools.map((tool, index) => (
             <Tool key={index} tool={tool} />
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col space-y-6">
+        <h2 className="text-2xl font-bold">Work</h2>
+
+        <div className="grid xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+          {HighlightedWorks.map((work, index) => (
+            <Work key={index} work={work} />
           ))}
         </div>
       </div>
