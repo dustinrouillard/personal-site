@@ -28,6 +28,11 @@ export interface Repository {
   url: string;
 }
 
+export interface ContributionDate {
+  count: number;
+  date: string;
+}
+
 export interface Language {
   name: string;
   color: string;

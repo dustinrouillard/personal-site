@@ -17,9 +17,18 @@ import { Song } from "../components/song";
 import { Spotify } from "../components/stats/spotify";
 
 import { gateway } from "../utils/gateway";
-import { getPinnedRepositories, getRecentListens } from "../utils/core";
+import {
+  getContributionGraph,
+  getPinnedRepositories,
+  getRecentListens,
+} from "../utils/core";
 
-import { RecentSong, Repository, BlogPost as TBlogPost } from "../types/core";
+import {
+  ContributionDate,
+  RecentSong,
+  Repository,
+  BlogPost as TBlogPost,
+} from "../types/core";
 import { SpotifyPlayingData } from "../types/gateway";
 import { LocalTimeConditions } from "../components/stats/local";
 import { CommandsToday } from "../components/stats/commandsToday";
@@ -31,6 +40,7 @@ import { BoostedBoardStats } from "../components/stats/boostedBoardStats";
 import { Work } from "../components/work";
 import { Tool } from "../components/tool";
 import { HighlightedTools, HighlightedWorks } from "../components/shared";
+import { GitActivity } from "../components/GitActivity";
 
 interface Props {
   posts: TBlogPost[];
@@ -39,6 +49,10 @@ interface Props {
 export default function Index(props: Props) {
   const [repos, setRepos] = useState<Repository[]>();
   const [recentSongs, setRecentSongs] = useState<RecentSong[]>([]);
+  const [gitActivity, setGitActivity] = useState<{
+    total_contributions: number;
+    graph: ContributionDate[][];
+  }>();
 
   const [christmasTime, setChristmasTime] = useState(() => {
     const currentDate = new Date();
@@ -76,6 +90,7 @@ export default function Index(props: Props) {
   useEffect(() => {
     (async () => setRepos(await getPinnedRepositories()))();
     (async () => setRecentSongs(await getRecentListens()))();
+    (async () => setGitActivity(await getContributionGraph()))();
 
     const int = setInterval(() => {
       const currentDate = new Date();
@@ -208,6 +223,14 @@ export default function Index(props: Props) {
           {HighlightedWorks.map((work, index) => (
             <Work key={index} work={work} />
           ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col space-y-6">
+        <h2 className="text-2xl font-bold">Git Activity</h2>
+
+        <div className="flex overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+          <GitActivity graph={gitActivity?.graph} />
         </div>
       </div>
 

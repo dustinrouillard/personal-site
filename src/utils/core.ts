@@ -2,13 +2,13 @@ import {
   Analytics,
   BlogPost,
   BoostedStats,
+  ContributionDate,
   RecentSong,
   Repository,
   WeatherConditions,
 } from "../types/core";
 
-const URL_BASE = "https://rest.dstn.to";
-// const URL_BASE = "http://10.4.20.210:8081";
+const URL_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://rest.dstn.to";
 
 export async function getPinnedRepositories() {
   const req = await fetch(`${URL_BASE}/v2/github/pinned`);
@@ -19,6 +19,18 @@ export async function getPinnedRepositories() {
   } = await req.json();
 
   return json.repositories;
+}
+
+export async function getContributionGraph() {
+  const req = await fetch(`${URL_BASE}/v2/github/contributions`);
+  if (req.status != 200) return { total_contributions: 0, graph: [] };
+
+  const json: {
+    total_contributions: number;
+    graph: ContributionDate[][];
+  } = await req.json();
+
+  return json;
 }
 
 export async function getRecentListens() {
