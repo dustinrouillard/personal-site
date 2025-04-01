@@ -2,8 +2,17 @@ import { SiKubernetes, SiSocialblade } from "react-icons/si";
 import { TerminusSymbol } from "./icons/terminus";
 
 import { HighlightedTool, Work } from "../types/core";
+import { BoostedTrackingLogo } from "./icons/boosted";
 
 export const HighlightedTools: HighlightedTool[] = [
+  {
+    soon: true,
+    name: "Boosted Ride Tracking",
+    description: "Tracking application for Boosted Boards with a social aspect",
+    color: "#EE7643",
+    url: "https://boosted.dstn.to",
+    icon: (<BoostedTrackingLogo />) as JSX.Element,
+  },
   {
     name: "Terminus Solver",
     description: "Calculator for Beamsmasher Easter Egg on Black Ops 6",

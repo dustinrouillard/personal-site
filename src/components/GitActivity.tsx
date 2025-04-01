@@ -53,8 +53,8 @@ export function GitActivity({ graph }: GitActivity) {
             <Tippy
               content={
                 <span>
-                  <p className="text-sm">Commits: {date.count}</p>
-                  <p className="text-sm">
+                  <p className="text-sm">{date.count} contributions</p>
+                  <p className="text-sm opacity-50">
                     {new Date(date.date).toLocaleDateString()}
                   </p>
                 </span>

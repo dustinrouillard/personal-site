@@ -4,6 +4,7 @@ export interface HighlightedTool {
   url: string;
   color: string;
   icon: JSX.Element;
+  soon?: boolean;
 }
 
 export interface Work {
