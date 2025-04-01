@@ -41,6 +41,7 @@ import { Work } from "../components/work";
 import { Tool } from "../components/tool";
 import { HighlightedTools, HighlightedWorks } from "../components/shared";
 import { GitActivity } from "../components/GitActivity";
+import { Tippy } from "../components/tippy";
 
 interface Props {
   posts: TBlogPost[];
@@ -227,7 +228,14 @@ export default function Index(props: Props) {
       </div>
 
       <div className="flex flex-col space-y-6">
-        <h2 className="text-2xl font-bold">Git Activity</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-2xl font-bold">Git Activity</h2>
+          <Tippy content="Total Contributions" placement="right">
+            <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
+              {gitActivity?.total_contributions || "..."}
+            </p>
+          </Tippy>
+        </div>
 
         <div className="flex overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
           <GitActivity graph={gitActivity?.graph} />
