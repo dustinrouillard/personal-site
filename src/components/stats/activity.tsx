@@ -61,7 +61,7 @@ export function DiscordActivity({ className }: Props) {
 
   return editorState ? (
     <div className={className}>
-      <div className="flex flex-row items-center h-40 text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md py-6 px-4 min-w-[24rem] cursor-pointer transition-all relative">
+      <div className="flex flex-row items-center h-40 text-black bg-neutral-200/50 dark:text-white dark:bg-neutral-800 rounded-md py-6 px-4 min-w-[24rem] transition-all relative">
         <div className="flex flex-row items-center w-full justify-between relative">
           <div className="flex flex-row items-center space-x-3">
             <img

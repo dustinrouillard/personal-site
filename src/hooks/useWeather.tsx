@@ -4,7 +4,7 @@ import { WeatherConditions } from "../types/core";
 import { getWeatherConditions } from "../utils/core";
 
 export function useWeather() {
-  const [weather, setWeather] = useState<WeatherConditions>({ temperature: 0, humidity: 0 });
+  const [weather, setWeather] = useState<WeatherConditions>();
 
   useEffect(() => {
     (async () => {
@@ -15,7 +15,7 @@ export function useWeather() {
         setWeather({
           temperature: 0,
           humidity: 0,
-        })
+        });
       }
     })();
   }, []);
