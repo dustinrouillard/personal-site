@@ -6,11 +6,10 @@ import { BoostedTrackingLogo } from "./icons/boosted";
 
 export const HighlightedTools: HighlightedTool[] = [
   {
-    soon: true,
-    name: "Boosted Ride Tracking",
+    name: "Riderr",
     description: "Tracking application for Boosted Boards with a social aspect",
     color: "#EE7643",
-    url: "https://boosted.dstn.to",
+    url: "https://riderr.app",
     icon: (<BoostedTrackingLogo />) as JSX.Element,
   },
   {
