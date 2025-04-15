@@ -86,7 +86,6 @@ export interface BlogPost {
 }
 
 export interface BoostedStats {
-  riding: boolean;
   current_ride: CurrentRide;
   latest_ride: LatestRide;
   stats: Stats;

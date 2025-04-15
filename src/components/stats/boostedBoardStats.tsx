@@ -54,11 +54,11 @@ export function BoostedBoardStats({ className }: Props) {
                 {boosted.stats.boards[0].odometer.toLocaleString()} mi
               </p>
               <p
-                className={`text-sm font-bold text-nowrap ${boosted.riding ? "text-green-500" : "opacity-40"}`}
+                className={`text-sm font-bold text-nowrap ${boosted.current_ride ? "text-green-500" : "opacity-40"}`}
               >
-                {boosted.riding ? "On a Ride" : "Idle"}
+                {boosted.current_ride ? "On a Ride" : "Idle"}
               </p>
-              {boosted.riding && boosted.current_ride ? (
+              {boosted.current_ride && boosted.current_ride ? (
                 <>
                   <p className={`text-xs font-bold text-nowrap`}>
                     {boosted.current_ride.distance} mi
@@ -86,7 +86,7 @@ export function BoostedBoardStats({ className }: Props) {
                   </p>
                 </div>
               </Tippy>
-              {!boosted.riding ? (
+              {!boosted.current_ride ? (
                 <Tippy placement="auto" content="Last ride">
                   <p className="text-sm font-bold text-nowrap opacity-35">
                     {lastRide ? `${lastRide} ago` : "..."}
