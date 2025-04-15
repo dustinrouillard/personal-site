@@ -230,7 +230,7 @@ export default function Index(props: Props) {
       <div className="flex flex-col space-y-6">
         <div className="flex items-center gap-4">
           <h2 className="text-2xl font-bold">Git Activity</h2>
-          <Tippy content="Total Contributions" placement="right">
+          <Tippy content="Total Contributions" placement="auto">
             <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
               {gitActivity?.total_contributions || "..."}
             </p>
