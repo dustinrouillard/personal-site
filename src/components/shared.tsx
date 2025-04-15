@@ -25,7 +25,7 @@ export const HighlightedTools: HighlightedTool[] = [
       'Applies the out-of-service node taint whenever the node is "unreachable"',
     color: "#326CE5",
     url: "https://github.com/dustinrouillard/kube-node-oos-controller",
-    icon: (<SiKubernetes size={"auto"} />) as JSX.Element,
+    icon: (<SiKubernetes size={"100%"} className="w-auto" />) as JSX.Element,
   },
 ];
 
@@ -37,7 +37,7 @@ export const HighlightedWorks: Work[] = [
     url: "https://socialblade.com",
     startYear: 2025,
     icon: (
-      <SiSocialblade className="text-socialblade-brand" size={"auto"} />
+      <SiSocialblade className="text-socialblade-brand w-auto" size={"100%"} />
     ) as JSX.Element,
   },
 ];

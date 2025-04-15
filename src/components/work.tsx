@@ -5,7 +5,7 @@ export function Work({ work }: { work: TWork }) {
     <a href={work.url} target="_blank">
       <div
         style={{ borderBottomColor: work.color }}
-        className={`flex flex-row h-40 justify-between rounded-lg m-1 bg-neutral-200 dark:bg-black/60 p-6 min-w-80 border-b-8 gap-6 cursor-pointer hover:brightness-75 transition-all`}
+        className={`flex flex-row h-40 justify-between rounded-lg m-1 bg-neutral-200 dark:bg-black/60 p-4 md:p-6 min-w-80 border-b-8 space-x-6 cursor-pointer hover:brightness-75 transition-all`}
       >
         <div className="flex flex-col w-full justify-between">
           <div className="flex flex-col space-y-2 w-full">
@@ -25,7 +25,11 @@ export function Work({ work }: { work: TWork }) {
           )}
         </div>
 
-        {work.icon ? <div className="flex">{work.icon}</div> : <></>}
+        {work.icon ? (
+          <div className="flex justify-end">{work.icon}</div>
+        ) : (
+          <></>
+        )}
       </div>
     </a>
   );
