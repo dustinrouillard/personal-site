@@ -1,4 +1,4 @@
-import { useBoostedStats } from "../../hooks/useBoostedStats";
+import { useRiderrStats } from "../../hooks/useRiderrStats";
 import { shortMsFormat } from "../../utils/time";
 import { Tippy } from "../tippy";
 
@@ -22,45 +22,45 @@ interface Stats {
   content: string;
 }
 
-export function BoostedRideStats({ className }: Props) {
-  const boosted = useBoostedStats();
+export function RiderrRideStats({ className }: Props) {
+  const riderr = useRiderrStats();
 
   if (
-    !boosted ||
+    !riderr ||
     !(
-      boosted.stats.rides.day ||
-      boosted.stats.rides.week ||
-      boosted.stats.rides.month
+      riderr.stats.rides.day ||
+      riderr.stats.rides.week ||
+      riderr.stats.rides.month
     )
   ) {
     return <></>;
   }
 
-  const dayStats: Stats | null = boosted.stats.rides.day
+  const dayStats: Stats | null = riderr.stats.rides.day
     ? {
-        duration: boosted.stats.duration.day,
-        distance: boosted.stats.distance.day,
-        rides: boosted.stats.rides.day,
+        duration: riderr.stats.duration.day,
+        distance: riderr.stats.distance.day,
+        rides: riderr.stats.rides.day,
         period: "24h",
         content: "Rides in the last 24h",
       }
     : null;
 
-  const weekStats: Stats | null = boosted.stats.rides.week
+  const weekStats: Stats | null = riderr.stats.rides.week
     ? {
-        duration: boosted.stats.duration.week,
-        distance: boosted.stats.distance.week,
-        rides: boosted.stats.rides.week,
+        duration: riderr.stats.duration.week,
+        distance: riderr.stats.distance.week,
+        rides: riderr.stats.rides.week,
         period: "7d",
         content: "Rides in the last week",
       }
     : null;
 
-  const monthStats: Stats | null = boosted.stats.rides.month
+  const monthStats: Stats | null = riderr.stats.rides.month
     ? {
-        duration: boosted.stats.duration.month,
-        distance: boosted.stats.distance.month,
-        rides: boosted.stats.rides.month,
+        duration: riderr.stats.duration.month,
+        distance: riderr.stats.distance.month,
+        rides: riderr.stats.rides.month,
         period: "30d",
         content: "Rides in the last month",
       }

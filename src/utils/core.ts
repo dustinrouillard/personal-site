@@ -1,7 +1,7 @@
 import {
   Analytics,
   BlogPost,
-  BoostedStats,
+  RiderrUserStats,
   ContributionDate,
   RecentSong,
   Repository,
@@ -66,15 +66,15 @@ export async function getAnalytics() {
   return json.analytics;
 }
 
-export async function getBoostedStats() {
-  const req = await fetch(`${URL_BASE}/v2/boosted/stats`);
-  if (req.status != 200) throw { code: "failed_to_pull_boosted_stats" };
+export async function getRiderrUserStats() {
+  const req = await fetch(`${URL_BASE}/v2/riderr/stats`);
+  if (req.status != 200) throw { code: "failed_to_pull_riderr_stats" };
 
   const json: {
-    boosted: BoostedStats;
+    riderr: RiderrUserStats;
   } = await req.json();
 
-  return json.boosted;
+  return json.riderr;
 }
 
 export async function getPosts() {

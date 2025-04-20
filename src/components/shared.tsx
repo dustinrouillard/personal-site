@@ -2,7 +2,7 @@ import { SiKubernetes, SiSocialblade } from "react-icons/si";
 import { TerminusSymbol } from "./icons/terminus";
 
 import { HighlightedTool, Work } from "../types/core";
-import { BoostedTrackingLogo } from "./icons/boosted";
+import { RiderrLogo } from "./icons/riderr";
 
 export const HighlightedTools: HighlightedTool[] = [
   {
@@ -10,7 +10,7 @@ export const HighlightedTools: HighlightedTool[] = [
     description: "Tracking application for Boosted Boards with a social aspect",
     color: "#EE7643",
     url: "https://riderr.app",
-    icon: (<BoostedTrackingLogo />) as JSX.Element,
+    icon: (<RiderrLogo />) as JSX.Element,
   },
   {
     name: "Terminus Solver",

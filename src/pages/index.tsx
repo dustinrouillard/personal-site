@@ -33,9 +33,9 @@ import { SpotifyPlayingData } from "../types/gateway";
 import { LocalTimeConditions } from "../components/stats/local";
 import { CommandsToday } from "../components/stats/commandsToday";
 import { DiscordActivity } from "../components/stats/activity";
-import { BoostedLastRide } from "../components/stats/boostedLastRide";
-import { BoostedRideStats } from "../components/stats/boostedRideStats";
-import { BoostedBoardStats } from "../components/stats/boostedBoardStats";
+import { RiderrLastRide } from "../components/stats/riderrLastRide";
+import { RiderrRideStats } from "../components/stats/riderrRideStats";
+import { RiderrBoardStats } from "../components/stats/riderrBoardStats";
 
 import { Work } from "../components/work";
 import { Tool } from "../components/tool";
@@ -185,9 +185,9 @@ export default function Index(props: Props) {
         <div className="flex flex-wrap flex-grow w-full">
           <CommandsToday className="p-1 w-full md:w-auto" />
           <LocalTimeConditions className="p-1 w-full md:w-auto" />
-          <BoostedBoardStats className="p-1 w-full md:w-auto" />
-          <BoostedLastRide className="p-1 w-full md:w-auto" />
-          <BoostedRideStats className="p-1 w-full md:w-auto" />
+          <RiderrBoardStats className="p-1 w-full md:w-auto" />
+          <RiderrLastRide className="p-1 w-full md:w-auto" />
+          <RiderrRideStats className="p-1 w-full md:w-auto" />
           <DiscordActivity className="p-1 w-full md:w-auto" />
           <Spotify recents={recentSongs} className="p-1 w-full md:w-auto" />
         </div>

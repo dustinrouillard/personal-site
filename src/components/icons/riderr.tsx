@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-export function BoostedTrackingLogo(props: SVGProps<SVGSVGElement>) {
+export function RiderrLogo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width="auto"

@@ -85,7 +85,7 @@ export interface BlogPost {
   published_at: Date;
 }
 
-export interface BoostedStats {
+export interface RiderrUserStats {
   current_ride: CurrentRide;
   latest_ride: LatestRide;
   stats: Stats;

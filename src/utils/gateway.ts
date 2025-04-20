@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 import { inflate, deflate } from "pako";
 import { SpotifyPlayingData, StatusResponse } from "../types/gateway";
-import { BoostedStats } from "../types/core";
+import { RiderrUserStats } from "../types/core";
 
 enum Op {
   Init,
@@ -9,7 +9,7 @@ enum Op {
   Spotify,
   SpotifyChanged,
   Status,
-  BoostedUpdate,
+  RiderrUpdate,
 }
 
 interface SocketData {
@@ -39,7 +39,7 @@ export interface Gateway {
     event: "spotify_changed",
     listener: (data: SpotifyPlayingData) => void,
   ): this;
-  on(event: "boosted_update", listener: (data: BoostedStats) => void): this;
+  on(event: "riderr_update", listener: (data: RiderrUserStats) => void): this;
   on(event: "connected", listener: () => void): this;
   on(event: "init", listener: () => void): this;
 }
@@ -146,8 +146,8 @@ export class Gateway extends EventEmitter {
 
         break;
 
-      case Op.BoostedUpdate:
-        this.emit("boosted_update", data.d);
+      case Op.RiderrUpdate:
+        this.emit("riderr_update", data.d);
 
         break;
 
