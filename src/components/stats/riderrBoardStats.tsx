@@ -103,7 +103,7 @@ export function RiderrBoardStats({ className }: Props) {
               className="rounded-lg p-1 opacity-60 group-hover:opacity-100 transition-opacity"
               width={128}
               height={128}
-              src="/riderr-plus.png"
+              src="/boosted-plus.png"
               alt="avatar"
             />
           </div>
