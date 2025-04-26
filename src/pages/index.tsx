@@ -158,8 +158,8 @@ export default function Index(props: Props) {
               I'm a self-taught Software Engineer turned Network Engineer and
               Systems Administrator.
               <br />
-              <br />I live and breath Kubernetes, really love to break things so
-              I can fix them, and if I'm writing code, it's probably Rust.
+              <br />I live and breath Kubernetes, love writing Rust, and enjoy
+              learning new technologies.
             </p>
           </div>
 
