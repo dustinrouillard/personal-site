@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        "instagram-pink": "rgb(193, 53, 132)",
         "socialblade-brand": "rgb(179, 56, 44)",
       },
       screens: {

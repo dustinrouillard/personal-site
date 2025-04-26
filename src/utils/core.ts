@@ -6,9 +6,18 @@ import {
   RecentSong,
   Repository,
   WeatherConditions,
+  InstagramOverview,
 } from "../types/core";
 
 const URL_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://rest.dstn.to";
+
+export async function getInstagramOverview() {
+  const req = await fetch(`${URL_BASE}/v2/ig/overview`);
+  if (req.status != 200) throw { code: "failed_to_fetch_instagram_overview" };
+
+  const json: InstagramOverview = await req.json();
+  return json;
+}
 
 export async function getPinnedRepositories() {
   const req = await fetch(`${URL_BASE}/v2/github/pinned`);

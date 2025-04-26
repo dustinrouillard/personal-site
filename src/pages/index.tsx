@@ -19,12 +19,14 @@ import { Spotify } from "../components/stats/spotify";
 import { gateway } from "../utils/gateway";
 import {
   getContributionGraph,
+  getInstagramOverview,
   getPinnedRepositories,
   getRecentListens,
 } from "../utils/core";
 
 import {
   ContributionDate,
+  InstagramOverview,
   RecentSong,
   Repository,
   BlogPost as TBlogPost,
@@ -42,6 +44,8 @@ import { Tool } from "../components/tool";
 import { HighlightedTools, HighlightedWorks } from "../components/shared";
 import { GitActivity } from "../components/GitActivity";
 import { Tippy } from "../components/tippy";
+import { InstagramPost } from "../components/InstagramPost";
+import { ALL_POSTS_AFTER } from "../consts";
 
 interface Props {
   posts: TBlogPost[];
@@ -54,6 +58,8 @@ export default function Index(props: Props) {
     total_contributions: number;
     graph: ContributionDate[][];
   }>();
+  const [instagramOverview, setInstagramOverview] =
+    useState<InstagramOverview>();
 
   const [christmasTime, setChristmasTime] = useState(() => {
     const currentDate = new Date();
@@ -89,9 +95,18 @@ export default function Index(props: Props) {
   );
 
   useEffect(() => {
-    (async () => setRepos(await getPinnedRepositories()))();
-    (async () => setRecentSongs(await getRecentListens()))();
-    (async () => setGitActivity(await getContributionGraph()))();
+    try {
+      (async () => setRepos(await getPinnedRepositories()))();
+    } catch (err) {}
+    try {
+      (async () => setRecentSongs(await getRecentListens()))();
+    } catch (err) {}
+    try {
+      (async () => setGitActivity(await getContributionGraph()))();
+    } catch (err) {}
+    try {
+      (async () => setInstagramOverview(await getInstagramOverview()))();
+    } catch (err) {}
 
     const int = setInterval(() => {
       const currentDate = new Date();
@@ -227,38 +242,74 @@ export default function Index(props: Props) {
         </div>
       </div>
 
-      <div className="flex flex-col space-y-6">
-        <div className="flex items-center gap-4">
-          <h2 className="text-2xl font-bold">Git Activity</h2>
-          <Tippy content="Total Contributions" placement="auto">
+      {gitActivity && (
+        <div className="flex flex-col space-y-6">
+          <div className="flex items-center gap-4">
+            <h2 className="text-2xl font-bold">Git Activity</h2>
+            <Tippy content="Total Contributions" placement="auto">
+              <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
+                {gitActivity?.total_contributions.toLocaleString() || "..."}
+              </p>
+            </Tippy>
+          </div>
+
+          <div className="flex overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+            <GitActivity graph={gitActivity?.graph} />
+          </div>
+        </div>
+      )}
+
+      {repos && (
+        <div className="flex flex-col space-y-6">
+          <h2 className="text-2xl font-bold">
+            Highlighted Github Repositories
+          </h2>
+
+          <div className="grid xl:grid-cols-2 xl:grid-rows-3 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+            {repos.map((repo, index) => (
+              <Repo key={index} repo={repo} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {instagramOverview && (
+        <div className="flex flex-col space-y-6">
+          <div className="flex items-center gap-4">
+            <h2 className="text-2xl font-bold">Recent Instagram Posts</h2>
             <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
-              {gitActivity?.total_contributions || "..."}
+              {instagramOverview.followers.toLocaleString() || "..."} followers
             </p>
-          </Tippy>
+            <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
+              {instagramOverview.post_count.toLocaleString() || "..."} posts
+            </p>
+          </div>
+
+          <div className="grid 2xl:grid-cols-3 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+            {instagramOverview.posts
+              .filter(
+                (post) =>
+                  new Date(post.timestamp).getTime() >
+                  ALL_POSTS_AFTER.getTime(),
+              )
+              .map((post, index) => (
+                <InstagramPost key={index} post={post} />
+              ))}
+          </div>
         </div>
+      )}
 
-        <div className="flex overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
-          <GitActivity graph={gitActivity?.graph} />
+      {recentSongs && (
+        <div className="flex flex-col space-y-6">
+          <h2 className="text-2xl font-bold">Recent Spotify Listens</h2>
+
+          <div className="grid grid-cols-1 grid-rows-10 grid-flow-col 2xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+            {recentSongs.map((song, index) => (
+              <Song key={index} song={song} />
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div className="flex flex-col space-y-6">
-        <h2 className="text-2xl font-bold">Highlighted Github Repositories</h2>
-
-        <div className="grid xl:grid-cols-2 xl:grid-rows-3 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
-          {repos &&
-            repos.map((repo, index) => <Repo key={index} repo={repo} />)}
-        </div>
-      </div>
-
-      <div className="flex flex-col space-y-6">
-        <h2 className="text-2xl font-bold">Recent Spotify Listens</h2>
-
-        <div className="grid grid-cols-1 grid-rows-10 grid-flow-col 2xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
-          {recentSongs &&
-            recentSongs.map((song, index) => <Song key={index} song={song} />)}
-        </div>
-      </div>
+      )}
     </Layout>
   );
 }

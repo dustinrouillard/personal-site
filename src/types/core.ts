@@ -123,3 +123,33 @@ export interface Distance {
   week: number;
   month: number;
 }
+
+export interface InstagramOverview {
+  followers: number;
+  post_count: number;
+  posts: InstagramPost[];
+}
+
+export interface InstagramPost {
+  id: string;
+  caption: string;
+  media_type: IGMediaType;
+  media_product_type: IGMediaProductType;
+  comments_count: number;
+  like_count: number;
+  media_url: string;
+  thumbnail_url: null | string;
+  permalink: string;
+  timestamp: string;
+}
+
+export enum IGMediaProductType {
+  Feed = "FEED",
+  Reels = "REELS",
+}
+
+export enum IGMediaType {
+  CarouselAlbum = "CAROUSEL_ALBUM",
+  Image = "IMAGE",
+  Video = "VIDEO",
+}
