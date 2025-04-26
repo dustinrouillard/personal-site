@@ -16,7 +16,7 @@ export function InstagramPost({ post }: { post: IGPost }) {
     <a href={post.permalink} target="_blank">
       <div className="flex flex-row items-start lg:items-center rounded-lg m-1 bg-neutral-200 dark:bg-black/60 py-6 px-4 border-b-8 border-b-instagram-pink/50 hover:border-b-instagram-pink cursor-pointer hover:brightness-75 transition-all">
         <div className="flex flex-col gap-2 relative">
-          <div className="absolute right-0 bg-neutral-900 rounded-lg p-2 m-2">
+          <div className="absolute right-0 bg-neutral-400 dark:bg-neutral-900 rounded-lg p-2 m-2">
             <p className="text-sm">{PostTypes[post.media_product_type]}</p>
           </div>
 

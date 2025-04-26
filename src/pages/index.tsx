@@ -305,15 +305,17 @@ export default function Index(props: Props) {
       {instagramOverview && (
         <div className="flex flex-col space-y-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex lg:items-center gap-4 flex-col lg:flex-row">
               <h2 className="text-2xl font-bold">Instagram Feed</h2>
-              <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
-                {instagramOverview.followers.toLocaleString() || "..."}{" "}
-                followers
-              </p>
-              <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
-                {instagramOverview.post_count.toLocaleString() || "..."} posts
-              </p>
+              <div className="flex gap-2">
+                <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
+                  {instagramOverview.followers.toLocaleString() || "..."}{" "}
+                  followers
+                </p>
+                <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
+                  {instagramOverview.post_count.toLocaleString() || "..."} posts
+                </p>
+              </div>
             </div>
             <BiLogoInstagram size={38} className="p-1" />
           </div>
@@ -337,9 +339,6 @@ export default function Index(props: Props) {
             <div className="grid overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
               <div className="flex flex-col p-2 h-full">
                 <p className="text-xl font-bold">No posts to show yet.</p>
-                <p className="text-xs font-bold opacity-40">
-                  (Only posts from this year will show here)
-                </p>
                 <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
                   See my page{" "}
                   <a
