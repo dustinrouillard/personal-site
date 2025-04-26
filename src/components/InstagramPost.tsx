@@ -27,11 +27,12 @@ export function InstagramPost({ post }: { post: IGPost }) {
 
           <div className="flex justify-between items-center">
             <div className="flex flex-row gap-1 opacity-70 items-center">
-              <HiHeart size={20} /> <p className="">{post.like_count}</p>
+              <HiHeart size={20} />{" "}
+              <p className="">{post.like_count.toLocaleString()}</p>
             </div>
             <div className="flex flex-row gap-1 opacity-70 items-center">
               <HiMiniChatBubbleOvalLeft size={20} />{" "}
-              <p className="">{post.like_count}</p>
+              <p className="">{post.comments_count.toLocaleString()}</p>
             </div>
           </div>
 
