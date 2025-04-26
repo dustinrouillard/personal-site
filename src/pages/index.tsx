@@ -4,11 +4,16 @@ import { useCallback, useEffect, useState } from "react";
 import { RequestContext } from "next/dist/server/base-server";
 
 import {
+  BiStats,
   BiLogoGithub,
   BiLogoInstagram,
   BiLogoLinkedin,
+  BiLogoSpotify,
   BiLogoTwitter,
 } from "react-icons/bi";
+import { MdWork } from "react-icons/md";
+import { BsTools } from "react-icons/bs";
+import { VscSourceControl } from "react-icons/vsc";
 
 import Layout from "./_layout";
 
@@ -195,7 +200,10 @@ export default function Index(props: Props) {
       </div>
 
       <div className="flex flex-col space-y-6">
-        <h2 className="text-2xl font-bold">Stats & Activity</h2>
+        <div className="flex items-center gap-2">
+          <BiStats size={38} className="p-1" />
+          <h2 className="text-2xl font-bold">Stats & Activity</h2>
+        </div>
 
         <div className="flex flex-wrap flex-grow w-full">
           <CommandsToday className="p-1 w-full md:w-auto" />
@@ -223,7 +231,10 @@ export default function Index(props: Props) {
       </div> */}
 
       <div className="flex flex-col space-y-6">
-        <h2 className="text-2xl font-bold">Tools & Things</h2>
+        <div className="flex items-center gap-2 justify-between">
+          <h2 className="text-2xl font-bold">Tools & Things</h2>
+          <BsTools size={38} className="p-1" />
+        </div>
 
         <div className="grid xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
           {HighlightedTools.map((tool, index) => (
@@ -233,7 +244,10 @@ export default function Index(props: Props) {
       </div>
 
       <div className="flex flex-col space-y-6">
-        <h2 className="text-2xl font-bold">Work</h2>
+        <div className="flex items-center gap-2 justify-between">
+          <h2 className="text-2xl font-bold">Work</h2>
+          <MdWork size={38} className="p-1" />
+        </div>
 
         <div className="grid xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
           {HighlightedWorks.map((work, index) => (
@@ -244,13 +258,16 @@ export default function Index(props: Props) {
 
       {gitActivity && (
         <div className="flex flex-col space-y-6">
-          <div className="flex items-center gap-4">
-            <h2 className="text-2xl font-bold">Git Activity</h2>
-            <Tippy content="Total Contributions" placement="auto">
-              <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
-                {gitActivity?.total_contributions.toLocaleString() || "..."}
-              </p>
-            </Tippy>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <h2 className="text-2xl font-bold">Git Activity</h2>
+              <Tippy content="Total Contributions" placement="auto">
+                <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
+                  {gitActivity?.total_contributions.toLocaleString() || "..."}
+                </p>
+              </Tippy>
+            </div>
+            <VscSourceControl size={38} className="p-1" />
           </div>
 
           <div className="flex overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
@@ -261,9 +278,10 @@ export default function Index(props: Props) {
 
       {repos && (
         <div className="flex flex-col space-y-6">
-          <h2 className="text-2xl font-bold">
-            Highlighted Github Repositories
-          </h2>
+          <div className="flex items-center gap-2 justify-between">
+            <h2 className="text-2xl font-bold">Highlighted Repositories</h2>
+            <BiLogoGithub size={38} className="p-1" />
+          </div>
 
           <div className="grid xl:grid-cols-2 xl:grid-rows-3 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
             {repos.map((repo, index) => (
@@ -275,33 +293,65 @@ export default function Index(props: Props) {
 
       {instagramOverview && (
         <div className="flex flex-col space-y-6">
-          <div className="flex items-center gap-4">
-            <h2 className="text-2xl font-bold">Recent Instagram Posts</h2>
-            <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
-              {instagramOverview.followers.toLocaleString() || "..."} followers
-            </p>
-            <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
-              {instagramOverview.post_count.toLocaleString() || "..."} posts
-            </p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <h2 className="text-2xl font-bold">Instagram Feed</h2>
+              <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
+                {instagramOverview.followers.toLocaleString() || "..."}{" "}
+                followers
+              </p>
+              <p className="flex rounded-full bg-neutral-300 dark:bg-neutral-800 py-2 px-3 font-bold">
+                {instagramOverview.post_count.toLocaleString() || "..."} posts
+              </p>
+            </div>
+            <BiLogoInstagram size={38} className="p-1" />
           </div>
 
-          <div className="grid 2xl:grid-cols-3 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
-            {instagramOverview.posts
-              .filter(
-                (post) =>
-                  new Date(post.timestamp).getTime() >
-                  ALL_POSTS_AFTER.getTime(),
-              )
-              .map((post, index) => (
-                <InstagramPost key={index} post={post} />
-              ))}
-          </div>
+          {instagramOverview.posts.filter(
+            (post) =>
+              new Date(post.timestamp).getTime() > ALL_POSTS_AFTER.getTime(),
+          ).length ? (
+            <div className="grid 2xl:grid-cols-3 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+              {instagramOverview.posts
+                .filter(
+                  (post) =>
+                    new Date(post.timestamp).getTime() >
+                    ALL_POSTS_AFTER.getTime(),
+                )
+                .map((post, index) => (
+                  <InstagramPost key={index} post={post} />
+                ))}
+            </div>
+          ) : (
+            <div className="grid overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+              <div className="flex flex-col p-2 h-full">
+                <p className="text-xl font-bold">No posts to show yet.</p>
+                <p className="text-xs font-bold opacity-40">
+                  (Only posts from this year will show here)
+                </p>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
+                  See my page{" "}
+                  <a
+                    className="text-blue-300 hover:underline"
+                    target="_blank"
+                    href="https://dstn.to/instagram"
+                  >
+                    on instagram
+                  </a>{" "}
+                  for my older posts
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
       {recentSongs && (
         <div className="flex flex-col space-y-6">
-          <h2 className="text-2xl font-bold">Recent Spotify Listens</h2>
+          <div className="flex items-center gap-2 justify-between">
+            <h2 className="text-2xl font-bold">Spotify Recents</h2>
+            <BiLogoSpotify size={38} className="p-1" />
+          </div>
 
           <div className="grid grid-cols-1 grid-rows-10 grid-flow-col 2xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
             {recentSongs.map((song, index) => (
