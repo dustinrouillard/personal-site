@@ -3,10 +3,11 @@ import { useWeather } from "../../hooks/useWeather";
 
 interface Props {
   className: string;
+  timezone?: string;
 }
 
-export function LocalTimeConditions({ className }: Props) {
-  const time = useTimeFromTZ("America/Denver");
+export function LocalTimeConditions({ className, timezone }: Props) {
+  const time = useTimeFromTZ(timezone ?? "America/Denver");
   const weather = useWeather();
 
   return weather && time ? (

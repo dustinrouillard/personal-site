@@ -11,6 +11,14 @@ import {
 
 const URL_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://rest.dstn.to";
 
+export async function getSiteSettings() {
+  const req = await fetch(`${URL_BASE}/v2/settings/site`);
+  if (req.status != 200) throw { code: "failed_to_fetch_site_settings" };
+
+  const json: { settings: Record<string, string> } = await req.json();
+  return json.settings;
+}
+
 export async function getInstagramOverview() {
   const req = await fetch(`${URL_BASE}/v2/ig/overview`);
   if (req.status != 200) throw { code: "failed_to_fetch_instagram_overview" };

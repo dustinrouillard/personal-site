@@ -1,4 +1,5 @@
 export interface LanyardPresence {
+  kv: Record<string, string>;
   discord_status: string;
   activities: LanyardActivity[];
   active_on_discord_mobile: boolean;

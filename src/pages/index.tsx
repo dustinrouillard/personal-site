@@ -27,6 +27,7 @@ import {
   getInstagramOverview,
   getPinnedRepositories,
   getRecentListens,
+  getSiteSettings,
 } from "../utils/core";
 
 import {
@@ -65,6 +66,7 @@ export default function Index(props: Props) {
   }>();
   const [instagramOverview, setInstagramOverview] =
     useState<InstagramOverview>();
+  const [timezoneOverride, setTimezoneOverride] = useState<string>();
 
   const [christmasTime, setChristmasTime] = useState(() => {
     const currentDate = new Date();
@@ -100,6 +102,12 @@ export default function Index(props: Props) {
   );
 
   useEffect(() => {
+    try {
+      (async () => {
+        const settings = await getSiteSettings();
+        if ("timezone" in settings) setTimezoneOverride(settings.timezone);
+      })();
+    } catch (err) {}
     try {
       (async () => setRepos(await getPinnedRepositories()))();
     } catch (err) {}
@@ -207,7 +215,10 @@ export default function Index(props: Props) {
 
         <div className="flex flex-wrap flex-grow w-full">
           <CommandsToday className="p-1 w-full md:w-auto" />
-          <LocalTimeConditions className="p-1 w-full md:w-auto" />
+          <LocalTimeConditions
+            className="p-1 w-full md:w-auto"
+            timezone={timezoneOverride}
+          />
           <RiderrBoardStats className="p-1 w-full md:w-auto" />
           <RiderrLastRide className="p-1 w-full md:w-auto" />
           <RiderrRideStats className="p-1 w-full md:w-auto" />

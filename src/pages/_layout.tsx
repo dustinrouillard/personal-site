@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { GiNightSleep } from "react-icons/gi";
+import { GiNightSleep, GiCampingTent } from "react-icons/gi";
 
 import { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { Meta } from "../components/meta";
@@ -83,7 +83,7 @@ export default function Layout(props: Props) {
               >
                 <p className="text-2xl font-bold">Dustin Rouillard</p>
                 <StatusIcon />
-                {customStatus == "sleeping" && (
+                {customStatus == "sleeping" ? (
                   <div>
                     <Tippy placement="right" content={customStatusText}>
                       <span>
@@ -91,6 +91,16 @@ export default function Layout(props: Props) {
                       </span>
                     </Tippy>
                   </div>
+                ) : customStatus == "camping" ? (
+                  <div>
+                    <Tippy placement="right" content={customStatusText}>
+                      <span>
+                        <GiCampingTent size={24} />
+                      </span>
+                    </Tippy>
+                  </div>
+                ) : (
+                  <></>
                 )}
               </div>
             </Link>
