@@ -52,6 +52,7 @@ import { GitActivity } from "../components/GitActivity";
 import { Tippy } from "../components/tippy";
 import { InstagramPost } from "../components/InstagramPost";
 import { ALL_POSTS_AFTER } from "../consts";
+import { SiSocialblade } from "react-icons/si";
 
 interface Props {
   posts: TBlogPost[];
@@ -318,7 +319,19 @@ export default function Index(props: Props) {
                 </p>
               </div>
             </div>
-            <BiLogoInstagram size={38} className="p-1" />
+            <div className="flex space-x-2 items-center">
+              <Tippy content="View on Social Blade">
+                <Link
+                  href="https://socialblade.com/instagram/user/dustinrouillard"
+                  target="_blank"
+                >
+                  <SiSocialblade size={38} className="text-socialblade-brand" />
+                </Link>
+              </Tippy>
+              <Link href="https://dstn.to/instagram" target="_blank">
+                <BiLogoInstagram size={38} className="p-1" />
+              </Link>
+            </div>
           </div>
 
           {instagramOverview.posts.filter(
