@@ -48,6 +48,7 @@ export interface RecentSong {
   image: string;
   device: Device;
   listened_at: string;
+  alt: boolean;
 }
 
 export interface Artist {

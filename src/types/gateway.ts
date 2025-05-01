@@ -1,5 +1,6 @@
 export interface SpotifyPlayingData {
   playing: boolean;
+  alt: boolean;
   id: string;
   type: string;
   name: string;

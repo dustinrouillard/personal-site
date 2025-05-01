@@ -91,6 +91,7 @@ export default function Index(props: Props) {
         length: data.length,
         type: data.type,
         listened_at: new Date().toISOString(),
+        alt: data.alt,
       };
 
       setRecentSongs((recent) => {
@@ -363,7 +364,7 @@ export default function Index(props: Props) {
             <BiLogoSpotify size={38} className="p-1" />
           </div>
 
-          <div className="grid grid-cols-1 grid-rows-10 grid-flow-col 2xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+          <div className="grid grid-cols-1 grid-rows-10 grid-flow-col 2xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row gap-2 overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
             {recentSongs.map((song, index) => (
               <Song key={index} song={song} />
             ))}

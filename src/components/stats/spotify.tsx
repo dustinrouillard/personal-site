@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { CiClock2, CiStreamOn } from "react-icons/ci";
-
 import { RecentSong } from "../../types/core";
 import { SpotifyPlayingData } from "../../types/gateway";
 
@@ -70,11 +68,6 @@ export function Spotify({ className, ...props }: Props) {
                   </Tippy>
                 </div>
               </div>
-              <Tippy content="Currently playing">
-                <span className="right-1 hover:text-red-500 transition-all pl-3">
-                  <CiStreamOn size={28} />
-                </span>
-              </Tippy>
             </div>
           </div>
         </a>
@@ -111,11 +104,6 @@ export function Spotify({ className, ...props }: Props) {
                   </p>
                 </div>
               </div>
-              <Tippy content="Last played">
-                <span className="right-1 transition-all pl-3">
-                  <CiClock2 size={28} />
-                </span>
-              </Tippy>
             </div>
           </div>
         </a>
