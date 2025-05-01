@@ -319,19 +319,9 @@ export default function Index(props: Props) {
                 </p>
               </div>
             </div>
-            <div className="flex space-x-2 items-center">
-              <Tippy content="View on Social Blade">
-                <Link
-                  href="https://socialblade.com/instagram/user/dustinrouillard"
-                  target="_blank"
-                >
-                  <SiSocialblade size={38} className="text-socialblade-brand" />
-                </Link>
-              </Tippy>
-              <Link href="https://dstn.to/instagram" target="_blank">
-                <BiLogoInstagram size={38} className="p-1" />
-              </Link>
-            </div>
+            <Link href="https://dstn.to/instagram" target="_blank">
+              <BiLogoInstagram size={38} className="p-1" />
+            </Link>
           </div>
 
           {instagramOverview.posts.filter(
