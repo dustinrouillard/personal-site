@@ -66,10 +66,10 @@ export interface WeatherConditions {
 }
 
 export interface Analytics {
-  commands: Commands;
+  commands: DayWeekStat;
 }
 
-export interface Commands {
+export interface DayWeekStat {
   day: number;
   week: number;
 }

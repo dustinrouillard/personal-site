@@ -39,7 +39,7 @@ import {
 } from "../types/core";
 import { SpotifyPlayingData } from "../types/gateway";
 import { LocalTimeConditions } from "../components/stats/local";
-import { CommandsToday } from "../components/stats/commandsToday";
+import { CommandStats } from "../components/stats/commandStats";
 import { DiscordActivity } from "../components/stats/activity";
 import { RiderrLastRide } from "../components/stats/riderrLastRide";
 import { RiderrRideStats } from "../components/stats/riderrRideStats";
@@ -216,7 +216,7 @@ export default function Index(props: Props) {
         </div>
 
         <div className="flex flex-wrap flex-grow w-full">
-          <CommandsToday className="p-1 w-full md:w-auto" />
+          <CommandStats className="p-1 w-full md:w-auto" />
           <LocalTimeConditions
             className="p-1 w-full md:w-auto"
             timezone={timezoneOverride}
