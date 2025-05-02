@@ -37,11 +37,14 @@ export function GitActivity({ graph }: GitActivity) {
   const getColorClass = (count: number) => {
     if (maxCommits === 0) return "bg-gray-600/40 dark:bg-gray-600/40";
     const ratio = count / maxCommits;
-    if (ratio > 0.75) return "bg-green-900 dark:bg-green-900";
-    else if (ratio > 0.5) return "bg-green-800 dark:bg-green-800";
-    else if (ratio > 0.25) return "bg-green-700 dark:bg-green-700";
-    else if (ratio > 0) return "bg-green-600 dark:bg-green-600";
-    else return "bg-gray-600/40 dark:bg-gray-600/40";
+    if (ratio > 0.75) return "bg-github-act-most dark:bg-github-act-most-dark";
+    else if (ratio > 0.5)
+      return "bg-github-act-lot dark:bg-github-act-lot-dark";
+    else if (ratio > 0.25)
+      return "bg-github-act-medium dark:bg-github-act-medium-dark";
+    else if (ratio > 0)
+      return "bg-github-act-some dark:bg-github-act-some-dark";
+    else return "bg-github-act-none/60 dark:bg-github-act-none-dark/60";
   };
 
   return (
