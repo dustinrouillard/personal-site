@@ -53,6 +53,7 @@ import { Tippy } from "../components/tippy";
 import { InstagramPost } from "../components/InstagramPost";
 import { ALL_POSTS_AFTER } from "../consts";
 import { SiSocialblade } from "react-icons/si";
+import { GitActivityLegend } from "../components/GitActivityLegend";
 
 interface Props {
   posts: TBlogPost[];
@@ -283,8 +284,9 @@ export default function Index(props: Props) {
             <VscSourceControl size={38} className="p-1" />
           </div>
 
-          <div className="flex overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+          <div className="flex flex-col overflow-scroll p-2 rounded-lg border-2 border-neutral-700">
             <GitActivity graph={gitActivity?.graph} />
+            <GitActivityLegend />
           </div>
         </div>
       )}

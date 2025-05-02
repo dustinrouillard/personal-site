@@ -35,7 +35,8 @@ export function GitActivity({ graph }: GitActivity) {
   }, [weeklyData]);
 
   const getColorClass = (count: number) => {
-    if (maxCommits === 0) return "bg-gray-600/40 dark:bg-gray-600/40";
+    if (maxCommits === 0)
+      return "bg-github-act-none dark:bg-github-act-none-dark";
     const ratio = count / maxCommits;
     if (ratio > 0.75) return "bg-github-act-most dark:bg-github-act-most-dark";
     else if (ratio > 0.5)
@@ -44,11 +45,14 @@ export function GitActivity({ graph }: GitActivity) {
       return "bg-github-act-medium dark:bg-github-act-medium-dark";
     else if (ratio > 0)
       return "bg-github-act-some dark:bg-github-act-some-dark";
-    else return "bg-github-act-none/60 dark:bg-github-act-none-dark/60";
+    else return "bg-github-act-none dark:bg-github-act-none-dark";
   };
 
   return (
-    <div className="p-4 flex flex-row group overflow-x-scroll" ref={element}>
+    <div
+      className="px-4 py-2 flex flex-row group overflow-x-scroll"
+      ref={element}
+    >
       {weeklyData.map((week, weekIndex) => (
         <div className="flex flex-col group" key={weekIndex}>
           {week.map((date: ContributionDate, dayIndex: number) => (
@@ -64,7 +68,7 @@ export function GitActivity({ graph }: GitActivity) {
             >
               <div
                 key={dayIndex}
-                className={`w-2.5 h-2.5 m-0.5 p-3 rounded-md opacity-60 group-hover:opacity-100 transition-all ${getColorClass(date.count)}`}
+                className={`w-2.5 h-2.5 m-0.5 p-3 rounded-md opacity-60 group-hover:opacity-100 transition-all border-[0.5px] border-black/15 dark:border-white/10 ${getColorClass(date.count)}`}
               />
             </Tippy>
           ))}

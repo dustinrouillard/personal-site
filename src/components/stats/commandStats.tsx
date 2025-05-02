@@ -27,7 +27,7 @@ export function CommandStats({ className }: Props) {
             placement="auto"
             content="# of shell commands ran in the last 7 days"
           >
-            <p className="text-2xl font-bold">
+            <p className="text-xl font-bold">
               {analytics.commands.week.toLocaleString() ?? "--"}
               <span className="opacity-40">/7d</span>
             </p>

@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         "instagram-pink": "rgb(193, 53, 132)",
         "socialblade-brand": "rgb(179, 56, 44)",
+
         "github-act-none": "#eff2f5",
         "github-act-some": "#aceebb",
         "github-act-medium": "#4ac26b",
