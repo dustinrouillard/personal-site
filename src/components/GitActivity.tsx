@@ -49,10 +49,7 @@ export function GitActivity({ graph }: GitActivity) {
   };
 
   return (
-    <div
-      className="px-4 py-2 flex flex-row group overflow-x-scroll"
-      ref={element}
-    >
+    <div className="px-4 py-2 flex flex-row overflow-x-scroll" ref={element}>
       {weeklyData.map((week, weekIndex) => (
         <div className="flex flex-col group" key={weekIndex}>
           {week.map((date: ContributionDate, dayIndex: number) => (

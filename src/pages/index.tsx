@@ -284,7 +284,7 @@ export default function Index(props: Props) {
             <VscSourceControl size={38} className="p-1" />
           </div>
 
-          <div className="flex flex-col overflow-scroll p-2 rounded-lg border-2 border-neutral-700">
+          <div className="flex flex-col overflow-scroll p-2 rounded-lg border-[0.5px] border-neutral-700/30 group hover:border-neutral-700">
             <GitActivity graph={gitActivity?.graph} />
             <GitActivityLegend />
           </div>
