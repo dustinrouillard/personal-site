@@ -1,9 +1,6 @@
 import Head from "next/head";
-import {
-  GiNightSleep,
-  GiCampingTent,
-  GiCommercialAirplane,
-} from "react-icons/gi";
+import { GiNightSleep, GiCommercialAirplane } from "react-icons/gi";
+import { IoMdRocket } from "react-icons/io";
 
 import { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { Meta } from "../components/meta";
@@ -94,7 +91,7 @@ export default function Layout(props: Props) {
                   <div>
                     <Tippy placement="right" content={customStatusText}>
                       <span>
-                        <GiCampingTent size={24} />
+                        <IoMdRocket size={24} />
                       </span>
                     </Tippy>
                   </div>
