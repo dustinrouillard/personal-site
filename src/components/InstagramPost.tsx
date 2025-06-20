@@ -21,24 +21,28 @@ export function InstagramPost({ post }: { post: IGPost }) {
           </div>
 
           <img
-            className="aspect-[0.8/1] object-cover rounded-md"
+            className="aspect-square object-cover rounded-md"
             src={post.thumbnail_url ?? post.media_url}
           />
 
           <div className="flex justify-between items-center">
             <div className="flex flex-row gap-1 opacity-70 items-center">
-              <HiHeart size={20} />{" "}
+              <HiHeart size={20} className="text-pink-700 dark:text-pink-400" />{" "}
               <p className="">{post.like_count.toLocaleString()}</p>
             </div>
-            <div className="flex flex-row gap-1 opacity-70 items-center">
-              <HiMiniChatBubbleOvalLeft size={20} />{" "}
-              <p className="">{post.comments_count.toLocaleString()}</p>
-            </div>
+            {post.comments_count > 0 && (
+              <div className="flex flex-row gap-1 opacity-70 items-center">
+                <HiMiniChatBubbleOvalLeft size={20} />{" "}
+                <p className="">{post.comments_count.toLocaleString()}</p>
+              </div>
+            )}
           </div>
 
           <div className="flex justify-between items-center">
             <div className="flex flex-row gap-1 opacity-70 items-center">
-              <p className="text-sm">{timeSince}</p>
+              <p className="text-sm">
+                {new Date(post.timestamp).toLocaleDateString()} ({timeSince})
+              </p>
             </div>
           </div>
         </div>
