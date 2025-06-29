@@ -8,6 +8,7 @@ import {
   WeatherConditions,
   InstagramOverview,
 } from "../types/core";
+import { Album } from "../types/gallery";
 
 const URL_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://rest.dstn.to";
 
@@ -92,6 +93,28 @@ export async function getRiderrUserStats() {
   } = await req.json();
 
   return json.riderr;
+}
+
+export async function getPhotoAlbums() {
+  const req = await fetch(`${URL_BASE}/v2/photography/albums`);
+  if (req.status != 200) throw { code: "failed_to_pull_albums" };
+
+  const json: {
+    albums: Album[];
+  } = await req.json();
+
+  return json.albums;
+}
+
+export async function getPhotoAlbum(slug: string) {
+  const req = await fetch(`${URL_BASE}/v2/photography/albums/${slug}`);
+  if (req.status != 200) throw { code: "failed_to_pull_album" };
+
+  const json: {
+    album: Album;
+  } = await req.json();
+
+  return json.album;
 }
 
 export async function getPosts() {

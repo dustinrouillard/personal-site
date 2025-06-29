@@ -18,6 +18,7 @@ import { Age } from "../components/age";
 import { gateway } from "../utils/gateway";
 import { StatusResponse } from "../types/gateway";
 import { Tippy } from "../components/tippy";
+import { clsx } from "clsx";
 
 export interface Props extends PropsWithChildren {
   page_class?: string;
@@ -107,6 +108,14 @@ export default function Layout(props: Props) {
                   <></>
                 )}
               </div>
+            </Link>
+            <Link
+              className={clsx(
+                props.active_page == "photography" ? "font-bold" : "",
+              )}
+              href="/photography"
+            >
+              Photography
             </Link>
           </div>
         </div>

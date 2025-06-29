@@ -52,7 +52,6 @@ import { GitActivity } from "../components/GitActivity";
 import { Tippy } from "../components/tippy";
 import { InstagramPost } from "../components/InstagramPost";
 import { ALL_POSTS_AFTER } from "../consts";
-import { SiSocialblade } from "react-icons/si";
 import { GitActivityLegend } from "../components/GitActivityLegend";
 
 interface Props {
@@ -330,7 +329,7 @@ export default function Index(props: Props) {
             (post) =>
               new Date(post.timestamp).getTime() > ALL_POSTS_AFTER.getTime(),
           ).length ? (
-            <div className="grid 2xl:grid-cols-3 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
               {instagramOverview.posts
                 .filter(
                   (post) =>
