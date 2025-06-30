@@ -5,9 +5,33 @@ import Layout from "../../../pages/_layout";
 import { getPhotoAlbum } from "../../../utils/core";
 import { AlbumPhoto } from "../../../components/AlbumPhoto";
 import { BackButton } from "../../../components/BackButton";
+import { Metadata } from "next";
 
 interface Params {
   slug: string;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const album = await getPhotoAlbum(slug as string);
+  if (!album) throw "not found";
+
+  return {
+    title: `${album.name} - Dustin Rouillard`,
+    description: `${album.name} contains ${album.items.length.toLocaleString()} photos`,
+    openGraph: {
+      images: [
+        {
+          url: `https://cdn.dstn.to/gallery/albums/${album.slug}/${album.cover}`,
+        },
+      ],
+    },
+  };
 }
 
 export default async function PhotographyAlbum({
