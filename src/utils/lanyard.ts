@@ -48,7 +48,7 @@ export class Lanyard extends EventEmitter {
     this.ws.addEventListener("message", (e) => {
       try {
         this.message(JSON.parse(e.data));
-      } catch (error) { }
+      } catch (error) {}
     });
 
     // Close event for websocket
@@ -74,7 +74,7 @@ export class Lanyard extends EventEmitter {
         // Got hello, start our heartbeat interval
         this.heartbeat = setInterval(
           () => this.sendHeartbeat(),
-          data.d.heartbeat_interval
+          data.d?.heartbeat_interval,
         );
 
         // Subscribe to our user id
@@ -105,4 +105,4 @@ export class Lanyard extends EventEmitter {
   }
 }
 
-export const lanyard = typeof window != 'undefined' && new Lanyard(DISCORD_ID);
+export const lanyard = typeof window != "undefined" && new Lanyard(DISCORD_ID);

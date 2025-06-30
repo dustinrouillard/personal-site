@@ -117,13 +117,15 @@ export function StatusIcon() {
   }, []);
 
   useEffect(() => {
-    lanyard.on("presence", presenceChange);
+    if (lanyard) {
+      lanyard.on("presence", presenceChange);
 
-    // We don't have an event listener when we first get the presence data so request it again from local cache
-    lanyard.requestPresenceUpdate();
+      // We don't have an event listener when we first get the presence data so request it again from local cache
+      lanyard.requestPresenceUpdate();
+    }
 
     return () => {
-      lanyard.removeListener("presence", presenceChange);
+      if (lanyard) lanyard.removeListener("presence", presenceChange);
     };
   }, [presenceChange]);
 

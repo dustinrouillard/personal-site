@@ -40,7 +40,11 @@ export default function BlogPostBySlug({ post }: Props) {
                 a(props) {
                   const { href, className, children } = props;
                   return (
-                    <Link className={className} href={href} target="_blank">
+                    <Link
+                      className={className}
+                      href={href ?? ""}
+                      target="_blank"
+                    >
                       {children}
                     </Link>
                   );

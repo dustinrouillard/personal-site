@@ -126,7 +126,7 @@ export class Gateway extends EventEmitter {
         // Got hello, start our heartbeat interval
         this.heartbeat = setInterval(
           () => this.sendHeartbeat(),
-          data.d.heartbeat_interval,
+          data.d?.heartbeat_interval,
         );
 
         this.emit("init");

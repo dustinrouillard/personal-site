@@ -23,10 +23,10 @@ export function Spotify({ className, ...props }: Props) {
   );
 
   useEffect(() => {
-    gateway.on("spotify", spotifyChange);
+    if (gateway) gateway.on("spotify", spotifyChange);
 
     return () => {
-      gateway.removeListener("spotify", spotifyChange);
+      if (gateway) gateway.removeListener("spotify", spotifyChange);
     };
   }, [spotifyChange]);
 

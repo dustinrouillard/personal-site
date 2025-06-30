@@ -13,10 +13,10 @@ export function useRiderrStats() {
   );
 
   useEffect(() => {
-    gateway.on("riderr_update", riderrChange);
+    if (gateway) gateway.on("riderr_update", riderrChange);
 
     return () => {
-      gateway.removeListener("riderr_update", riderrChange);
+      if (gateway) gateway.removeListener("riderr_update", riderrChange);
     };
   }, [riderrChange]);
 

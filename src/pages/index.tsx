@@ -131,10 +131,10 @@ export default function Index(props: Props) {
   }, []);
 
   useEffect(() => {
-    gateway.on("spotify", spotifyChange);
+    if (gateway) gateway.on("spotify", spotifyChange);
 
     return () => {
-      gateway.removeListener("spotify", spotifyChange);
+      if (gateway) gateway.removeListener("spotify", spotifyChange);
     };
   }, [spotifyChange]);
 

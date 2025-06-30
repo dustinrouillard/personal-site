@@ -31,7 +31,8 @@ export function GitActivity({ graph }: GitActivity) {
   }, [graph]);
 
   useEffect(() => {
-    element.current.scrollLeft = element.current.scrollWidth;
+    if (element.current)
+      element.current.scrollLeft = element.current.scrollWidth;
   }, [weeklyData]);
 
   const getColorClass = (count: number) => {

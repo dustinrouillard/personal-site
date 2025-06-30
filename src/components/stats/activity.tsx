@@ -14,16 +14,18 @@ interface Props {
 }
 
 export function DiscordActivity({ className }: Props) {
-  const [editorState, setEditorState] = useState<LanyardActivity>();
+  const [editorState, setEditorState] = useState<LanyardActivity | null>();
   const [timestamp, setTimestamp] = useState<number>(
-    new Date().getTime() - editorState?.timestamps.start,
+    new Date().getTime() - (editorState?.timestamps?.start ?? 0),
   );
 
   useEffect(() => {
     if (!editorState) return () => {};
 
     const int = setInterval(() => {
-      setTimestamp(new Date().getTime() - editorState.timestamps.start);
+      setTimestamp(
+        new Date().getTime() - (editorState?.timestamps?.start ?? 0),
+      );
     }, 1000);
 
     return () => {
@@ -33,13 +35,13 @@ export function DiscordActivity({ className }: Props) {
 
   const presenceChange = useCallback((data: LanyardPresence) => {
     const zed = data.activities
-      .sort((a, b) => a?.timestamps?.start - b?.timestamps?.start)
+      .sort((a, b) => (a?.timestamps?.start ?? 0) - (b?.timestamps?.start ?? 0))
       .find((activity) => activity.application_id == ZED_APPLICATION_ID);
     const neovim = data.activities
-      .sort((a, b) => a?.timestamps?.start - b?.timestamps?.start)
+      .sort((a, b) => (a?.timestamps?.start ?? 0) - (b?.timestamps?.start ?? 0))
       .find((activity) => activity.application_id == NEOVIM_APPLICATION_ID);
     const vscode = data.activities
-      .sort((a, b) => a?.timestamps?.start - b?.timestamps?.start)
+      .sort((a, b) => (a?.timestamps?.start ?? 0) - (b?.timestamps?.start ?? 0))
       .find((activity) => activity.application_id == VSCODE_APPLICATION_ID);
 
     if (neovim) setEditorState(neovim);
@@ -49,13 +51,15 @@ export function DiscordActivity({ className }: Props) {
   }, []);
 
   useEffect(() => {
-    lanyard.on("presence", presenceChange);
+    if (lanyard) {
+      lanyard.on("presence", presenceChange);
 
-    // We don't have an event listener when we first get the presence data so request it again from local cache
-    lanyard.requestPresenceUpdate();
+      // We don't have an event listener when we first get the presence data so request it again from local cache
+      lanyard.requestPresenceUpdate();
+    }
 
     return () => {
-      lanyard.removeListener("presence", presenceChange);
+      if (lanyard) lanyard.removeListener("presence", presenceChange);
     };
   }, [presenceChange]);
 
@@ -67,12 +71,12 @@ export function DiscordActivity({ className }: Props) {
             <img
               className="rounded-lg w-20 h-20"
               src={
-                editorState.assets.large_image.startsWith("mp:external")
-                  ? editorState.assets.large_image.replace(
+                editorState.assets?.large_image.startsWith("mp:external")
+                  ? editorState.assets?.large_image.replace(
                       /mp:external\/([^\/]*)\/(http[s])/g,
                       "$2:/",
                     )
-                  : `https://cdn.discordapp.com/app-assets/${editorState.application_id}/${editorState.assets.large_image}.webp`
+                  : `https://cdn.discordapp.com/app-assets/${editorState.application_id}/${editorState.assets?.large_image}.webp`
               }
             />
             <div className="flex flex-col overflow-hidden pr-2">

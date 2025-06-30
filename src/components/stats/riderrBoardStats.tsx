@@ -25,7 +25,7 @@ export function RiderrBoardStats({ className }: Props) {
 
   const batteryStep = useMemo(() => {
     let step = 25;
-    let batt = riderr?.stats.boards[0]?.battery;
+    let batt = riderr?.stats.boards[0]?.battery ?? 0;
     if (batt >= 50) step = 50;
     if (batt >= 100) step = 50;
     return step;
