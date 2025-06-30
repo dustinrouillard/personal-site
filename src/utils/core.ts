@@ -103,7 +103,7 @@ export async function getPhotoAlbums() {
     albums: Album[];
   } = await req.json();
 
-  return json.albums;
+  return json.albums.reverse();
 }
 
 export async function getPhotoAlbum(slug: string) {
