@@ -215,7 +215,7 @@ export default function Index(props: Props) {
           <h2 className="text-2xl font-bold">Stats & Activity</h2>
         </div>
 
-        <div className="flex flex-wrap flex-grow w-full">
+        <div className="flex flex-wrap grow w-full">
           <CommandStats className="p-1 w-full md:w-auto" />
           <LocalTimeConditions
             className="p-1 w-full md:w-auto"
@@ -233,7 +233,7 @@ export default function Index(props: Props) {
         <h2 className="text-2xl font-bold">Recent Blog Posts</h2>
 
         {props.posts ? (
-          <div className="grid xl:grid-cols-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800 max-h-[30rem]">
+          <div className="grid xl:grid-cols-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800 max-h-120">
             {props.posts.map((post) => (
               <BlogPost post={post} key={post.id} />
             ))}

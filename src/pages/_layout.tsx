@@ -19,6 +19,7 @@ import { gateway } from "../utils/gateway";
 import { StatusResponse } from "../types/gateway";
 import { Tippy } from "../components/tippy";
 import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export interface Props extends PropsWithChildren {
   page_class?: string;
@@ -115,13 +116,18 @@ export default function Layout(props: Props) {
               )}
               href="/photography"
             >
-              Photography
+              <p className="bg-neutral-300 dark:bg-neutral-800 p-2 rounded-md text-sm hover:brightness-75 transition-all">
+                Photography
+              </p>
             </Link>
           </div>
         </div>
 
         <div
-          className={`w-full py-5 md:py-10 px-3 md:px-36 ${props.page_class ?? ""}`}
+          className={twMerge(
+            `w-full py-5 md:py-10 px-3 md:px-36`,
+            props.page_class,
+          )}
         >
           {props.children}
         </div>

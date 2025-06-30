@@ -1,12 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Roboto Mono", monospace, "Noto Color Emoji";
+}
+
+@theme {
+    --color-instagram-pink: rgb(193, 53, 132);
+    --color-socialblade-brand: rgb(179, 56, 44);
+
+    --color-github-act-none: #eff2f5;
+    --color-github-act-some: #aceebb;
+    --color-github-act-medium: #4ac26b;
+    --color-github-act-lot: #2da44e;
+    --color-github-act-most: #116329;
+
+    --color-github-act-none-dark: #151b23;
+    --color-github-act-some-dark: #033a16;
+    --color-github-act-medium-dark: #196c2e;
+    --color-github-act-lot-dark: #2ea043;
+    --color-github-act-most-dark: #56d364;
 }
 
 @layer base {
