@@ -33,43 +33,44 @@ export default function BlogPostBySlug({ post }: Props) {
         <div className="flex flex-col items-start">
           <h1 className="text-3xl font-bold mb-8">{post.title}</h1>
 
-          <Markdown
-            className="prose prose-sm bg:!max-w-none vs:!max-w-sm xs:!max-w-xs dark:prose-invert"
-            remarkPlugins={[remarkGfm, remarkBreaks]}
-            components={{
-              a(props) {
-                const { href, className, children } = props;
-                return (
-                  <Link className={className} href={href} target="_blank">
-                    {children}
-                  </Link>
-                );
-              },
-              code(props) {
-                const { children, className, node, ...rest } = props;
-                const match = /language-(\w+)/.exec(className || "");
-                return match ? (
-                  <SyntaxHighlighter
-                    PreTag="div"
-                    children={String(children).replace(/\n$/, "")}
-                    language={match[1]}
-                    style={coldarkDark}
-                    customStyle={{
-                      border: "none",
-                      background: "none",
-                      boxShadow: "none",
-                    }}
-                  />
-                ) : (
-                  <code {...rest} className={className}>
-                    {children}
-                  </code>
-                );
-              },
-            }}
-          >
-            {post.body}
-          </Markdown>
+          <div className="prose prose-sm bg:!max-w-none vs:!max-w-sm xs:!max-w-xs dark:prose-invert">
+            <Markdown
+              remarkPlugins={[remarkGfm, remarkBreaks]}
+              components={{
+                a(props) {
+                  const { href, className, children } = props;
+                  return (
+                    <Link className={className} href={href} target="_blank">
+                      {children}
+                    </Link>
+                  );
+                },
+                code(props) {
+                  const { children, className, node, ...rest } = props;
+                  const match = /language-(\w+)/.exec(className || "");
+                  return match ? (
+                    <SyntaxHighlighter
+                      PreTag="div"
+                      children={String(children).replace(/\n$/, "")}
+                      language={match[1]}
+                      style={coldarkDark}
+                      customStyle={{
+                        border: "none",
+                        background: "none",
+                        boxShadow: "none",
+                      }}
+                    />
+                  ) : (
+                    <code {...rest} className={className}>
+                      {children}
+                    </code>
+                  );
+                },
+              }}
+            >
+              {post.body}
+            </Markdown>
+          </div>
         </div>
       </div>
     </Layout>

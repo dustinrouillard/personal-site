@@ -1,3 +1,5 @@
+import type { JSX } from "react";
+
 export interface HighlightedTool {
   name: string;
   description: string;

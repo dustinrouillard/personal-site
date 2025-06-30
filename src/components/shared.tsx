@@ -3,6 +3,7 @@ import { TerminusSymbol } from "./icons/terminus";
 
 import { HighlightedTool, Work } from "../types/core";
 import { RiderrLogo } from "./icons/riderr";
+import type { JSX } from "react";
 
 export const HighlightedTools: HighlightedTool[] = [
   {
