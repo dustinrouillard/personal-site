@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Album, Photo } from "../types/gallery";
 import { ImageThumbnail } from "./ImageThumbnail";
@@ -11,7 +13,7 @@ export function AlbumPhoto({ photo, album }: { photo: Photo; album: Album }) {
             <ImageThumbnail
               className="object-cover rounded-md"
               src={`https://cdn.dstn.to/gallery/albums/${album.slug}/${photo.name}`}
-              alt={photo.name}
+              alt={photo.name ?? "Photo"}
               fill
             />
           </div>

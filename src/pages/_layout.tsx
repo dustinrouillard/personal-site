@@ -1,3 +1,5 @@
+"use client";
+
 import Head from "next/head";
 import { GiNightSleep, GiCommercialAirplane } from "react-icons/gi";
 import { IoMdRocket } from "react-icons/io";
@@ -49,10 +51,10 @@ export default function Layout(props: Props) {
   }, []);
 
   useEffect(() => {
-    gateway.on("status", statusChange);
+    if (gateway) gateway.on("status", statusChange);
 
     return () => {
-      gateway.removeListener("status", statusChange);
+      if (gateway) gateway.removeListener("status", statusChange);
     };
   }, [statusChange]);
 

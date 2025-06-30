@@ -1,6 +1,5 @@
-"use server";
-
 import exifr from "exifr";
+import { unstable_cache } from "next/cache";
 import { memo } from "react";
 import { BiAperture, BiCamera } from "react-icons/bi";
 import { BsClock } from "react-icons/bs";
@@ -11,7 +10,7 @@ const formatNumber = (num: number) =>
     : parseFloat(num.toFixed(3)).toString();
 
 async function ExifData({ url }: { url: string }) {
-  const exif = await exifr.parse(url);
+  const exif = await unstable_cache(() => exifr.parse(url), [url])();
 
   return (
     <div>
@@ -33,7 +32,7 @@ async function ExifData({ url }: { url: string }) {
         <div className="flex flex-row items-center space-x-2">
           <BsClock size={20} />
           {exif.CreateDate && (
-            <p className="">{(exif.CreateDate as Date).toLocaleString()}</p>
+            <p className="">{new Date(exif.CreateDate).toLocaleString()}</p>
           )}
         </div>
         <div className="flex flex-row space-x-2">
@@ -80,4 +79,4 @@ async function ExifData({ url }: { url: string }) {
   );
 }
 
-export const ImageExif = memo(ExifData);
+export default memo(ExifData);
