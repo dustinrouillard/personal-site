@@ -1,3 +1,4 @@
+import PlausibleProvider from "next-plausible";
 import "../assets/app.css";
 
 import { Noto_Color_Emoji, Roboto_Mono } from "next/font/google";
@@ -50,7 +51,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PlausibleProvider
+          domain="dstn.to"
+          enabled={
+            typeof window != "undefined" &&
+            window.location.hostname == "dstn.to"
+          }
+          selfHosted
+          customDomain="https://trck.dstn.to"
+        >
+          {children}
+        </PlausibleProvider>
+      </body>
     </html>
   );
 }
