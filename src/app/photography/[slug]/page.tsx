@@ -22,6 +22,14 @@ export async function generateMetadata({
   if (!album) throw "not found";
 
   return {
+    twitter: {
+      card: "summary_large_image",
+      images: [
+        {
+          url: `https://cdn.dstn.to/gallery/albums/${album.slug}/${album.cover}`,
+        },
+      ],
+    },
     title: `${album.name} - Dustin Rouillard`,
     description: `${album.name} contains ${album.items.length.toLocaleString()} photos`,
     openGraph: {
