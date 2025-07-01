@@ -1,14 +1,15 @@
 "use server";
 
+import { Metadata } from "next";
 import { Suspense } from "react";
 
-import { BsInstagram } from "react-icons/bs";
+import { BsChevronLeft, BsChevronRight, BsInstagram } from "react-icons/bs";
 
 import Layout from "../../../../pages/_layout";
 import { getPhotoAlbum } from "../../../../utils/core";
 import ImageExif from "../../../../components/ImageExif";
 import { BackButton } from "../../../../components/BackButton";
-import { Metadata } from "next";
+import Link from "next/link";
 
 interface Params {
   slug: string;
@@ -55,7 +56,11 @@ export default async function AlbumPhotoPage({
   const { slug, photo: photoName } = await params;
 
   const album = await getPhotoAlbum(slug as string);
+
+  const index = album.items.findIndex((item) => item.name == photoName);
   const photo = album.items.find((item) => item.name == photoName);
+  const previousPhoto = album.items[index - 1];
+  const nextPhoto = album.items[index + 1];
 
   if (!photo)
     return (
@@ -78,6 +83,27 @@ export default async function AlbumPhotoPage({
 
       <div className="flex flex-col xl:flex-row h-screen justify-between rounded-lg bg-neutral-300 dark:bg-neutral-800 p-2 gap-2">
         <div className="relative h-full w-full overflow-hidden rounded-lg">
+          <div className="flex absolute h-full items-center px-4 justify-between w-full z-20">
+            {previousPhoto ? (
+              <Link href={`/photography/${album.slug}/${previousPhoto.name}`}>
+                <div className="bg-neutral-400 p-2 rounded-full text-black hover:brightness-50 transition-all cursor-pointer">
+                  <BsChevronLeft size={20} />
+                </div>
+              </Link>
+            ) : (
+              <div />
+            )}
+            {nextPhoto ? (
+              <Link href={`/photography/${album.slug}/${nextPhoto.name}`}>
+                <div className="bg-neutral-400 p-2 rounded-full text-black hover:brightness-50 transition-all cursor-pointer">
+                  <BsChevronRight size={20} />
+                </div>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
+
           <img
             src={`https://cdn.dstn.to/gallery/albums/${album.slug}/${photo.name}`}
             className="absolute inset-0 h-full w-full object-cover object-center blur-lg opacity-40"
