@@ -13,7 +13,6 @@ export default function App({ Component, pageProps }) {
         typeof window != "undefined" && window.location.hostname == "dstn.to"
       }
       selfHosted
-      customDomain="https://trck.dstn.to"
     >
       <Head>
         <link

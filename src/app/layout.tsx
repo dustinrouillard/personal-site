@@ -50,20 +50,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <PlausibleProvider
-          domain="dstn.to"
-          enabled={
-            typeof window != "undefined" &&
-            window.location.hostname == "dstn.to"
-          }
-          selfHosted
-          customDomain="https://trck.dstn.to"
-        >
-          {children}
-        </PlausibleProvider>
-      </body>
-    </html>
+    <PlausibleProvider domain="dstn.to" enabled selfHosted>
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    </PlausibleProvider>
   );
 }

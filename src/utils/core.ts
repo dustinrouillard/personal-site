@@ -13,7 +13,9 @@ import { Album } from "../types/gallery";
 const URL_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://rest.dstn.to";
 
 export async function getSiteSettings() {
-  const req = await fetch(`${URL_BASE}/v2/settings/site`);
+  const req = await fetch(`${URL_BASE}/v2/settings/site`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) throw { code: "failed_to_fetch_site_settings" };
 
   const json: { settings: Record<string, string> } = await req.json();
@@ -21,7 +23,9 @@ export async function getSiteSettings() {
 }
 
 export async function getInstagramOverview() {
-  const req = await fetch(`${URL_BASE}/v2/ig/overview`);
+  const req = await fetch(`${URL_BASE}/v2/ig/overview`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) throw { code: "failed_to_fetch_instagram_overview" };
 
   const json: InstagramOverview = await req.json();
@@ -29,7 +33,9 @@ export async function getInstagramOverview() {
 }
 
 export async function getPinnedRepositories() {
-  const req = await fetch(`${URL_BASE}/v2/github/pinned`);
+  const req = await fetch(`${URL_BASE}/v2/github/pinned`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) return [];
 
   const json: {
@@ -40,7 +46,9 @@ export async function getPinnedRepositories() {
 }
 
 export async function getContributionGraph() {
-  const req = await fetch(`${URL_BASE}/v2/github/contributions`);
+  const req = await fetch(`${URL_BASE}/v2/github/contributions`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) return { total_contributions: 0, graph: [] };
 
   const json: {
@@ -52,7 +60,9 @@ export async function getContributionGraph() {
 }
 
 export async function getRecentListens() {
-  const req = await fetch(`${URL_BASE}/v2/spotify/recents`);
+  const req = await fetch(`${URL_BASE}/v2/spotify/recents`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) return [];
 
   const json: {
@@ -63,7 +73,9 @@ export async function getRecentListens() {
 }
 
 export async function getWeatherConditions() {
-  const req = await fetch(`${URL_BASE}/v2/weather/current`);
+  const req = await fetch(`${URL_BASE}/v2/weather/current`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) throw { code: "failed_to_pull_weather" };
 
   const json: {
@@ -74,7 +86,9 @@ export async function getWeatherConditions() {
 }
 
 export async function getAnalytics() {
-  const req = await fetch(`${URL_BASE}/v2/analytics`);
+  const req = await fetch(`${URL_BASE}/v2/analytics`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) throw { code: "failed_to_pull_analytics" };
 
   const json: {
@@ -96,7 +110,9 @@ export async function getRiderrUserStats() {
 }
 
 export async function getPhotoAlbums() {
-  const req = await fetch(`${URL_BASE}/v2/photography/albums`);
+  const req = await fetch(`${URL_BASE}/v2/photography/albums`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) throw { code: "failed_to_pull_albums" };
 
   const json: {
@@ -107,7 +123,9 @@ export async function getPhotoAlbums() {
 }
 
 export async function getPhotoAlbum(slug: string) {
-  const req = await fetch(`${URL_BASE}/v2/photography/albums/${slug}`);
+  const req = await fetch(`${URL_BASE}/v2/photography/albums/${slug}`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) throw { code: "failed_to_pull_album" };
 
   const json: {
@@ -118,7 +136,9 @@ export async function getPhotoAlbum(slug: string) {
 }
 
 export async function getPosts() {
-  const req = await fetch(`${URL_BASE}/v2/blog/posts`);
+  const req = await fetch(`${URL_BASE}/v2/blog/posts`, {
+    next: { revalidate: 60 },
+  });
   if (req.status != 200) throw { code: "failed_to_pull_posts" };
 
   const json: {
@@ -129,7 +149,9 @@ export async function getPosts() {
 }
 
 export async function getPostBySlug(slug: string) {
-  const req = await fetch(`${URL_BASE}/v2/blog/posts/${slug}`);
+  const req = await fetch(`${URL_BASE}/v2/blog/posts/${slug}`, {
+    next: { revalidate: 60 },
+  });
   if (req.status == 404) throw { code: "invalid_post" };
   if (req.status != 200) throw { code: "failed_to_pull_post" };
 
