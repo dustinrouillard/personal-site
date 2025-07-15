@@ -2,6 +2,7 @@ import PlausibleProvider from "next-plausible";
 import "../assets/app.css";
 
 import { Noto_Color_Emoji, Roboto_Mono } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 const mono = Roboto_Mono({
   subsets: ["latin"],
@@ -52,7 +53,11 @@ export default function RootLayout({
   return (
     <PlausibleProvider domain="dstn.to" enabled selfHosted>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <Toaster />
+
+          {children}
+        </body>
       </html>
     </PlausibleProvider>
   );

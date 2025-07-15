@@ -10,6 +10,7 @@ import { getPhotoAlbum } from "../../../../utils/core";
 import ImageExif from "../../../../components/ImageExif";
 import { BackButton } from "../../../../components/BackButton";
 import Link from "next/link";
+import { ShareButton } from "../../../../components/ShareButton";
 
 interface Params {
   slug: string;
@@ -77,8 +78,14 @@ export default async function AlbumPhotoPage({
       <div className="flex flex-col">
         <BackButton text="Back to album" to={`/photography/${album.slug}`} />
 
-        <h1 className="text-2xl font-bold">{album.name}</h1>
-        <h2 className="text-xl">{photo.name}</h2>
+        <div className="flex flex-row justify-between">
+          <div className="">
+            <h1 className="text-2xl font-bold">{album.name}</h1>
+            <h2 className="text-xl">{photo.name}</h2>
+          </div>
+
+          <ShareButton album={album} photo={photo} />
+        </div>
       </div>
 
       <div className="flex flex-col xl:flex-row h-screen justify-between rounded-lg bg-neutral-300 dark:bg-neutral-800 p-2 gap-2">

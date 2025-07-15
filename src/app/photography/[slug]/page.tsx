@@ -1,11 +1,13 @@
 "use server";
-import { MdLocationPin } from "react-icons/md";
+import { Metadata } from "next";
+import { MdLocationPin, MdShare } from "react-icons/md";
 
 import Layout from "../../../pages/_layout";
 import { getPhotoAlbum } from "../../../utils/core";
 import { AlbumPhoto } from "../../../components/AlbumPhoto";
 import { BackButton } from "../../../components/BackButton";
-import { Metadata } from "next";
+import toast from "react-hot-toast";
+import { ShareButton } from "../../../components/ShareButton";
 
 interface Params {
   slug: string;
@@ -31,7 +33,7 @@ export async function generateMetadata({
       ],
     },
     title: `${album.name} - Dustin Rouillard`,
-    description: `${album.name} contains ${album.items.length.toLocaleString()} photos`,
+    description: `Album has ${album.items.length.toLocaleString()} photos`,
     openGraph: {
       images: [
         {
@@ -55,15 +57,21 @@ export default async function PhotographyAlbum({
       <div className="flex flex-col">
         <BackButton text="Back to albums" to="/photography" />
 
-        <h1 className="text-2xl font-bold">{album.name}</h1>
-        {album.location ? (
-          <div className="flex flex-row items-center space-x-1">
-            <MdLocationPin />
-            <p className="text-sm opacity-60">{album.location}</p>
+        <div className="flex flex-row justify-between">
+          <div className="">
+            <h1 className="text-2xl font-bold">{album.name}</h1>
+            {album.location ? (
+              <div className="flex flex-row items-center space-x-1">
+                <MdLocationPin />
+                <p className="text-sm opacity-60">{album.location}</p>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-        ) : (
-          <></>
-        )}
+
+          <ShareButton album={album} />
+        </div>
 
         {album.description ? (
           <p className="mt-4">{album.description}</p>
