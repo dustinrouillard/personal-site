@@ -11,6 +11,7 @@ import ImageExif from "../../../../components/ImageExif";
 import { BackButton } from "../../../../components/BackButton";
 import Link from "next/link";
 import { ShareButton } from "../../../../components/ShareButton";
+import { notFound } from "next/navigation";
 
 interface Params {
   slug: string;
@@ -25,6 +26,8 @@ export async function generateMetadata({
   const { slug, photo: photoName } = await params;
 
   const album = await getPhotoAlbum(slug as string);
+  if (!album) throw "not found";
+
   const photo = album.items.find((item) => item.name == photoName);
   if (!photo) throw "not found";
 
@@ -57,6 +60,10 @@ export default async function AlbumPhotoPage({
   const { slug, photo: photoName } = await params;
 
   const album = await getPhotoAlbum(slug as string);
+
+  if (!album) {
+    return notFound();
+  }
 
   const index = album.items.findIndex((item) => item.name == photoName);
   const photo = album.items.find((item) => item.name == photoName);
