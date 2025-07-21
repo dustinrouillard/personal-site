@@ -3,6 +3,7 @@ import "../assets/app.css";
 
 import { Noto_Color_Emoji, Roboto_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { RemoveSourceQuery } from "../components/utility/QueryParams";
 
 const mono = Roboto_Mono({
   subsets: ["latin"],
@@ -54,6 +55,7 @@ export default function RootLayout({
     <PlausibleProvider domain="dstn.to" enabled selfHosted>
       <html lang="en">
         <body>
+          <RemoveSourceQuery />
           <Toaster />
 
           {children}
