@@ -10,9 +10,9 @@ export function RemoveSourceQuery() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (searchParams?.has("ref")) {
+    if (searchParams?.has("utm_source")) {
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.delete("ref");
+      newSearchParams.delete("utm_source");
       router.push(`${pathname}?${newSearchParams.toString()}`);
     }
   }, [searchParams]);
