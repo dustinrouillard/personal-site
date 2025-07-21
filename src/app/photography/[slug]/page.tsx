@@ -8,6 +8,7 @@ import { AlbumPhoto } from "../../../components/AlbumPhoto";
 import { BackButton } from "../../../components/BackButton";
 import toast from "react-hot-toast";
 import { ShareButton } from "../../../components/ShareButton";
+import { notFound } from "next/navigation";
 
 interface Params {
   slug: string;
@@ -51,6 +52,8 @@ export default async function PhotographyAlbum({
 }) {
   const { slug } = await params;
   const album = await getPhotoAlbum(slug);
+
+  if (!album) return notFound();
 
   return (
     <Layout active_page="gallery_album" page_class="space-y-10">

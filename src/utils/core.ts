@@ -126,6 +126,8 @@ export async function getPhotoAlbum(slug: string) {
   const req = await fetch(`${URL_BASE}/v2/photography/albums/${slug}`, {
     next: { revalidate: 60 },
   });
+
+  if (req.status == 404) return null;
   if (req.status != 200) throw { code: "failed_to_pull_album" };
 
   const json: {
