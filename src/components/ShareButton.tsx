@@ -8,7 +8,7 @@ import { Album, Photo } from "../types/gallery";
 export function ShareButton({ album, photo }: { album: Album; photo?: Photo }) {
   const handleShare = () => {
     navigator.clipboard.writeText(
-      `https://dustin.pics/a/${album.slug}${photo ? `/${photo.name}` : ""}`,
+      `https://dustin.pics/${album.slug}${photo ? `/${photo.name}` : ""}`,
     );
     toast.success("Link copied to clipboard");
   };
