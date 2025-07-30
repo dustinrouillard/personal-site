@@ -10,7 +10,8 @@ import {
 } from "../types/core";
 import { Album } from "../types/gallery";
 
-const URL_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://rest.dstn.to";
+export const URL_BASE =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://rest.dstn.to";
 
 export async function getSiteSettings() {
   const req = await fetch(`${URL_BASE}/v2/settings/site`, {
