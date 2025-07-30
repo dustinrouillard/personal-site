@@ -1,7 +1,9 @@
 "use server";
 
+import Link from "next/link";
 import { Metadata } from "next";
 import { Suspense } from "react";
+import { notFound } from "next/navigation";
 
 import { BsChevronLeft, BsChevronRight, BsInstagram } from "react-icons/bs";
 
@@ -9,9 +11,7 @@ import Layout from "../../../../pages/_layout";
 import { getPhotoAlbum } from "../../../../utils/core";
 import ImageExif from "../../../../components/ImageExif";
 import { BackButton } from "../../../../components/BackButton";
-import Link from "next/link";
 import { ShareButton } from "../../../../components/ShareButton";
-import { notFound } from "next/navigation";
 
 interface Params {
   slug: string;

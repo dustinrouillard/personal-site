@@ -39,7 +39,7 @@ export function Input({
       {full ? (
         <textarea
           className={twMerge(
-            "border border-gray-300 rounded-md p-2 w-full",
+            "border dark:border-gray-500 border-gray-300 dark:bg-neutral-600 bg-neutral-100 rounded-md p-2 w-full",
             className,
           )}
           placeholder={
@@ -52,7 +52,7 @@ export function Input({
       ) : (
         <input
           className={twMerge(
-            "border border-gray-300 rounded-md p-2 w-full",
+            "border dark:border-gray-500 border-gray-300 dark:bg-neutral-600 bg-neutral-100 rounded-md p-2 w-full",
             className,
           )}
           type={type}

@@ -113,7 +113,8 @@ export async function getRiderrUserStats() {
 export async function getPhotoAlbums() {
   const req = await fetch(`${URL_BASE}/v2/photography/albums`, {
     headers: {
-      ...(window.localStorage.getItem("dstn-management-token")
+      ...(typeof window !== "undefined" &&
+      window.localStorage.getItem("dstn-management-token")
         ? {
             Authorization: window.localStorage
               .getItem("dstn-management-token")

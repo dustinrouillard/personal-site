@@ -9,6 +9,7 @@ import { BackButton } from "../../../components/BackButton";
 import toast from "react-hot-toast";
 import { ShareButton } from "../../../components/ShareButton";
 import { notFound } from "next/navigation";
+import { EditButton } from "../../../components/EditButton";
 
 interface Params {
   slug: string;
@@ -56,7 +57,7 @@ export default async function PhotographyAlbum({
   if (!album) return notFound();
 
   return (
-    <Layout active_page="gallery_album" page_class="space-y-10">
+    <Layout active_page="gallery_album" page_class="space-y-10 h-screen">
       <div className="flex flex-col">
         <BackButton text="Back to albums" to="/photography" />
 
@@ -73,7 +74,10 @@ export default async function PhotographyAlbum({
             )}
           </div>
 
-          <ShareButton album={album} />
+          <div className="flex flex-row items-center space-x-2">
+            <ShareButton album={album} />
+            <EditButton album={album} />
+          </div>
         </div>
 
         {album.description ? (
@@ -83,12 +87,18 @@ export default async function PhotographyAlbum({
         )}
       </div>
 
-      <div>
-        <div className="grid lg:grid-cols-2 xl:grid-cols-3 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800 max-h-full gap-4">
-          {album.items.map((item) => (
-            <AlbumPhoto album={album} photo={item} key={item.name} />
-          ))}
-        </div>
+      <div className="p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800 max-h-full">
+        {album.items.length > 0 ? (
+          <div className="grid lg:grid-cols-2 xl:grid-cols-3 xl:grid-flow-row overflow-scroll gap-4">
+            {album.items.map((item) => (
+              <AlbumPhoto album={album} photo={item} key={item.id} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-xl opacity-80 py-20">
+            No photos in this album
+          </p>
+        )}
       </div>
     </Layout>
   );

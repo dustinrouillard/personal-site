@@ -12,16 +12,18 @@ export default function LoginPage() {
   const [token, setToken] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
   const [loggedIn, setLoggedIn] = useState(() => {
-    const token = localStorage.getItem("dstn-management-token");
+    if (typeof window == "undefined") return false;
+    const token = window.localStorage.getItem("dstn-management-token");
     return !!token;
   });
 
   const login = useCallback(async () => {
     try {
+      if (typeof window == "undefined") return;
       await checkToken(token);
       setLoginMessage("");
 
-      localStorage.setItem("dstn-management-token", token);
+      window.localStorage.setItem("dstn-management-token", token);
       setLoggedIn(true);
     } catch (error) {
       setLoginMessage("Invalid token");
@@ -29,7 +31,8 @@ export default function LoginPage() {
   }, [token]);
 
   const logout = useCallback(async () => {
-    localStorage.removeItem("dstn-management-token");
+    if (typeof window == "undefined") return false;
+    window.localStorage.removeItem("dstn-management-token");
     setLoggedIn(false);
   }, []);
 
