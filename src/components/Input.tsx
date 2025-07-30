@@ -2,33 +2,68 @@ import { HTMLInputTypeAttribute } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
+  name?: string;
   value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+  onKeyDown?: (
+    event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   placeholder?: string;
   type?: HTMLInputTypeAttribute;
   className?: string;
+  required?: boolean;
+  full?: boolean;
 }
 
 export function Input({
+  name,
   value,
   placeholder,
   type,
   onChange,
   onKeyDown,
   className,
+  required,
+  full,
 }: Props) {
   return (
-    <input
-      className={twMerge(
-        "border border-gray-300 rounded-md p-2 w-full",
-        className,
+    <div className={name ? twMerge("flex flex-col", className) : ""}>
+      {name && (
+        <div className="flex flex-row justify-between">
+          <p className="font-bold text-lg">{name}</p>{" "}
+          {required && <p className="text-sm">*</p>}
+        </div>
       )}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-    />
+      {full ? (
+        <textarea
+          className={twMerge(
+            "border border-gray-300 rounded-md p-2 w-full",
+            className,
+          )}
+          placeholder={
+            placeholder ? `${placeholder} ${required ? "*" : ""}` : ""
+          }
+          value={value}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+        />
+      ) : (
+        <input
+          className={twMerge(
+            "border border-gray-300 rounded-md p-2 w-full",
+            className,
+          )}
+          type={type}
+          placeholder={
+            placeholder ? `${placeholder} ${required ? "*" : ""}` : ""
+          }
+          value={value}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+        />
+      )}
+    </div>
   );
 }

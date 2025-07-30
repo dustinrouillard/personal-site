@@ -112,6 +112,15 @@ export async function getRiderrUserStats() {
 
 export async function getPhotoAlbums() {
   const req = await fetch(`${URL_BASE}/v2/photography/albums`, {
+    headers: {
+      ...(window.localStorage.getItem("dstn-management-token")
+        ? {
+            Authorization: window.localStorage
+              .getItem("dstn-management-token")
+              ?.toString(),
+          }
+        : {}),
+    },
     next: { revalidate: 60 },
   });
   if (req.status != 200) throw { code: "failed_to_pull_albums" };
