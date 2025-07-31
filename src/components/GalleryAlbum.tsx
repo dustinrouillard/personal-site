@@ -24,10 +24,12 @@ export function GalleryAlbum({ album }: { album: Album }) {
           <div className="flex flex-col space-y-2">
             <p className="text-lg font-bold">{album.name}</p>
 
-            <div className="flex flex-row items-center space-x-1">
-              <MdLocationPin />
-              <p className="text-sm opacity-60">{album.location}</p>
-            </div>
+            {album.location && (
+              <div className="flex flex-row items-center space-x-1">
+                <MdLocationPin />
+                <p className="text-sm opacity-60">{album.location}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
