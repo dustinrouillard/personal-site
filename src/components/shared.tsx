@@ -30,15 +30,4 @@ export const HighlightedTools: HighlightedTool[] = [
   },
 ];
 
-export const HighlightedWorks: Work[] = [
-  {
-    name: "Social Blade",
-    title: "Part-Time Software Engineer",
-    color: "rgb(179, 56, 44)",
-    url: "https://socialblade.com",
-    startYear: 2025,
-    icon: (
-      <SiSocialblade className="text-socialblade-brand w-auto" size={"100%"} />
-    ) as JSX.Element,
-  },
-];
+export const HighlightedWorks: Work[] = [];

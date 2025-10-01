@@ -13,7 +13,7 @@ export interface Work {
   name: string;
   description?: string;
   title: string;
-  url: string;
+  url?: string;
   color: string;
   startYear?: number;
   endYear?: number;
