@@ -243,18 +243,22 @@ export default function Index(props: Props) {
         )}
       </div> */}
 
-      <div className="flex flex-col space-y-6">
-        <div className="flex items-center gap-2 justify-between">
-          <h2 className="text-2xl font-bold">Tools & Things</h2>
-          <BsTools size={38} className="p-1" />
-        </div>
+      {HighlightedTools.length ? (
+        <div className="flex flex-col space-y-6">
+          <div className="flex items-center gap-2 justify-between">
+            <h2 className="text-2xl font-bold">Tools & Things</h2>
+            <BsTools size={38} className="p-1" />
+          </div>
 
-        <div className="grid xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
-          {HighlightedTools.map((tool, index) => (
-            <Tool key={index} tool={tool} />
-          ))}
+          <div className="grid xl:grid-cols-2 xl:grid-rows-1 xl:grid-flow-row overflow-scroll p-2 rounded-lg bg-neutral-300 dark:bg-neutral-800">
+            {HighlightedTools.map((tool, index) => (
+              <Tool key={index} tool={tool} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
 
       {HighlightedWorks.length ? (
         <div className="flex flex-col space-y-6">
