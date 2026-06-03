@@ -57,7 +57,7 @@ export default async function PhotographyAlbum({
   if (!album) return notFound();
 
   return (
-    <Layout active_page="gallery_album" page_class="space-y-10 h-screen">
+    <Layout active_page="gallery_album" page_class="space-y-10">
       <div className="flex flex-col">
         <BackButton text="Back to albums" to="/photography" />
 
