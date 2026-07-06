@@ -5,9 +5,7 @@ import { notFound } from "next/navigation";
 import { getPhotoAlbum } from "../../../../utils/core";
 import { BackButton } from "../../../../components/BackButton";
 import Layout from "../../../../pages/_layout";
-import { Input } from "../../../../components/Input";
-import { Button } from "../../../../components/Button";
-import { EditAlbumFields } from "../../../../components/EditAlbumFields";
+import { AlbumManager } from "../../../../components/photography/AlbumManager";
 
 interface Params {
   slug: string;
@@ -24,7 +22,7 @@ export default async function EditAlbumPage({
   if (!album) return notFound();
 
   return (
-    <Layout active_page="album" page_class="space-y-10 px-2 md:px-12 h-screen">
+    <Layout active_page="album" page_class="space-y-10 px-2 md:px-12">
       <div className="flex flex-col">
         <BackButton text="Back to album" to={`/photography/${album.slug}`} />
 
@@ -36,11 +34,7 @@ export default async function EditAlbumPage({
         </div>
       </div>
 
-      <div className="flex justify-center items-center h-full">
-        <div className="bg-neutral-300 dark:bg-neutral-800 rounded-lg p-6 space-y-2 w-fit">
-          <EditAlbumFields album={album} />
-        </div>
-      </div>
+      <AlbumManager initialAlbum={album} />
     </Layout>
   );
 }

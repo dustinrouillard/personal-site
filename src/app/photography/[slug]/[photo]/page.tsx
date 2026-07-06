@@ -134,6 +134,14 @@ export default async function AlbumPhotoPage({
         </div>
 
         <div className="bg-neutral-200 dark:bg-neutral-700 rounded-md p-3 text-nowrap">
+          {photo.caption ? (
+            <p className="mb-3 max-w-xs whitespace-normal text-wrap">
+              {photo.caption}
+            </p>
+          ) : (
+            <></>
+          )}
+
           {photo.instagram ? (
             <a href={photo.instagram} target="_blank" rel="noopener noreferrer">
               <div className="flex space-x-2 items-center mb-2 hover:opacity-60 cursor-pointer">

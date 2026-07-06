@@ -1,17 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function CreateAlbumButton() {
   const router = useRouter();
-  const [loggedIn, setLoggedIn] = useState(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("dstn-management-token");
-      return !!token;
-    }
-    return false;
-  });
+  // Read the token after mount to avoid an SSR/client hydration mismatch.
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem("dstn-management-token"));
+  }, []);
 
   return loggedIn ? (
     <button

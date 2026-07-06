@@ -25,23 +25,21 @@ export async function generateMetadata({
   const album = await getPhotoAlbum(slug as string);
   if (!album) throw "not found";
 
+  // Fall back to the first photo if no cover is set.
+  const cover = album.cover ?? album.items[0]?.name;
+  const images = cover
+    ? [{ url: `https://cdn.dstn.to/gallery/albums/${album.slug}/${cover}` }]
+    : undefined;
+
   return {
     twitter: {
       card: "summary_large_image",
-      images: [
-        {
-          url: `https://cdn.dstn.to/gallery/albums/${album.slug}/${album.cover}`,
-        },
-      ],
+      images,
     },
     title: `${album.name} - Dustin Rouillard`,
     description: `Album has ${album.items.length.toLocaleString()} photos`,
     openGraph: {
-      images: [
-        {
-          url: `https://cdn.dstn.to/gallery/albums/${album.slug}/${album.cover}`,
-        },
-      ],
+      images,
     },
   };
 }

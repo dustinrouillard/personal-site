@@ -1,16 +1,17 @@
 "use client";
 
-import { MdEdit, MdShare } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 
 import { Album, Photo } from "../types/gallery";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export function EditButton({ album, photo }: { album: Album; photo?: Photo }) {
   const router = useRouter();
-  const loggedIn = useMemo(() => {
-    const token = localStorage.getItem("dstn-management-token");
-    return !!token;
+  // Read the token after mount so this never touches localStorage during SSR.
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem("dstn-management-token"));
   }, []);
 
   return loggedIn ? (
